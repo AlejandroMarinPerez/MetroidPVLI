@@ -19,3 +19,9 @@ Haremos sólo la primera zona, de momento, la que se conoce como Brinstar.
 -	Flyers: estos enemigos salen del suelo e igualan la altura del jugador, una vez han alcanzado la altura, se lanzan contra Samus. 
 -	Swoopers: estos enemigos son similares a un murciélago que espera en el techo a que Samus pase caminando y cuando detectan al jugador, 
   se lanzan contra el y se quedan a su altura. Si saltas cerca de ellos intentarán igualar la altura en la que estas. 
+- Floaters: enemigos invulnerables al daño de Samus, se mueven de izquierda a derecha.
+- Skrees: enemigos que se encuentran en el techo, esperando a que Samus pase para lanzarse contra ella. En contacto con el suelo,       explotan.   Si Samus está cerca, puede ser dañada.
+- Waver: enemigos que vuelan en S, siendo difícil apuntarles.
+
+## Estética:
+ Al no poder usar los sprites originales, usaremos recursos de acceso libre para realizar los enemigos, a Samus, el terreno, los disparos, etc.
