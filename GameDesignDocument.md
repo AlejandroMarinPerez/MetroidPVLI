@@ -2,6 +2,8 @@
 Vamos a programar Metroid (Nintendo 1986) de la Nintendo Entertainment System.
 Haremos sólo la primera zona, de momento, la que se conoce como Brinstar. 
 
+![GitHub Logo](http://jansenprice.com/metroid/met1/met1_map_fz.jpg)
+
 ## Mecánicas básicas del juego: 
 -	Moverse izda dcha: utilizando las teclas A y D del teclado.
 -	Saltar: pulsando tecla O.
