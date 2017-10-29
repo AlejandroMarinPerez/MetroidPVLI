@@ -17,9 +17,9 @@ function Suma(){
 
 function SumaEnBucle(){
     while (!control){
-        if (suma > 6)
+        if (suma >= 50)
             control = true;
-        else 
+        else
             suma = Suma();
     }
     console.log("Gracias por participar " + suma);
@@ -28,11 +28,27 @@ function SumaEnBucle(){
     console.log(numeroRec);
 }
 
+function llamaaFuncion(){
+  factorial (10);
+}
+
 function factorial(numeroRec){
     if (numeroRec === 0)
         return 1;
     else
         numeroRec *= factorial(numeroRec - 1);
 
+    console.log(numeroRec);
     return numeroRec;
+}
+
+window.onload = function(){
+  var button = document.getElementById('summon');
+    button.addEventListener('click', function () {
+      var sorpresa = "Número " + numeroRec + "sorpresa";
+      var img = new Image();
+      img.src = 'https://placekitten.com/g/200/200/';
+      document.getElementById('kittens').appendChild(img);
+      document.body.innerHTML.getElementById('kittens').appendChild(img);
+    });
 }
