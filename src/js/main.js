@@ -2,6 +2,9 @@ var playState = {
 
 	//IMPORTANTE: Siempre que declares una variable en estas funciones y la uses, siempre poner el THIS.
 	create: function(){
+
+		game.world.setBounds(0, 0, 2000, 384); //esto hace que el tamaño del mundo sea el especificado
+
 		this.cursores = game.input.keyboard.createCursorKeys(); //"listener" de eventos de teclado, declarando la variable cursores
 		game.add.sprite(0,0,'sky'); //establecemos el fondo
 
@@ -10,23 +13,15 @@ var playState = {
 
 		//Definimos un grupo de plataformas, esto es importante, al definir el grupo
 		//podemos tratar a todas las plataformas como una sola, en vez de ir una por una
-		this.plataformas = game.add.group();
+		this.plataformas = new Platforms();
 		//activamos las fisicas para dicho grupo
-		this.plataformas.enableBody = true;
+		//this.plataformas.enableBody = true;
 
 		//Creamos el "suelo"
-		this.suelo = this.plataformas.create(0, game.world.height - 64, 'ground'); //en el 0, altura -64, con el sprite ground
-		//escalamos el sprite para que concuerde con el juego
-		this.suelo.scale.setTo(2,2);
+		this.plataformas.create_Platform(0, game.world.height - 64, 'ground',2 , 2);
 
-		//esto hace que si lo pisas no se mueva, ya que como le afectan las físicas...
-		this.suelo.body.immovable = true;
-
-		//Creamos dos plataformas en el aire (tuto de phaser dice eso)
-		this.ledge = this.plataformas.create(400,400, 'ground'); //las creamos a partir del grupo plataformas
-		this.ledge.body.immovable = true;
-		this.ledge2 = this.plataformas.create(-150,250,'ground');
-		this.ledge2.body.immovable = true;
+		//Pared
+		this.plataformas.create_Platform(400, 300, 'wall',1 ,1); //es otro sprite pero girado, no he encontrado la forma de girarlos en phaser sin que las fisicas se rayen muuuucho
 	
 		//Manos que te darán puntos
 		this.hands = game.add.group();
@@ -60,16 +55,18 @@ var playState = {
 
 		this.cursores.up.onDown.add(this.jugador.saltar,this.jugador); //le añadimos a la tecla UP la funcion saltar
 		this.JKey = game.input.keyboard.addKey(Phaser.Keyboard.J); //definimos la J
-		this.JKey.onDown.add(this.jugador.disparo, this.jugador); //le añadimos la funcion "disparo" de la clase jugador
+
+		this.objetosQueColisionan = [this.hands, this.spikes, this.jugador.jugador];
 	},
 
 	update: function(){
 
 			//le decimos a las manos y a los pinchos que colisionen con las plataformas
-			game.physics.arcade.collide(this.hands, this.plataformas);
+			//game.physics.arcade.collide(this.hands, this.plataformas);
+			this.plataformas.update(this.objetosQueColisionan);
 			game.physics.arcade.collide(this.spikes, this.plataformas);
 			//igual al jugador pero con un metodo de clase
-			this.jugador.update(this.plataformas);
+			this.jugador.update();
 
 			//If del movimiento...
 			if(this.cursores.left.isDown){ //si presiona izquierda
@@ -77,6 +74,9 @@ var playState = {
 			}
 			else if(this.cursores.right.isDown){ //si presiona derecha
 				this.jugador.mueveDerecha();
+			}
+			else if(this.JKey.isDown){
+				this.jugador.disparo();
 			}
 
 			//Vamos a comprobar si el jugador hace "overlap" con una mano y llamamos a la funcion collectStar
@@ -90,6 +90,11 @@ var playState = {
 
 		},
 
+
+	render: function() {
+        game.debug.cameraInfo(game.camera, 32, 32);
+        game.debug.spriteCoords(this.jugador.jugador, 32, 500);
+    },
 	collectStar: function(jugador, hands){
 		hands.kill(); //destruye el objeto star
 		//Añade y updatea el texto

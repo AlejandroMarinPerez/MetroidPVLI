@@ -9,7 +9,8 @@ var loadState = {
 		game.load.image('ground', 'assets/platform.png');       //Cargamos tooodos los recursos que vamos a necesitar
     	game.load.image('star', 'assets/hand.png');
     	game.load.image('spike', 'assets/spikes.png');
-    	game.load.image('estrellita', 'assets/star.png'); 
+    	game.load.image('estrellita', 'assets/star.png');
+    	game.load.image('wall', 'assets/wall.png'); 
     	console.log("Cargando..."); //simple debug
 	},
 

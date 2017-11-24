@@ -19,6 +19,7 @@ class Jugador{
 		this._balas.createMultiple(20, 'estrellita'); //creamos 5 balas, y luego las reutilizamos tooodo el rato
 		this._balas.setAll('outOfBoundsKill', true); //hacemos que desaparezcan al chocar con los limites
 		this._balas.setAll('checkWorldBounds', true);//comprueba que no se ha chocado con nada
+		game.camera.follow(this._jugador);
 	}
 
 	mueveIzquierda(){
@@ -29,9 +30,8 @@ class Jugador{
 		this._jugador.body.velocity.x = 150;
 	}
 
-	update(plataformas){ //update del jugador, se reinicia la velocidad, la gravedad y comprueba si choca
+	update(){ //update del jugador, se reinicia la velocidad, la gravedad y comprueba si choca
 						//o no con el suelo
-		game.physics.arcade.collide(this._jugador, plataformas);
 		this._jugador.body.velocity.x = 0;
 		this._jugador.body.gravity.y = 250;
 		if(this._jugador.body.touching.down){  
