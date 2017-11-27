@@ -3,23 +3,22 @@ var playState = {
 	//IMPORTANTE: Siempre que declares una variable en estas funciones y la uses, siempre poner el THIS.
 	create: function(){
 
-		game.world.setBounds(0, 0, 2000, 384); //esto hace que el tamaño del mundo sea el especificado
-
-		game.add.image(0,0,'sky'); //establecemos el fondo
-
-		this.player = new Player(32, game.world.height - 250, 'dude', 250, 0.25, 0.25); //una clase o_O (posX,posY, sprite, gravity, scaleX, scaleY)
+		//game.world.setBounds(0, 0, 2000, 384); //esto hace que el tamaño del mundo sea el especificado
+		this.map = new TileMap('simple_pimples', 'backgroundLayer' ,'blockedTile', 'objectsLayer'); //creamos el mapa a partir del Tile
+		var playerStart = this.map.findObjectsByType('playerStart', this.map.objectsLayer); //un objeto que nos indica el comienzo
+		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 250, 0.25, 0.25); //una clase o_O (posX,posY, sprite, gravity, scaleX, scaleY)
 
 		//Definimos un grupo de plataformas, esto es importante, al definir el grupo
 		//podemos tratar a todas las plataformas como una sola, en vez de ir una por una
-		this.plataformas = new Platforms();
+		//this.plataformas = new Platforms();
 		//activamos las fisicas para dicho grupo
 		//this.plataformas.enableBody = true;
 
 		//Creamos el "suelo"
-		this.plataformas.create_Platform(0, game.world.height - 64, 'ground',2 , 2);
+		//this.plataformas.create_Platform(0, game.world.height - 64, 'ground',2 , 2);
 
 		//Pared
-		this.plataformas.create_Platform(400, 300, 'wall',1 ,1); //es otro sprite pero girado, no he encontrado la forma de girarlos en phaser sin que las fisicas se rayen muuuucho
+		//this.plataformas.create_Platform(400, 300, 'wall',1 ,1); //es otro sprite pero girado, no he encontrado la forma de girarlos en phaser sin que las fisicas se rayen muuuucho
 	
 		//Manos que te darán puntos
 		this.hands = game.add.group();
@@ -47,7 +46,7 @@ var playState = {
 
 		for(var i = 1; i < 4; i++){
 			var spike = this.spikes.create(i*200 + 70, game.world.height - 500 ,'spike');
-			spike.body.gravity.y = 10000;
+			spike.body.gravity.y = 1000;
 			spike.scale.setTo(0.25,0.25);
 		}
 		
@@ -58,7 +57,8 @@ var playState = {
 
 			//le decimos a las manos y a los pinchos que colisionen con las plataformas
 			//game.physics.arcade.collide(this.hands, this.plataformas);
-			this.plataformas.update(this.objetosQueColisionan);
+			//this.plataformas.update(this.objetosQueColisionan);
+			this.map.update(this.objetosQueColisionan);
 			this.player.update();
 			
 			//Vamos a comprobar si el player hace "overlap" con una mano y llamamos a la funcion collectStar
@@ -88,5 +88,5 @@ var playState = {
 	this.player.morir();
 	this.scoreText.text = 'Moriste wey';
 	game.state.start('fail');
-	}
+	},
 }

@@ -45,7 +45,7 @@ class Player extends GameSprite{
 
 	//Aquí hacemos el saltito
 	saltar(){
-		if(this._contSaltos < 2){
+		if(this._player.body.velocity.y === 0){
 			this._player.body.velocity.y = -200;
 			this._contSaltos++;
 		}
