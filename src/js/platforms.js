@@ -1,14 +1,14 @@
 class Platforms extends GroupFather{
 	constructor(){
 		super();
-		this._variable; 
+		this._variable = this._object; 
 	}
 
 	create_Platform(x, y, texture, height, width){
-			this._variable = this._object.create(x, y, texture);
-			this._variable.scale.setTo(height, width);  //crea el objeto, lo añade al grupo, lo escala...
+			var newPlatform = this._variable.create(x, y, texture);
+			newPlatform.scale.setTo(height, width);  //crea el objeto, lo añade al grupo, lo escala...
 			//esto hace que si lo pisas no se mueva, ya que como le afectan las físicas...
-			this._variable.body.immovable = true;
+			newPlatform.body.immovable = true;
 	}	
 
 	update(objetos){

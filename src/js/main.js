@@ -5,11 +5,9 @@ var playState = {
 
 		game.world.setBounds(0, 0, 2000, 384); //esto hace que el tamaño del mundo sea el especificado
 
-		this.cursores = game.input.keyboard.createCursorKeys(); //"listener" de eventos de teclado, declarando la variable cursores
 		game.add.sprite(0,0,'sky'); //establecemos el fondo
 
 		this.jugador = new Jugador(); //una clase o_O
-		this.jugador.creaCosas();
 
 		//Definimos un grupo de plataformas, esto es importante, al definir el grupo
 		//podemos tratar a todas las plataformas como una sola, en vez de ir una por una
@@ -52,10 +50,7 @@ var playState = {
 			spike.body.gravity.y = 10000;
 			spike.scale.setTo(0.25,0.25);
 		}
-
-		this.cursores.up.onDown.add(this.jugador.saltar,this.jugador); //le añadimos a la tecla UP la funcion saltar
-		this.JKey = game.input.keyboard.addKey(Phaser.Keyboard.J); //definimos la J
-
+		
 		this.objetosQueColisionan = [this.hands, this.spikes, this.jugador.jugador];
 	},
 
@@ -67,18 +62,6 @@ var playState = {
 			game.physics.arcade.collide(this.spikes, this.plataformas);
 			//igual al jugador pero con un metodo de clase
 			this.jugador.update();
-
-			//If del movimiento...
-			if(this.cursores.left.isDown){ //si presiona izquierda
-				this.jugador.mueveIzquierda();
-			}
-			else if(this.cursores.right.isDown){ //si presiona derecha
-				this.jugador.mueveDerecha();
-			}
-			else if(this.JKey.isDown){
-				this.jugador.disparo();
-			}
-
 			//Vamos a comprobar si el jugador hace "overlap" con una mano y llamamos a la funcion collectStar
 			game.physics.arcade.overlap(this.jugador.jugador,this.hands, this.collectStar, null, this); //no se que es ni el null ni el this ese
 			//lo mismo pero para los pinchos
