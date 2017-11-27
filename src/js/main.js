@@ -5,9 +5,9 @@ var playState = {
 
 		game.world.setBounds(0, 0, 2000, 384); //esto hace que el tamaño del mundo sea el especificado
 
-		game.add.sprite(0,0,'sky'); //establecemos el fondo
+		game.add.image(0,0,'sky'); //establecemos el fondo
 
-		this.jugador = new Jugador(); //una clase o_O
+		this.player = new Player(32, game.world.height - 250, 'dude', 250, 0.25, 0.25); //una clase o_O (posX,posY, sprite, gravity, scaleX, scaleY)
 
 		//Definimos un grupo de plataformas, esto es importante, al definir el grupo
 		//podemos tratar a todas las plataformas como una sola, en vez de ir una por una
@@ -51,7 +51,7 @@ var playState = {
 			spike.scale.setTo(0.25,0.25);
 		}
 		
-		this.objetosQueColisionan = [this.hands, this.spikes, this.jugador.jugador];
+		this.objetosQueColisionan = [this.hands, this.spikes, this.player.player];
 	},
 
 	update: function(){
@@ -59,13 +59,12 @@ var playState = {
 			//le decimos a las manos y a los pinchos que colisionen con las plataformas
 			//game.physics.arcade.collide(this.hands, this.plataformas);
 			this.plataformas.update(this.objetosQueColisionan);
-			game.physics.arcade.collide(this.spikes, this.plataformas);
-			//igual al jugador pero con un metodo de clase
-			this.jugador.update();
-			//Vamos a comprobar si el jugador hace "overlap" con una mano y llamamos a la funcion collectStar
-			game.physics.arcade.overlap(this.jugador.jugador,this.hands, this.collectStar, null, this); //no se que es ni el null ni el this ese
+			this.player.update();
+			
+			//Vamos a comprobar si el player hace "overlap" con una mano y llamamos a la funcion collectStar
+			game.physics.arcade.overlap(this.player.player,this.hands, this.collectStar, null, this); //no se que es ni el null ni el this ese
 			//lo mismo pero para los pinchos
-			game.physics.arcade.overlap(this.jugador.jugador,this.spikes, this.muerte, null, this);
+			game.physics.arcade.overlap(this.player.player,this.spikes, this.muerte, null, this);
 
 			if(this.score === this.scoreMax){
 				game.state.start('win');
@@ -76,9 +75,9 @@ var playState = {
 
 	render: function() {
         game.debug.cameraInfo(game.camera, 32, 32);
-        game.debug.spriteCoords(this.jugador.jugador, 32, 500);
+        game.debug.spriteCoords(this.player.player, 32, 500);
     },
-	collectStar: function(jugador, hands){
+	collectStar: function(player, hands){
 		hands.kill(); //destruye el objeto star
 		//Añade y updatea el texto
 		this.score += 10;
@@ -86,7 +85,7 @@ var playState = {
 	},
 	
 	muerte: function(){
-	this.jugador.morir();
+	this.player.morir();
 	this.scoreText.text = 'Moriste wey';
 	game.state.start('fail');
 	}
