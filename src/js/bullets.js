@@ -2,7 +2,7 @@ class Bullets extends GroupFather{
 	constructor(sprite, speed, range, shooter){
 		super();
 		//Balas
-		this._balas = this._object;
+		this._balas = this._group;
 		this._balas.createMultiple(100, sprite); //creamos 100 balas, y luego las reutilizamos tooodo el rato
 		this._balas.setAll('outOfBoundsKill', true); //hacemos que desaparezcan al chocar con los limites
 		this._balas.setAll('checkWorldBounds', true);//comprueba que no se ha chocado con nada

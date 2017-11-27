@@ -1,6 +1,6 @@
 class GroupFather{
 	constructor(){
-		this._object = game.add.group();
-		this._object.enableBody = true;
+		this._group = game.add.group();
+		this._group.enableBody = true;
 	}
 }

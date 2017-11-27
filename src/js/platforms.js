@@ -1,7 +1,7 @@
 class Platforms extends GroupFather{
 	constructor(){
 		super();
-		this._variable = this._object; 
+		this._variable = this._group; 
 	}
 
 	create_Platform(x, y, texture, height, width){
@@ -13,7 +13,7 @@ class Platforms extends GroupFather{
 
 	update(objetos){
 		for(var i = 0; i < objetos.length; i++){
-			game.physics.arcade.collide(objetos[i], this._object); //establece colisiones con todos los objetos del array que recibe
+			game.physics.arcade.collide(objetos[i], this._variable); //establece colisiones con todos los objetos del array que recibe
 		}
 	}
 
