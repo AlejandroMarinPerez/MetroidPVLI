@@ -27,7 +27,7 @@ var playState = {
 		for(var i = 0; i < 12; i++){ //creamos 12 manos
 
 			//Añadimos una mano al grupo Hands
-			var mano = this.hands.create(i*70, 0 ,'star');
+			var mano = this.hands.create(i*70, 0 ,'hand');
 			//Fisicas...
 			mano.body.gravity.y = 100;
 			mano.body.bounce.y = 0.4 + Math.random() *0.2;

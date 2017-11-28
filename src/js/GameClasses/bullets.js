@@ -33,11 +33,6 @@ class Bullets extends GroupFather{
 				bal.angle = 0;
 				bal.body.velocity.y = -this._speed;
 			}
-			else if(aim === 'down'){
-				bal.reset(this._shooter.x + 20, this._shooter.y + 70); //le marcamos su posicion inicial
-				bal.angle = -180;
-				bal.body.velocity.y = this._speed;
-			}	
 			this._tiempoBala = game.time.now + 250; //temporizador para que no dispare chorrocientas balas de golpe
 
 			bal.lifespan = this._range; //rango de la bala peeeeero lo he medido en tiempo, no queda mal y no es dificil de hacer asi que ¯\_(ツ)_/¯

@@ -23,9 +23,9 @@ class Player extends GameSprite{
 		this._aim = 'up';
 	}
 
-	apuntaAbajo(){ //se puede apuntar hacia abajo??
+	/*apuntaAbajo(){ //se puede apuntar hacia abajo??
 		this._aim = 'down';
-	}
+	} no se puede apuntar hacia abako xd*/
 
 	//Tengo que ver si se puede disparar en diagonal (?) pero bueno, mas comprobaciones , metodos que cambien el string y poco más supongo xd
 
@@ -59,10 +59,6 @@ class Player extends GameSprite{
 		else if(this.DKey.isDown){ //si presiona derecha
 			this.mueveDerecha();
 		}
-		
-		if(this.cursores.down.isDown){
-			this.apuntaAbajo();                 //esto hay que cambiarlo, apuntar con los cursores es muy kk
-		} 
 		else if(this.cursores.up.isDown){
 			this.apuntaArriba();
 		}

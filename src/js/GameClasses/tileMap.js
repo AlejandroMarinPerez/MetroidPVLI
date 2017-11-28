@@ -1,6 +1,6 @@
 class TileMap{
 	constructor(image, backLayerName, collisionLayerName, objectLayerName){
-		this._map = game.add.tilemap('prueba');
+		this._map = game.add.tilemap('tilemapPrueba');
 		this._map.addTilesetImage(image, 'gameTiles');
 		this._backgroundlayer = this._map.createLayer(backLayerName); //los names de las layers tienen que ser iguales que en tile
 		this._blockedLayer = this._map.createLayer(collisionLayerName);
