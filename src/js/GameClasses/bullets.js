@@ -3,7 +3,7 @@ class Bullets extends GroupFather{
 		super();
 		//Balas
 		this._balas = this._group;
-		this._balas.createMultiple(100, sprite); //creamos 100 balas, y luego las reutilizamos tooodo el rato
+		this._balas.createMultiple(20, sprite); //creamos 100 balas, y luego las reutilizamos tooodo el rato
 		this._balas.setAll('outOfBoundsKill', true); //hacemos que desaparezcan al chocar con los limites
 		this._balas.setAll('checkWorldBounds', true);//comprueba que no se ha chocado con nada
 		this._tiempoBala = 0;
@@ -19,12 +19,12 @@ class Bullets extends GroupFather{
 			bal.scale.setTo(0.15, 0.15);
 			console.log(aim);
 			if(aim === 'left'){
-				bal.reset(this._shooter.x - 50, this._shooter.y + 15); //le marcamos su posicion inicial
+				bal.reset(this._shooter.x - 30, this._shooter.y + 15); //le marcamos su posicion inicial
 				bal.angle = -90;
 				bal.body.velocity.x = -this._speed;
 			}
 			else if(aim === 'right'){
-				bal.reset(this._shooter.x + 70, this._shooter.y); //le marcamos su posicion inicial
+				bal.reset(this._shooter.x + 50, this._shooter.y); //le marcamos su posicion inicial
 				bal.angle = 90;
 				bal.body.velocity.x = this._speed;
 			}

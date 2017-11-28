@@ -33,9 +33,9 @@ class Player extends GameSprite{
 		this._player.body.velocity.x = 0;  //reiniciamos variables...
 		this._player.body.gravity.y = 150;
 		this.handle_Events();
-		if(this._player.body.touching.down){  
+		/*if(this._player.body.touching.down){  
 			this._contSaltos = 0;
-		}
+		}*/
 
 	}
 
@@ -47,7 +47,7 @@ class Player extends GameSprite{
 	saltar(){
 		if(this._player.body.velocity.y === 0){
 			this._player.body.velocity.y = -200;
-			this._contSaltos++;
+			//this._contSaltos++;
 		}
 	}
 

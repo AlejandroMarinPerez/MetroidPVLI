@@ -38,6 +38,7 @@ var playState = {
 		//y le decimnos que tenga un tamaño de 32 px y el color.Ademas creamos la variable score y la inicializamos a 0
 		this.score = 0;
 		this.scoreText = game.add.text(16,16, 'score: 0', {fontSize: '32px', fill: '#FFF'});
+		this.scoreText.fixedToCamera = true;
 		this.scoreMax = 120; //variable scoreMax para saber si hemos acabado
 
 		this.spikes = game.add.group(); //pinchitos
