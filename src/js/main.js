@@ -24,10 +24,10 @@ var playState = {
 		this.hands = game.add.group();
 		this.hands.enableBody = true;
 
-		for(var i = 0; i < 12; i++){ //creamos 12 manos
+		for(var i = 1; i <= 1; i++){ //creamos 12 manos
 
 			//Añadimos una mano al grupo Hands
-			var mano = this.hands.create(i*70, 0 ,'hand');
+			var mano = this.hands.create(i*100, 0 ,'hand');
 			//Fisicas...
 			mano.body.gravity.y = 100;
 			mano.body.bounce.y = 0.4 + Math.random() *0.2;
@@ -83,6 +83,7 @@ var playState = {
 		//Añade y updatea el texto
 		this.score += 10;
 		this.scoreText.text = 'Score: ' + this.score;
+		this.player.set_Potenciadores(0, true); //como prieba, al coger una mano, ya puede transformarse en bola
 	},
 
 	muerte: function(){
