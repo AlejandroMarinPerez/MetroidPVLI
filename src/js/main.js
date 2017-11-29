@@ -4,7 +4,7 @@ var playState = {
 	create: function(){
 
 		//game.world.setBounds(0, 0, 2000, 384); //esto hace que el tamaño del mundo sea el especificado
-		this.map = new TileMap('simple_pimples', 'backgroundLayer' ,'blockedTile', 'objectsLayer'); //creamos el mapa a partir del Tile
+		this.map = new TileMap('gameTiles', 'Background' ,'Main', 'Objects'); //creamos el mapa a partir del Tile
 		var playerStart = this.map.findObjectsByType('playerStart', this.map.objectsLayer); //un objeto que nos indica el comienzo
 		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 250, 0.25, 0.25); //una clase o_O (posX,posY, sprite, gravity, scaleX, scaleY)
 
