@@ -19,7 +19,7 @@ var playState = {
 
 		//Pared
 		//this.plataformas.create_Platform(400, 300, 'wall',1 ,1); //es otro sprite pero girado, no he encontrado la forma de girarlos en phaser sin que las fisicas se rayen muuuucho
-	
+
 		//Manos que te darán puntos
 		this.hands = game.add.group();
 		this.hands.enableBody = true;
@@ -50,7 +50,7 @@ var playState = {
 			spike.body.gravity.y = 1000;
 			spike.scale.setTo(0.25,0.25);
 		}
-		
+
 		this.objetosQueColisionan = [this.hands, this.spikes, this.player.player];
 	},
 
@@ -61,7 +61,7 @@ var playState = {
 			//this.plataformas.update(this.objetosQueColisionan);
 			this.map.update(this.objetosQueColisionan);
 			this.player.update();
-			
+
 			//Vamos a comprobar si el player hace "overlap" con una mano y llamamos a la funcion collectStar
 			game.physics.arcade.overlap(this.player.player,this.hands, this.collectStar, null, this); //no se que es ni el null ni el this ese
 			//lo mismo pero para los pinchos
@@ -84,7 +84,7 @@ var playState = {
 		this.score += 10;
 		this.scoreText.text = 'Score: ' + this.score;
 	},
-	
+
 	muerte: function(){
 	this.player.morir();
 	this.scoreText.text = 'Moriste wey';

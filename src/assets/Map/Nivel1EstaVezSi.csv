@@ -43,18 +43,16 @@
                  "type":"",
                  "visible":true,
                  "width":16,
-                 "x":239,
-                 "y":247
+                 "x":241,
+                 "y":249
                 }],
-         "offsetx":345,
-         "offsety":7,
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
          "x":0,
          "y":0
         }],
- "nextobjectid":5,
+ "nextobjectid":4,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",

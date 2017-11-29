@@ -4,6 +4,7 @@ class Player extends GameSprite{
 
 		this._player = this._sprite; //asignacion con el sprite del padre para que el nombre sea mas legible
 		game.camera.follow(this._player);
+		game.camera.view = new Phaser.Rectangle(posX, posY, 1000, 1000);
 		this._aim = 'left';
 		this.define_Keys();
 		this._basicBullets = new Bullets('bala', 300, 300, this); //balas añadidas en una clase, que hereda de la clase GroupFather
@@ -29,11 +30,11 @@ class Player extends GameSprite{
 
 	//Tengo que ver si se puede disparar en diagonal (?) pero bueno, mas comprobaciones , metodos que cambien el string y poco más supongo xd
 
-	update(){ //update del jugador, se reinicia la velocidad, la gravedad y comprueba si choca o no con el suelo, los eventos de teclado		
+	update(){ //update del jugador, se reinicia la velocidad, la gravedad y comprueba si choca o no con el suelo, los eventos de teclado
 		this._player.body.velocity.x = 0;  //reiniciamos variables...
 		this._player.body.gravity.y = 150;
 		this.handle_Events();
-		/*if(this._player.body.touching.down){  
+		/*if(this._player.body.touching.down){
 			this._contSaltos = 0;
 		}*/
 
@@ -69,7 +70,7 @@ class Player extends GameSprite{
 	}
 
 	define_Keys(){
-		this.cursores = game.input.keyboard.createCursorKeys(); //"listener" de eventos de teclado, declarando la variable cursores	
+		this.cursores = game.input.keyboard.createCursorKeys(); //"listener" de eventos de teclado, declarando la variable cursores
 		this.JKey = game.input.keyboard.addKey(Phaser.Keyboard.J); //definimos la J
 		this.WKey = game.input.keyboard.addKey(Phaser.Keyboard.W); //definimos la W
 		this.AKey = game.input.keyboard.addKey(Phaser.Keyboard.A); //definimos la A
