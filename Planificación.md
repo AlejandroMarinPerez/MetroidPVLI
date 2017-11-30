@@ -1,4 +1,4 @@
-# Hito 1
+﻿# Hito 1
   - Tener al menos una demo con saltos y el jugador moviéndose por la pantalla -> Diego y Alex
   - Que el jugador dispare -> Diego y Alex
   - Unas pocas plataformas -> Alex
