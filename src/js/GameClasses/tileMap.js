@@ -1,12 +1,15 @@
 class TileMap{
 	constructor(image, backLayerName, collisionLayerName, objectLayerName){
-		this._map = game.add.tilemap('mapaA', 32, 32);
-		this._map.addTilesetImage(image, 'gameTiles');
-		this._backgroundlayer = this._map.createLayer(backLayerName); //los names de las layers tienen que ser iguales que en tile
+		game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+		this._map = game.add.tilemap('mapaA');
+		this._map.addTilesetImage(image);
+		this._backgroundLayer = this._map.createLayer(backLayerName); //los names de las layers tienen que ser iguales que en tile
 		this._blockedLayer = this._map.createLayer(collisionLayerName);
 		this._objectsLayer = objectLayerName;
-		this._map.setCollisionBetween(1, 1000, true, collisionLayerName); //el 800 es el maximo numero que se encuentra en la parte "layers" del json (unos cuantos aumentados por si acaso)
-		this._backgroundlayer.resizeWorld();
+		this._blockedLayer.debug = true;
+		this._map.setCollisionBetween(1, 1000, true, this._blockedLayer); //el 800 es el maximo numero que se encuentra en la parte "layers" del json (unos cuantos aumentados por si acaso)
+		//this._backgroundLayer.setScale(2);
+		this._blockedLayer.resizeWorld();
 		//this.tileMapHeight = this.map.tileHeight;
 		/*this.tileMapWidth = this.map.tileWidth;
 		this.width = this.map.width;*/

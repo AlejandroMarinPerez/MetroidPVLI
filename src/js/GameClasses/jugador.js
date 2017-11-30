@@ -13,9 +13,7 @@ class Player extends GameSprite{
 		this._bola = false;
 		this._width = this._player.body.width;
 		this._height = this._player.body.height;
-		this.previousY;
 		this._potenciadores = [false, false, false]; //array de potenciadores activados... por ahora lo hacemos asi hasta que se nos ocurra algo mejor
-		console.log(this._height + '       ' + this._width);
 	}
 
 	mueveIzquierda(){
@@ -41,7 +39,7 @@ class Player extends GameSprite{
 		if(this._bola){
 			this._bola = false;
 			this._player.body.setSize(this._width, this._height);
-			this._player.body.y = this.previousY;
+			this._player.body.y = this._player.y - 34.25; //este numero hay que cambiarlo pero no se llegar a él... (es AlturaDeAntes - AlturaEnBola)
 		}
 	} 	
 
@@ -81,12 +79,11 @@ class Player extends GameSprite{
 		}
 		else if(this.cursores.down.isDown && this._player.body.velocity.y === 0 && this._potenciadores[0]){ //para que no pueda transformarse saltando
 			if(!this._bola){
-				this.previousY = this._player.y; //para que el jugador vuelva a la altura de siempre
 				this.bolita();
 			}
 		}
 
-		if(this.JKey.isDown){
+		if(this.JKey.isDown && !this._bola){
 			this._basicBullets.shoot(this._aim);
 		}
 	}
@@ -100,6 +97,7 @@ class Player extends GameSprite{
 			this._player.animations.play('bolita');
 		}
 	}
+
 	define_Keys(){
 		this.cursores = game.input.keyboard.createCursorKeys(); //"listener" de eventos de teclado, declarando la variable cursores
 		this.JKey = game.input.keyboard.addKey(Phaser.Keyboard.J); //definimos la J

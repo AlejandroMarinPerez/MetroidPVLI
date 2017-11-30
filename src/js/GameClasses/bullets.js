@@ -3,7 +3,7 @@ class Bullets extends GroupFather{
 		super();
 		//Balas
 		this._balas = this._group;
-		this._balas.createMultiple(20, sprite); //creamos 100 balas, y luego las reutilizamos tooodo el rato
+		this._balas.createMultiple(20, sprite); //creamos 20 balas, y luego las reutilizamos tooodo el rato
 		this._balas.setAll('outOfBoundsKill', true); //hacemos que desaparezcan al chocar con los limites
 		this._balas.setAll('checkWorldBounds', true);//comprueba que no se ha chocado con nada
 		this._tiempoBala = 0;
@@ -41,6 +41,10 @@ class Bullets extends GroupFather{
 
 	set range(newRange){  //para cambiar el rango de la bala, lo necesitaremos
 		this._range = newRange;
+	}
+
+	get grupoBalas(){
+		return this._balas;
 	}
 
 	//faltan metodos en plan daño y eso pero por ahora ta bien
