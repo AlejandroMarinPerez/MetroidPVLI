@@ -8,3 +8,5 @@ gulp.config.json
 gulpfile.js
 package.json
 pachage-lock.json
+comandoNode.txt
+.gitignore
