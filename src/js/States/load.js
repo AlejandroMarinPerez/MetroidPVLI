@@ -5,12 +5,12 @@ var loadState = {
 		var loading = game.add.text(80,150,'loading...',{font: '40px Courier', fill: '#FFF'}); //una textito de carga
 
 		//game.load.image('dude', 'assets/PlayerThings/personaje.png'); //Cargamos tooodos los recursos que vamos a necesitar
-		game.load.spritesheet('dude', 'assets/PlayerThings/letsTry.png', 99, 274);
+		game.load.spritesheet('dude', 'assets/PlayerThings/personajeMasPequeno.png', 99, 274);
     	game.load.image('hand', 'assets/PowerUps/hand.png');
     	game.load.image('spike', 'assets/Enemies/spikes.png');
     	game.load.image('bala', 'assets/PlayerThings/bala.png');
-    	game.load.tilemap('mapaA', 'assets/Map/Nivel1Def.json', null, Phaser.Tilemap.TILED_JSON); //el primer tile
-    	game.load.image('gameTiles', 'assets/Map/simples_pimples.png'); //las imagenes del tile
+    	game.load.tilemap('mapaA', 'assets/Map/Nivel1Sala1.json', null, Phaser.Tilemap.TILED_JSON); //el primer tile
+    	game.load.image('gameTiles', 'assets/Map/simples_pimplesdoble.png'); //las imagenes del tile
     	console.log("Cargando..."); //simple debug
 	},
 
