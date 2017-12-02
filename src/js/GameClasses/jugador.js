@@ -1,19 +1,19 @@
 class Player extends GameSprite{
-	constructor(posX, posY, sprite, gravity, scaleX, scaleY){
-		super(posX, posY, sprite, gravity, scaleX, scaleY);
+	constructor(posX, posY, sprite, gravity){
+		super(posX, posY, sprite, gravity);
 
 		this._player = this._sprite; //asignacion con el sprite del padre para que el nombre sea mas legible
 		game.camera.follow(this._player);
-		//game.camera.view = new Phaser.Rectangle(posX, posY, 1000, 1000);
 		this._aim = 'left';
 		this.define_Keys();
 		this._basicBullets = new Bullets('bala', 300, 300, this); //balas añadidas en una clase, que hereda de la clase GroupFather
 		this._player.animations.add('normal', [0], 10, true);
 		this._player.animations.add('bolita', [1], 10, true);
-		this._bola = false;
 		this._width = this._player.body.width;
 		this._height = this._player.body.height;
-		this._potenciadores = [false, false, false]; //array de potenciadores activados... por ahora lo hacemos asi hasta que se nos ocurra algo mejor
+		this._potenciadores = new Potenciadores(this);
+		this._animacion = 'normal';
+		this._jumpTimer = 0;
 	}
 
 	mueveIzquierda(){
@@ -28,26 +28,13 @@ class Player extends GameSprite{
 
 	apuntaArriba(){
 		this._aim = 'up';
-	}
-
-	bolita(){ //se transforma en bola
-		this._bola = true;
-		this._player.body.setSize(this._width, this._height/2); //cambia los colliders
-	}
-
-	normal(){ //vuelve a la normalidad
-		if(this._bola){
-			this._bola = false;
-			this._player.body.setSize(this._width, this._height);
-			this._player.body.y = this._player.y - 34.25; //este numero hay que cambiarlo pero no se llegar a él... (es AlturaDeAntes - AlturaEnBola)
-		}
-	} 	
+	}	
 
 	update(){ //update del jugador, se reinicia la velocidad, la gravedad y comprueba si choca o no con el suelo, los eventos de teclado
-		this.cambia_Anim(this._bola);
-		this._player.body.velocity.x = 0;  //reiniciamos variables...
-		this._player.body.gravity.y = 250;
+		this.reset();
 		this.handle_Events();
+		this.Anima();
+		this._puedeTrans = true; //si no esta en los overlaps que no le dejan transformarse, se pone a true y le dejan transformarse
 		/*if(this._player.body.touching.down){
 			this._contSaltos = 0;
 		}*/
@@ -57,12 +44,28 @@ class Player extends GameSprite{
 		this._player.kill(); //destruye el objeto Jugador
 	}
 
-	//Aquí hacemos el saltito
+	//Aquí hacemos el saltito (por tiempo presionando la tecla)
 	saltar(){
-		if(this._player.body.velocity.y === 0 && !this._bola){
-			this._player.body.velocity.y = -250;
-			//this._contSaltos++;
+
+		if(this.WKey.isDown && this._player.body.velocity.y === 0 && !this._bola){
+			this._jumpTimer = game.time.now + 600;
+			this._player.body.velocity.y = -150;
 		}
+		else if(this.WKey.isDown && this._jumpTimer != 0){
+			if(game.time.now > this._jumpTimer){
+					this._jumpTimer = 0;
+				}
+				else{
+					this._player.body.velocity.y = -150;
+				}
+		}
+		else{
+			this._jumpTimer = 0;
+		}
+		/*if(this._player.body.velocity.y === 0 && !this._bola){
+			this._player.body.velocity.y = -200;
+			//this._contSaltos++;
+		}*/
 	}
 
 	handle_Events(){
@@ -75,27 +78,27 @@ class Player extends GameSprite{
 		}
 		else if(this.cursores.up.isDown){
 			this.apuntaArriba();
-			this.normal();
-		}
-		else if(this.cursores.down.isDown && this._player.body.velocity.y === 0 && this._potenciadores[0]){ //para que no pueda transformarse saltando
-			if(!this._bola){
-				this.bolita();
+			if(this.normal != undefined){
+				this.normal();
 			}
 		}
+		else if(this.cursores.down.isDown && this.transformarse != undefined){
+			this.transformarse();
+		}
+
+		this.saltar();
 
 		if(this.JKey.isDown && !this._bola){
 			this._basicBullets.shoot(this._aim);
 		}
 	}
 
-	cambia_Anim(){
-		if(!this._bola){
-			this._player.animations.play('normal');
-		}
-		else{
-			console.log('snif');
-			this._player.animations.play('bolita');
-		}
+	reset(){
+		this._player.body.velocity.x = 0;  //reiniciamos variables...
+	}
+
+	Anima(){
+		this._player.animations.play(this._animacion);
 	}
 
 	define_Keys(){
@@ -105,7 +108,10 @@ class Player extends GameSprite{
 		this.AKey = game.input.keyboard.addKey(Phaser.Keyboard.A); //definimos la A
 		this.SKey = game.input.keyboard.addKey(Phaser.Keyboard.S); //definimos la S
 		this.DKey = game.input.keyboard.addKey(Phaser.Keyboard.D); //definimos la D
-		this.WKey.onDown.add(this.saltar,this); //le añadimos a la tecla UP la funcion saltar
+	}
+
+	agregarBola(i, bool){
+		this._potenciadores.agregarBola();
 	}
 
 	//Unos gets simples para saber las coordenadas del jugador y para devolvernos al propio jugador
@@ -115,10 +121,13 @@ class Player extends GameSprite{
 	get y(){
 		return this._player.y;
 	}
+	get width(){
+		return this._width;
+	}
+	get height(){
+		return this._height;
+	}
 	get player(){
 		return this._player;
-	}
-	set_Potenciadores(i, bool){
-		this._potenciadores[i] = bool;
 	}
 }
