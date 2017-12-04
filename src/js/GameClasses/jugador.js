@@ -101,7 +101,7 @@ class Player extends GameSprite{
 		}
 	}
 
-	reset(){
+	reset(){  //reset de la velocidad, si no deberia haber rebote se hace normal, si hay rebote comienza un timer y cuando el timer llegue al tiempo especificado se reinicia la velocidad
 		if(!this._rebote){
 			this._player.body.velocity.x = 0;  //reiniciamos variables...
 		}
