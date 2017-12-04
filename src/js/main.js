@@ -6,7 +6,7 @@ var playState = {
 		//game.world.setBounds(0, 0, 2000, 384); //esto hace que el tamaño del mundo sea el especificado
 		this.map = new TileMap('gameTiles', 'Background' ,'Main', 'Objects'); //creamos el mapa a partir del Tile
 		var playerStart = this.map.findObjectsByType('playerStart', this.map.objectsLayer); //un objeto que nos indica el comienzo
-		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 200, 150); //una clase o_O (posX,posY, sprite, gravity, scaleX, scaleY)
+		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 200, 150, 120); //una clase o_O (posX,posY, sprite, gravity, scaleX, scaleY)
 		this.capa_Overlaps = this.creacion_Overlaps(); //crea la capa de overlaps para que el jugador no pueda transformarse
 		//Manos que te darán puntos
 		this.hands = game.add.group();
@@ -35,6 +35,7 @@ var playState = {
 		for(var i = 1; i < 4; i++){
 			var spike = this.spikes.create(i*200 + 70, 0 ,'spike');
 			spike.body.gravity.y = 1000;
+			spike.body.velocity.x = 5;
 			spike.scale.setTo(0.25,0.25);
 		}
 
@@ -42,24 +43,30 @@ var playState = {
 	},
 
 	update: function(){
+		if(this.player._immune){  //esto es solo pa pruebas loko
+			this.energiaText.text = 'Immuneeeee';
+		}
+		else{
+			this.energiaText.text = 'EN: ' + this.energia;
+		}
 
-			this.map.update(this.objetosQueColisionan);
-			this.player.update();
-			//Vamos a comprobar si el player hace "overlap" con una mano y llamamos a la funcion collectStar
-			game.physics.arcade.overlap(this.player.player,this.hands, this.collectStar, null, this); //no se que es ni el null ni el this ese
-			//lo mismo pero para los pinchos
-			game.physics.arcade.overlap(this.player.player,this.spikes, this.muerte, null, this);
-			//Si overlapea con el grupo de objetos de overlap, no podrá transformarse
-			game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this);
+		this.map.update(this.objetosQueColisionan);
+		this.player.update();
+		//Vamos a comprobar si el player hace "overlap" con una mano y llamamos a la funcion collectStar
+		game.physics.arcade.overlap(this.player.player,this.hands, this.collectStar, null, this); //no se que es ni el null ni el this ese
+		//lo mismo pero para los pinchos
+		game.physics.arcade.overlap(this.player.player,this.spikes, this.muerte, null, this);
+		//Si overlapea con el grupo de objetos de overlap, no podrá transformarse
+		game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this);
 
 
-		},
+	},
 
 
 	render: function() {
         //game.debug.cameraInfo(game.camera, 32, 32);
         game.debug.spriteCoords(this.player.player, 32, 500);
-        game.debug.body(this.player.player);
+        //game.debug.body(this.player.player);
     },
 	collectStar: function(player, hands){
 		hands.kill(); //destruye el objeto star
@@ -69,13 +76,16 @@ var playState = {
 		this.player.agregarBola(); //como prueba, al coger una mano, ya puede transformarse en bola
 	},
 
-	muerte: function(){
+	muerte: function(player, spike){
 		//this.player.morir();
 		//this.scoreText.text = 'Moriste wey';
 		//game.state.start('fail');
-		this.player.recoil_Damage(); //por ahora aqui...
-		this.energia = this.player.health;
-		this.energiaText.text = 'EN: ' + this.energia;
+		if(!this.player._immune){
+			this.player.recoil_Damage(spike.x); //por ahora aqui...
+			this.player.immune();
+			this.energia = this.player.health;
+			this.energiaText.text = 'EN: ' + this.energia;
+		}
 	},
 
 	creacion_Overlaps: function(){
