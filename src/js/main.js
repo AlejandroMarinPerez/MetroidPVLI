@@ -24,22 +24,21 @@ var playState = {
 
 		//Añadimos un texto, igualándolo al scoretext, en las coordenadas (16,16) con el texto por defecto "score: 0"
 		//y le decimnos que tenga un tamaño de 32 px y el color.Ademas creamos la variable score y la inicializamos a 0
-		this.score = 0;
-		this.scoreText = game.add.text(16,16, 'score: 0', {fontSize: '32px', fill: '#FFF'});
-		this.scoreText.fixedToCamera = true;
-		this.scoreMax = 120; //variable scoreMax para saber si hemos acabado
+		this.energia = this.player.health;
+		this.energiaText = game.add.text(16,16, 'EN: ' + this.energia, {fontSize: '32px', fill: '#FFF'});  //energia por ahora, hay que hacer una clase canvas por ahí y todo eso
+		this.energiaText.fixedToCamera = true;
 
-		/*this.spikes = game.add.group(); //pinchitos
+		this.spikes = game.add.group(); //pinchitos
 
 		this.spikes.enableBody = true;
 
 		for(var i = 1; i < 4; i++){
-			var spike = this.spikes.create(i*200 + 70, game.world.height - 500 ,'spike');
+			var spike = this.spikes.create(i*200 + 70, 0 ,'spike');
 			spike.body.gravity.y = 1000;
 			spike.scale.setTo(0.25,0.25);
-		}*/
+		}
 
-		this.objetosQueColisionan = [this.hands, this.player.player];
+		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes];
 	},
 
 	update: function(){
@@ -53,30 +52,30 @@ var playState = {
 			//Si overlapea con el grupo de objetos de overlap, no podrá transformarse
 			game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this);
 
-			if(this.score === this.scoreMax){
-				game.state.start('win');
-			}
 
 		},
 
 
 	render: function() {
-        game.debug.cameraInfo(game.camera, 32, 32);
+        //game.debug.cameraInfo(game.camera, 32, 32);
         game.debug.spriteCoords(this.player.player, 32, 500);
         game.debug.body(this.player.player);
     },
 	collectStar: function(player, hands){
 		hands.kill(); //destruye el objeto star
 		//Añade y updatea el texto
-		this.score += 10;
-		this.scoreText.text = 'Score: ' + this.score;
+		//this.score += 10;
+		//this.scoreText.text = 'Score: ' + this.score;
 		this.player.agregarBola(); //como prueba, al coger una mano, ya puede transformarse en bola
 	},
 
 	muerte: function(){
-	this.player.morir();
-	this.scoreText.text = 'Moriste wey';
-	game.state.start('fail');
+		//this.player.morir();
+		//this.scoreText.text = 'Moriste wey';
+		//game.state.start('fail');
+		this.player.recoil_Damage(); //por ahora aqui...
+		this.energia = this.player.health;
+		this.energiaText.text = 'EN: ' + this.energia;
 	},
 
 	creacion_Overlaps: function(){

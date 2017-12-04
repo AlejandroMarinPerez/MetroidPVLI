@@ -4,6 +4,7 @@ class Player extends GameSprite{
 
 		this._player = this._sprite; //asignacion con el sprite del padre para que el nombre sea mas legible
 		game.camera.follow(this._player);
+		this._player.health = 30; //vida inicial original del juego
 		this._aim = 'left';
 		this.define_Keys();
 		this._basicBullets = new Bullets('bala', 300, 300, this); //balas añadidas en una clase, que hereda de la clase GroupFather
@@ -14,6 +15,9 @@ class Player extends GameSprite{
 		this._potenciadores = new Potenciadores(this);
 		this._animacion = 'normal';
 		this._jumpTimer = 0;
+		console.log(this._player);
+		this._rebote = false;
+		this._reboteTimer = 0;
 	}
 
 	mueveIzquierda(){
@@ -31,7 +35,7 @@ class Player extends GameSprite{
 	}	
 
 	update(){ //update del jugador, se reinicia la velocidad, la gravedad y comprueba si choca o no con el suelo, los eventos de teclado
-		this.reset();
+		//this.reset();
 		this.handle_Events();
 		this.Anima();
 		this._puedeTrans = true; //si no esta en los overlaps que no le dejan transformarse, se pone a true y le dejan transformarse
@@ -70,13 +74,17 @@ class Player extends GameSprite{
 
 	handle_Events(){
 		//If del movimiento...
-		if(this.AKey.isDown){ //si presiona izquierda
+		if(this.AKey.isDown && !this._rebote){ //si presiona izquierda
 			this.mueveIzquierda();
 		}
-		else if(this.DKey.isDown){ //si presiona derecha
+		else if(this.DKey.isDown && !this._rebote){ //si presiona derecha
 			this.mueveDerecha();
 		}
-		else if(this.cursores.up.isDown){
+		else{
+			this.reset();
+		}
+		
+		if(this.cursores.up.isDown){
 			this.apuntaArriba();
 			if(this.normal != undefined){
 				this.normal();
@@ -94,11 +102,30 @@ class Player extends GameSprite{
 	}
 
 	reset(){
-		this._player.body.velocity.x = 0;  //reiniciamos variables...
+		if(!this._rebote){
+			this._player.body.velocity.x = 0;  //reiniciamos variables...
+		}
+		else if (this._rebote && this._reboteTimer == 0){
+			this._reboteTimer = game.time.now + 100;
+			console.log('hey');
+		}
+		else if(game.time.now > this._reboteTimer){
+				this._player.body.velocity.x = 0;
+				this._rebote = false;
+				this._reboteTimer = 0;
+			}
+		
 	}
 
 	Anima(){
 		this._player.animations.play(this._animacion);
+	}
+
+	recoil_Damage(){
+		this._player.body.velocity.x = -(this._player.body.velocity.x * 2);
+		this._player.body.velocity.y = -(this._player.body.velocity.y * 2);
+		this._player.damage(1); //si la salud llega a 0, el player muere
+		this._rebote = true;
 	}
 
 	define_Keys(){
@@ -112,6 +139,10 @@ class Player extends GameSprite{
 
 	agregarBola(i, bool){
 		this._potenciadores.agregarBola();
+	}
+
+	heal(int){
+		this._player.health += int;
 	}
 
 	//Unos gets simples para saber las coordenadas del jugador y para devolvernos al propio jugador
@@ -129,5 +160,8 @@ class Player extends GameSprite{
 	}
 	get player(){
 		return this._player;
+	}
+	get health(){
+		return this._player.health;
 	}
 }
