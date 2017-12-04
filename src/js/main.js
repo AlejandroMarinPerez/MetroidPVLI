@@ -6,7 +6,7 @@ var playState = {
 		//game.world.setBounds(0, 0, 2000, 384); //esto hace que el tamaño del mundo sea el especificado
 		this.map = new TileMap('gameTiles', 'Background' ,'Main', 'Objects'); //creamos el mapa a partir del Tile
 		var playerStart = this.map.findObjectsByType('playerStart', this.map.objectsLayer); //un objeto que nos indica el comienzo
-		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 200); //una clase o_O (posX,posY, sprite, gravity, scaleX, scaleY)
+		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 200, 150); //una clase o_O (posX,posY, sprite, gravity, scaleX, scaleY)
 		this.capa_Overlaps = this.creacion_Overlaps(); //crea la capa de overlaps para que el jugador no pueda transformarse
 		//Manos que te darán puntos
 		this.hands = game.add.group();

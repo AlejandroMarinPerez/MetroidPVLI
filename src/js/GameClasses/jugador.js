@@ -1,9 +1,10 @@
 class Player extends GameSprite{
-	constructor(posX, posY, sprite, gravity){
+	constructor(posX, posY, sprite, gravity, speed){
 		super(posX, posY, sprite, gravity);
 
 		this._player = this._sprite; //asignacion con el sprite del padre para que el nombre sea mas legible
 		game.camera.follow(this._player);
+		this._speed  = speed;
 		this._player.health = 30; //vida inicial original del juego
 		this._aim = 'left';
 		this.define_Keys();
@@ -22,11 +23,11 @@ class Player extends GameSprite{
 
 	mueveIzquierda(){
 		this._aim = 'left';
-		this._player.body.velocity.x = -150;
+		this._player.body.velocity.x = -this._speed;
 	}
 
 	mueveDerecha(){
-		this._player.body.velocity.x = 150;
+		this._player.body.velocity.x = this._speed;
 		this._aim = 'right';
 	}
 
@@ -121,9 +122,9 @@ class Player extends GameSprite{
 		this._player.animations.play(this._animacion);
 	}
 
-	recoil_Damage(){
-		this._player.body.velocity.x = -(this._player.body.velocity.x * 2);
-		this._player.body.velocity.y = -(this._player.body.velocity.y * 2);
+	recoil_Damage(){ //esto por ahora nos vale para objetivos estaticos como los pinchos, para objetivos en movimiento habría que mandarle la velocidad del enemigo para saber en que direccion rebota y todo eso
+		this._player.body.velocity.x = -(this._player.body.velocity.x + 50);
+		this._player.body.velocity.y = -(this._player.body.velocity.y);
 		this._player.damage(1); //si la salud llega a 0, el player muere
 		this._rebote = true;
 	}
