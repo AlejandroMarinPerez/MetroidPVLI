@@ -81,7 +81,7 @@ class Player extends GameSprite{
 		this.saltar();
 
 		if(this.JKey.isDown && !this._bola){
-			this._basicBullets.shoot(this._aim);
+			this._currentBullets.shoot(this._aim);
 		}
 	}
 
@@ -105,7 +105,14 @@ class Player extends GameSprite{
 	}
 
 	recoil_Damage(posEnemigo){ //esto por ahora nos vale para objetivos estaticos como los pinchos, para objetivos en movimiento habría que mandarle la velocidad del enemigo para saber en que direccion rebota y todo eso
-		this._player.body.velocity.x = (this._player.body.x - posEnemigo) * 10;
+		var direccion;
+		if(this._player.body.x - posEnemigo <= 0){ //para saber la direccion del rebote
+			direccion = -1;
+		}
+		else{
+			direccion = 1;
+		}
+		this._player.body.velocity.x = (direccion) * (this._speed);
 		this._player.damage(1); //si la salud llega a 0, el player muere
 		this._rebote = true;
 		this._immune = true;
@@ -144,10 +151,11 @@ class Player extends GameSprite{
 		this.AKey = game.input.keyboard.addKey(Phaser.Keyboard.A); //definimos la A
 		this.SKey = game.input.keyboard.addKey(Phaser.Keyboard.S); //definimos la S
 		this.DKey = game.input.keyboard.addKey(Phaser.Keyboard.D); //definimos la D
+		//this.WKey.onDown.add(this.saltar, this);
 	}
 
-	agregarBola(i, bool){
-		this._potenciadores.agregarBola();
+	activarMejoras(i){
+		this._potenciadores.activate(i);
 	}
 
 	heal(int){
@@ -156,13 +164,14 @@ class Player extends GameSprite{
 
 	construccion_Jugador(){ //construccion de las variables necesarias para el jugador
 		this._player = this._sprite; //asignacion con el sprite del padre para que el nombre sea mas legible
+		//this._player.anchor.setTo(0.5, 0.5);
 		game.camera.follow(this._player);
 		this._player.health = 30; //vida inicial original del juego
 		this._immune = false;
 		this._immuneTimer = 0;
 		this._blinkTimer = 0;
 		this._aim = 'left';
-		this._basicBullets = new Bullets('bala', 300, 300, this); //balas añadidas en una clase, que hereda de la clase GroupFather
+		this._currentBullets = new Bullets('bala', 300, 300, this.player); //balas añadidas en una clase, que hereda de la clase GroupFather 
 		this._player.animations.add('normal', [0], 10, true);
 		this._player.animations.add('bolita', [1], 10, true);
 		this._width = this._player.body.width;
@@ -192,5 +201,14 @@ class Player extends GameSprite{
 	}
 	get health(){
 		return this._player.health;
+	}
+	get jumpSpeed(){
+		return this._jumpSpeed;
+	}
+	get grupoBalas(){
+		return this._currentBullets.grupoBalas;
+	}
+	set jumpSpeed(vel){
+		this._jumpSpeed = vel;
 	}
 }
