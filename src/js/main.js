@@ -77,9 +77,6 @@ var playState = {
 	},
 
 	muerte: function(player, spike){
-		this.player.morir();
-		//this.scoreText.text = 'Moriste wey';
-		game.state.start('fail');
 		if(!this.player._immune){
 			this.player.recoil_Damage(spike.x); //por ahora aqui...
 			this.player.immune();

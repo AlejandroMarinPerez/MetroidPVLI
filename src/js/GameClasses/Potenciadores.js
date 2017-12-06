@@ -29,6 +29,8 @@ class Potenciadores{ //clase en la que agregaremos todas las funciones necesaria
 		self._player.no_PuedeTransformarse = function(){
 			this._puedeTrans = false;
 		}
+
+		self._player.cursores.down.onDown.add(self._player.transformarse, self._player);
 	}
 
 	superSalto(self){
@@ -39,7 +41,6 @@ class Potenciadores{ //clase en la que agregaremos todas las funciones necesaria
 	rockets(self){
 		self._player._rockets = new Bullets('rocket', 300, null, self._player, 5);
 		self._player._arrayBalas.push(self._player._rockets.grupoBalas);
-		console.log(self._player._arrayBalas);
 		self._player._basicBullets = self._player._currentBullets;
 		self._player.shiftKey = game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
 		playState.energiaText.text = 'EN: ' + self._player.health + '\nAMMO: ' + self._player._rockets.ammo; //canvas por probar cosas

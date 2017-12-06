@@ -73,13 +73,13 @@ class Player extends GameSprite{
 		
 		if(this.cursores.up.isDown){
 			this.apuntaArriba();
-			if(this.normal != undefined){
+			if(this._bola){
 				this.normal();
 			}
 		}
-		else if(this.cursores.down.isDown && this.transformarse != undefined){
+		/*else if(this.cursores.down.isDown && this.transformarse != undefined){
 			this.transformarse();
-		}
+		}*/
 
 		this.saltar();
 
