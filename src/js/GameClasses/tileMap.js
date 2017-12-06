@@ -41,5 +41,5 @@ class TileMap{
 		return this._objectsLayer;
 	}
 
-	
+
 }

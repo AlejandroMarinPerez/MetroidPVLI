@@ -15,7 +15,7 @@ var playState = {
 		for(var i = 1; i <= 1; i++){ //creamos 12 manos
 
 			//Añadimos una mano al grupo Hands
-			var mano = this.hands.create(i*100, 0 ,'hand');
+			var mano = this.hands.create(i*200, 7780,'hand');
 			//Fisicas...
 			mano.body.gravity.y = 100;
 			mano.body.bounce.y = 0.4 + Math.random() *0.2;
@@ -33,7 +33,7 @@ var playState = {
 		this.spikes.enableBody = true;
 
 		for(var i = 1; i < 4; i++){
-			var spike = this.spikes.create(i*200 + 70, 0 ,'spike');
+			var spike = this.spikes.create(i*200 + 70, 7780,'spike');
 			spike.body.gravity.y = 1000;
 			spike.body.velocity.x = 5;
 			spike.scale.setTo(0.25,0.25);
