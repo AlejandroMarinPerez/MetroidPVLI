@@ -17,16 +17,11 @@ class TileMap{
 	}
 
 	update(objects){ //pura comprobacion de colisiones
-		for(var i = 0; i < objects.length - 1; i++){
+		for(var i = 0; i < objects.length; i++){
 			game.physics.arcade.collide(objects[i], this._blockedLayer);
 		}
-			game.physics.arcade.collide(objects[i], this._blockedLayer, function(bullet){bullet.animations.play('expl'); bullet.lifespan = 200}); //si se choca una bala con el muro, destruye la bala y hace su animacion
 	}
-
-	update2(bal){
-		//game.physics.arcade.collide(bal, this._blockedLayer, );
-	}
-
+	
 	findObjectsByType(type, layer){ //encuentra los objetos por su tipo
 		var result = [];
 		this._map.objects[layer].forEach(function(element){

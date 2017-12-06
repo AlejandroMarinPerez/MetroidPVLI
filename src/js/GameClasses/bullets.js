@@ -24,8 +24,6 @@ class Bullets extends GroupFather{
 		if(game.time.now > this._tiempoBala && (this._ammo > 0 || this._ammo === null)){
 			var bal = this._balas.getFirstExists(false); //cogemos la primera bala
 			bal.animations.play('normal');
-			//bal.body.onCollide = new Phaser.Signal();
-			console.log(aim);
 			if(aim === 'left'){
 				bal.reset(this._shooter.x - 10, this._shooter.y + 15); //le marcamos su posicion inicial
 				bal.angle = -90;
@@ -43,10 +41,10 @@ class Bullets extends GroupFather{
 			}
 			this._tiempoBala = game.time.now + 250; //temporizador para que no dispare chorrocientas balas de golpe
 			bal.lifespan = this._range; //rango de la bala peeeeero lo he medido en tiempo, no queda mal y no es dificil de hacer asi que ¯\_(ツ)_/¯
-			if(this._ammo !== null){
+			if(this._ammo !== null){ //reducir la municion de los misiles
 				this._ammo--;
 				if(this.ammo === 0){
-					this._shooter.changeBullets();
+					this._shooter.changeBullets(); //se cambia automáticamente
 				}
 			}
 			if(this.ammo !== null)

@@ -1,8 +1,9 @@
 class Player extends GameSprite{
-	constructor(posX, posY, sprite, gravity, speed, jumpSpeed){
+	constructor(posX, posY, sprite, gravity, speed, jumpSpeed, colliders){
 		super(posX, posY, sprite, gravity);
 		this._speed  = speed;
 		this._jumpSpeed = jumpSpeed;
+		this._colliders = colliders;
 		this.construccion_Jugador();
 		this.define_Keys();
 	}
@@ -26,6 +27,8 @@ class Player extends GameSprite{
 		this.handle_Events();
 		this.Anima();
 		this._puedeTrans = true; //si no esta en los overlaps que no le dejan transformarse, se pone a true y le dejan transformarse
+		this.updateBullets();
+
 		/*if(this._player.body.touching.down){
 			this._contSaltos = 0;
 		}*/
@@ -162,6 +165,12 @@ class Player extends GameSprite{
 		this._player.health += int;
 	}
 
+	updateBullets(){
+		for(var i = 0; i < this._arrayBalas.length; i++){
+			game.physics.arcade.collide(this._arrayBalas[i], this._colliders, function(bullet){bullet.animations.play('expl');bullet.lifespan = 200;});
+		}
+	}
+
 	construccion_Jugador(){ //construccion de las variables necesarias para el jugador
 		this._player = this._sprite; //asignacion con el sprite del padre para que el nombre sea mas legible
 		//this._player.anchor.setTo(0.5, 0.5);
@@ -181,6 +190,7 @@ class Player extends GameSprite{
 		this._jumpTimer = 0;
 		this._rebote = false;
 		this._reboteTimer = 0;
+		this._arrayBalas = [this._currentBullets.grupoBalas];
 	}
 
 	//Unos gets simples para saber las coordenadas del jugador y para devolvernos al propio jugador
