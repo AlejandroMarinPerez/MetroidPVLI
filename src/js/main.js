@@ -6,7 +6,7 @@ var playState = {
 		//game.world.setBounds(0, 0, 2000, 384); //esto hace que el tamaño del mundo sea el especificado
 		this.map = new TileMap('gameTiles', 'Background' ,'Main', 'Objects'); //creamos el mapa a partir del Tile
 		var playerStart = this.map.findObjectsByType('playerStart', this.map.objectsLayer); //un objeto que nos indica el comienzo
-		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 400, 150, 130); //una clase o_O (posX,posY, sprite, gravity, scaleX, scaleY)
+		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 400, 150, 130, this.map._blockedLayer); //una clase o_O (posX,posY, sprite, gravity, scaleX, scaleY)
 		this.capa_Overlaps = this.creacion_Overlaps(); //crea la capa de overlaps para que el jugador no pueda transformarse
 		//Manos que te darán puntos
 		this.hands = game.add.group();
@@ -40,16 +40,16 @@ var playState = {
 			spike.scale.setTo(0.25,0.25);
 		}
 
-		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes, this.player.grupoBalas];
+		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes];
 	},
 
 	update: function(){
-		if(this.player._immune){  //esto es solo pa pruebas loko
+		/*if(this.player._immune){  //esto es solo pa pruebas loko
 			this.energiaText.text = 'Immuneeeee';
 		}
 		else{
 			this.energiaText.text = 'EN: ' + this.energia;
-		}
+		}*/
 
 		this.map.update(this.objetosQueColisionan);
 		this.player.update();
@@ -65,7 +65,7 @@ var playState = {
 	render: function() {
         //game.debug.cameraInfo(game.camera, 32, 32);
         game.debug.spriteCoords(this.player.player, 32, 500);
-        game.debug.body(this.player.grupoBalas);
+        //game.debug.body(this.player.grupoBalas);
     },
 	collectStar: function(player, hands){
 		hands.kill(); //destruye el objeto star
@@ -77,9 +77,6 @@ var playState = {
 	},
 
 	muerte: function(player, spike){
-		this.player.morir();
-		//this.scoreText.text = 'Moriste wey';
-		game.state.start('fail');
 		if(!this.player._immune){
 			this.player.recoil_Damage(spike.x); //por ahora aqui...
 			this.player.immune();

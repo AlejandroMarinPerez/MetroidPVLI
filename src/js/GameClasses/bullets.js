@@ -1,5 +1,5 @@
 class Bullets extends GroupFather{
-	constructor(sprite, speed, range, shooter){
+	constructor(sprite, speed, range, shooter, ammo){
 		super();
 		//Balas
 		this._balas = this._group;
@@ -16,15 +16,14 @@ class Bullets extends GroupFather{
 		this._shooter = shooter;
 		this._speed = speed;
 		this._range = range;
+		this._ammo = ammo;
 
 	}
 
 	shoot(aim){
-		if(game.time.now > this._tiempoBala){
+		if(game.time.now > this._tiempoBala && (this._ammo > 0 || this._ammo === null)){
 			var bal = this._balas.getFirstExists(false); //cogemos la primera bala
 			bal.animations.play('normal');
-			//bal.body.onCollide = new Phaser.Signal();
-			console.log(aim);
 			if(aim === 'left'){
 				bal.reset(this._shooter.x - 10, this._shooter.y + 15); //le marcamos su posicion inicial
 				bal.angle = -90;
@@ -42,6 +41,14 @@ class Bullets extends GroupFather{
 			}
 			this._tiempoBala = game.time.now + 250; //temporizador para que no dispare chorrocientas balas de golpe
 			bal.lifespan = this._range; //rango de la bala peeeeero lo he medido en tiempo, no queda mal y no es dificil de hacer asi que ¯\_(ツ)_/¯
+			if(this._ammo !== null){ //reducir la municion de los misiles
+				this._ammo--;
+				if(this.ammo === 0){
+					this._shooter.changeBullets(); //se cambia automáticamente
+				}
+			}
+			if(this.ammo !== null)
+			playState.energiaText.text = 'EN: ' + this._shooter.health + '\nAMMO: ' + this.ammo; //canvas por probar cosas
 		}
 
 		//los numeritos son para cuadrar las balas (no me mola, pero los anchors...)
@@ -54,6 +61,15 @@ class Bullets extends GroupFather{
 	get grupoBalas(){
 		return this._balas;
 	}
+
+	get ammo(){
+		return this._ammo;
+	}
+
+	set ammo(amount){
+		this._ammo = amount;
+	}
+
 
 	//faltan metodos en plan daño y eso pero por ahora ta bien
 }

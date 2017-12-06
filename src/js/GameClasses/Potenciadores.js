@@ -29,6 +29,8 @@ class Potenciadores{ //clase en la que agregaremos todas las funciones necesaria
 		self._player.no_PuedeTransformarse = function(){
 			this._puedeTrans = false;
 		}
+
+		self._player.cursores.down.onDown.add(self._player.transformarse, self._player);
 	}
 
 	superSalto(self){
@@ -37,19 +39,21 @@ class Potenciadores{ //clase en la que agregaremos todas las funciones necesaria
 
 
 	rockets(self){
-		self._player._rockets = new Bullets('rocket', 300, null, self._player);
+		self._player._rockets = new Bullets('rocket', 300, null, self._player, 5);
+		self._player._arrayBalas.push(self._player._rockets.grupoBalas);
 		self._player._basicBullets = self._player._currentBullets;
 		self._player.shiftKey = game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
+		playState.energiaText.text = 'EN: ' + self._player.health + '\nAMMO: ' + self._player._rockets.ammo; //canvas por probar cosas
 		self._player.changeBullets = function(){
-			if(this._currentBullets === this._basicBullets){
-				this._currentBullets = this._rockets;
-			}
-			else{
-				this._currentBullets = this._basicBullets;
-			}
-			playState.objetosQueColisionan.splice(3, 1);
-			playState.objetosQueColisionan.push(this.grupoBalas); //dios esto es tan guarro que me da miedo (en vdd no se si es guarro o no pero...)
-
+				if(this._currentBullets === this._basicBullets && this._rockets.ammo > 0){
+					this._currentBullets = this._rockets;
+				}
+				else{
+					this._currentBullets = this._basicBullets;
+				}
+				//playState.objetosQueColisionan.splice(3, 1);
+				 //dios esto es tan guarro que me da miedo (en vdd no se si es guarro o no pero...)
+			
 		}
 		self._player.shiftKey.onDown.add(self._player.changeBullets, self._player);
 	}
