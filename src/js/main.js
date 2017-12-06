@@ -44,12 +44,12 @@ var playState = {
 	},
 
 	update: function(){
-		if(this.player._immune){  //esto es solo pa pruebas loko
+		/*if(this.player._immune){  //esto es solo pa pruebas loko
 			this.energiaText.text = 'Immuneeeee';
 		}
 		else{
 			this.energiaText.text = 'EN: ' + this.energia;
-		}
+		}*/
 
 		this.map.update(this.objetosQueColisionan);
 		this.player.update();
@@ -65,7 +65,7 @@ var playState = {
 	render: function() {
         //game.debug.cameraInfo(game.camera, 32, 32);
         game.debug.spriteCoords(this.player.player, 32, 500);
-        game.debug.body(this.player.grupoBalas);
+        //game.debug.body(this.player.grupoBalas);
     },
 	collectStar: function(player, hands){
 		hands.kill(); //destruye el objeto star

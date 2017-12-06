@@ -171,7 +171,7 @@ class Player extends GameSprite{
 		this._immuneTimer = 0;
 		this._blinkTimer = 0;
 		this._aim = 'left';
-		this._currentBullets = new Bullets('bala', 300, 300, this.player); //balas añadidas en una clase, que hereda de la clase GroupFather 
+		this._currentBullets = new Bullets('bala', 300, 300, this, null); //balas añadidas en una clase, que hereda de la clase GroupFather 
 		this._player.animations.add('normal', [0], 10, true);
 		this._player.animations.add('bolita', [1], 10, true);
 		this._width = this._player.body.width;
@@ -210,5 +210,8 @@ class Player extends GameSprite{
 	}
 	set jumpSpeed(vel){
 		this._jumpSpeed = vel;
+	}
+	get ammo(){
+		return this._currentBullets.ammo;
 	}
 }

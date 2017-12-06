@@ -20,7 +20,7 @@ class TileMap{
 		for(var i = 0; i < objects.length - 1; i++){
 			game.physics.arcade.collide(objects[i], this._blockedLayer);
 		}
-	game.physics.arcade.collide(objects[i], this._blockedLayer, function(bullet){bullet.animations.play('expl'); bullet.lifespan = 200}); //si se choca una bala con el muro, destruye la bala y hace su animacion
+			game.physics.arcade.collide(objects[i], this._blockedLayer, function(bullet){bullet.animations.play('expl'); bullet.lifespan = 200}); //si se choca una bala con el muro, destruye la bala y hace su animacion
 	}
 
 	update2(bal){
