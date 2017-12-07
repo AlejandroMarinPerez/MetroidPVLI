@@ -64,8 +64,8 @@ var playState = {
 
 	render: function() {
         //game.debug.cameraInfo(game.camera, 32, 32);
-        game.debug.spriteCoords(this.player.player, 32, 500);
-        //game.debug.body(this.player.grupoBalas);
+        //game.debug.spriteCoords(this.player.player, 32, 500);
+        //game.debug.body(this.player.player);
     },
 	collectStar: function(player, hands){
 		hands.kill(); //destruye el objeto star

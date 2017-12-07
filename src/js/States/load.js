@@ -5,7 +5,7 @@ var loadState = {
 		var loading = game.add.text(80,150,'loading...',{font: '40px Courier', fill: '#FFF'}); //una textito de carga
 
 		//game.load.image('dude', 'assets/PlayerThings/personaje.png'); //Cargamos tooodos los recursos que vamos a necesitar
-		game.load.spritesheet('dude', 'assets/PlayerThings/letsTry2.png', 23, 64);
+		game.load.spritesheet('dude', 'assets/PlayerThings/samus.png', 33, 64);
     	game.load.image('hand', 'assets/PowerUps/hand.png');
     	game.load.image('spike', 'assets/Enemies/spikes.png');
     	game.load.spritesheet('bala', 'assets/PlayerThings/bala.png', 112, 176);

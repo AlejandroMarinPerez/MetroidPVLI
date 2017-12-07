@@ -7,8 +7,8 @@ class Potenciadores{ //clase en la que agregaremos todas las funciones necesaria
 	agregarBola(self){ //agrega todas las funciones necesarias para que el jugador se transforme en bola
 		self._player.bolita = function(){
 			this._bola = true;
-			this._player.body.setSize(this.width, this.height/2 - 7); //cambia los colliders
-			this._animacion = 'bolita';
+			this._player.body.setSize(this.width, this.height - 31); //cambia los colliders
+			this._animacion = 'bolitaParada';
 		}
 
 		self._player.transformarse = function(){
@@ -21,8 +21,16 @@ class Potenciadores{ //clase en la que agregaremos todas las funciones necesaria
 			if(this._bola && this._puedeTrans){
 				this._bola = false;
 				this._player.body.setSize(this.width, this.height);
-				this._player.body.y = this._player.y - 34.25; //este numero hay que cambiarlo pero no se llegar a él... (es AlturaDeAntes - AlturaEnBola)
+				this._player.body.y = this._player.y - 60; //este numero hay que cambiarlo pero no se llegar a él... (es AlturaDeAntes - AlturaEnBola)
 				this._animacion = 'normal';
+				if(this._ultimaDir == 1){
+					this._aim = 'right';
+					this._player.scale.x = 1;
+				}
+				else{
+					this._aim = 'left';
+					this._player.scale.x = -1;
+				}
 			}
 		}
 
@@ -46,9 +54,11 @@ class Potenciadores{ //clase en la que agregaremos todas las funciones necesaria
 		playState.energiaText.text = 'EN: ' + self._player.health + '\nAMMO: ' + self._player._rockets.ammo; //canvas por probar cosas
 		self._player.changeBullets = function(){
 				if(this._currentBullets === this._basicBullets && this._rockets.ammo > 0){
+					this._player.tint = 0xff391f;
 					this._currentBullets = this._rockets;
 				}
 				else{
+					this._player.tint = 0xffffff;
 					this._currentBullets = this._basicBullets;
 				}
 				//playState.objetosQueColisionan.splice(3, 1);

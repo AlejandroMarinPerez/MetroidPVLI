@@ -7,8 +7,8 @@ class Bullets extends GroupFather{
 		this._balas.setAll('outOfBoundsKill', true); //hacemos que desaparezcan al chocar con los limites
 		this._balas.setAll('checkWorldBounds', true);//comprueba que no se ha chocado con nada
 		for(var i = 0; i < this._balas.length; i++){
-			this._balas.children[i].scale.setTo(0.15, 0.15); //escalamos sprite & collider
-			this._balas.children[i].body.setSize(0.15,0.15);
+			this._balas.children[i].scale.setTo(0.10, 0.10); //escalamos sprite & collider
+			this._balas.children[i].body.setSize(0.2,0.2);
 			this._balas.children[i].animations.add('normal',[0], 0, true);
 			this._balas.children[i].animations.add('expl', [1], 0, true);
 		}	
@@ -25,17 +25,24 @@ class Bullets extends GroupFather{
 			var bal = this._balas.getFirstExists(false); //cogemos la primera bala
 			bal.animations.play('normal');
 			if(aim === 'left'){
-				bal.reset(this._shooter.x - 10, this._shooter.y + 15); //le marcamos su posicion inicial
+				bal.reset(this._shooter.x - 25, this._shooter.y - 1); //le marcamos su posicion inicial
 				bal.angle = -90;
 				bal.body.velocity.x = -this._speed;
 			}
 			else if(aim === 'right'){
-				bal.reset(this._shooter.x + 35, this._shooter.y); //le marcamos su posicion inicial
+				bal.reset(this._shooter.x + 25, this._shooter.y - 11); //le marcamos su posicion inicial
 				bal.angle = 90;
 				bal.body.velocity.x = this._speed;
 			}
 			else if(aim  === 'up'){
-				bal.reset(this._shooter.x + 5, this._shooter.y - 20); //le marcamos su posicion inicial
+				var x;
+				if(this._shooter._ultimaDir == 1){
+					x = 0;
+				}
+				else{
+					x = - 10;
+				}
+				bal.reset(this._shooter.x + x, this._shooter.y - 42); //le marcamos su posicion inicial
 				bal.angle = 0;
 				bal.body.velocity.y = -this._speed;
 			}

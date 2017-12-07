@@ -8,27 +8,60 @@ class Player extends GameSprite{
 		this.define_Keys();
 	}
 
-	mueveIzquierda(){
+	mueveIzquierda(){ //mueve el pj a la izquierda, guarda su direccion y gestiona sus animaciones
 		this._aim = 'left';
 		this._player.body.velocity.x = -this._speed;
+		this._ultimaDir = -1;
+		if(!this._bola){
+			if(this._player.body.onFloor()){
+				if(this.JKey.isDown)
+					this.cambiaAnim('runShoot');
+				else
+					this.cambiaAnim('andar');
+			}
+			this._player.scale.x = -1;
+		}
+	else
+		this.cambiaAnim('bolitaIz');
 	}
 
-	mueveDerecha(){
+	mueveDerecha(){ //mueve el pj a la derecha, guarda su direccion y gestiona sus animaciones
 		this._player.body.velocity.x = this._speed;
 		this._aim = 'right';
+		this._ultimaDir = 1;
+		if(!this._bola){
+			if(this._player.body.onFloor()){
+				if(this.JKey.isDown)
+					this.cambiaAnim('runShoot');
+				else
+					this.cambiaAnim('andar');
+			}
+			this._player.scale.x = 1;
+		}
+		else
+			this.cambiaAnim('bolitaDer');
 	}
 
 	apuntaArriba(){
 		this._aim = 'up';
+		if(this._player.body.onFloor()){
+			if(this._player.body.velocity.x === 0)
+				this.cambiaAnim('apArriba');
+			else
+				this.cambiaAnim('runUpShoot');
+		}
+		else
+			this.cambiaAnim('caida')
 	}	
 
 	update(){ //update del jugador, se reinicia la velocidad, la gravedad y comprueba si choca o no con el suelo, los eventos de teclado
+
 		this.reset();
 		this.handle_Events();
 		this.Anima();
 		this._puedeTrans = true; //si no esta en los overlaps que no le dejan transformarse, se pone a true y le dejan transformarse
 		this.updateBullets();
-
+		this.caida();
 		/*if(this._player.body.touching.down){
 			this._contSaltos = 0;
 		}*/
@@ -40,12 +73,13 @@ class Player extends GameSprite{
 
 	//Aquí hacemos el saltito (por tiempo presionando la tecla)
 	saltar(){
-
 		if(this.WKey.isDown && this._player.body.onFloor() && !this._bola){
+			this.cambiaAnim('salto');
 			this._jumpTimer = game.time.now + 600;
 			this._player.body.velocity.y = -this._jumpSpeed;
 		}
 		else if(this.WKey.isDown && this._jumpTimer != 0){
+			this.cambiaAnim('salto');
 			if(game.time.now > this._jumpTimer){
 					this._jumpTimer = 0;
 				}
@@ -62,6 +96,15 @@ class Player extends GameSprite{
 		}*/
 	}
 
+	caida(){ //gestiona la animacion de la caida
+		if(this._player.body.velocity.y > 0){
+			if(this.JKey.isDown && !this.cursores.up.isDown){
+				this._animacion = 'fallShoot';
+			}
+			else
+				this._animacion = 'caida';
+		}
+	}
 	handle_Events(){
 		//If del movimiento...
 		if(this.AKey.isDown && !this._rebote){ //si presiona izquierda
@@ -70,20 +113,19 @@ class Player extends GameSprite{
 		else if(this.DKey.isDown && !this._rebote){ //si presiona derecha
 			this.mueveDerecha();
 		}
-		
+		else{
+			this.resetAnimaciones();
+		}		
 		if(this.cursores.up.isDown){
 			this.apuntaArriba();
 			if(this._bola){
 				this.normal();
 			}
 		}
-		/*else if(this.cursores.down.isDown && this.transformarse != undefined){
-			this.transformarse();
-		}*/
-
 		this.saltar();
-
 		if(this.JKey.isDown && !this._bola){
+			if(!this.player.body.onFloor() && this._player.body.velocity.y < 0 && !this.cursores.up.isDown)
+			this.cambiaAnim('shootJump'); //si dispara mientras salta cambia de animacion
 			this._currentBullets.shoot(this._aim);
 		}
 	}
@@ -105,6 +147,27 @@ class Player extends GameSprite{
 
 	Anima(){
 		this._player.animations.play(this._animacion);
+	}
+
+	cambiaAnim(anim){
+		this._animacion = anim;
+	}
+
+	resetAnimaciones(){
+		if(!this._bola){ //si no es bola y toca el suelo, pone la animacion normal, si es bola, pone la animacion de bola. Ajusta el aim también
+				if(this._player.body.onFloor())
+				this.cambiaAnim('normal');
+				if(this._player.scale.x === -1){
+					this._aim = 'left';
+				}
+				else{
+					this._aim = 'right';
+				}
+			}
+			else{
+				this.cambiaAnim('bolitaParada');
+				this._player.scale.x = 1;
+			}
 	}
 
 	recoil_Damage(posEnemigo){ //esto por ahora nos vale para objetivos estaticos como los pinchos, para objetivos en movimiento habría que mandarle la velocidad del enemigo para saber en que direccion rebota y todo eso
@@ -173,16 +236,15 @@ class Player extends GameSprite{
 
 	construccion_Jugador(){ //construccion de las variables necesarias para el jugador
 		this._player = this._sprite; //asignacion con el sprite del padre para que el nombre sea mas legible
-		//this._player.anchor.setTo(0.5, 0.5);
+		this._player.anchor.setTo(0.5, 0.5);
 		game.camera.follow(this._player);
 		this._player.health = 30; //vida inicial original del juego
 		this._immune = false;
 		this._immuneTimer = 0;
 		this._blinkTimer = 0;
-		this._aim = 'left';
+		this._aim = 'right';
 		this._currentBullets = new Bullets('bala', 300, 300, this, null); //balas añadidas en una clase, que hereda de la clase GroupFather 
-		this._player.animations.add('normal', [0], 10, true);
-		this._player.animations.add('bolita', [1], 10, true);
+		this.declaracionAnimaciones();
 		this._width = this._player.body.width;
 		this._height = this._player.body.height;
 		this._potenciadores = new Potenciadores(this);
@@ -191,6 +253,22 @@ class Player extends GameSprite{
 		this._rebote = false;
 		this._reboteTimer = 0;
 		this._arrayBalas = [this._currentBullets.grupoBalas];
+		this._ultimaDir = 1; //almacena la ultima direccion pulsada, util para cuadrar las animaciones
+	}
+
+	declaracionAnimaciones(){
+		this._player.animations.add('normal', [1], 0, false);
+		this._player.animations.add('bolitaDer', [11, 12, 13, 14], 10, true);
+		this._player.animations.add('bolitaIz', [14, 13, 12, 11], 10, true);
+		this._player.animations.add('salto', [19], 0, true);
+		this._player.animations.add('caida', [20], 0, true);
+		this._player.animations.add('bolitaParada', [11], 0, true);
+		this._player.animations.add('andar', [3, 4, 5], 8, true);
+		this._player.animations.add('apArriba', [2], 0, false);
+		this._player.animations.add('shootJump', [16], 0, false);
+		this._player.animations.add('fallShoot', [17], 0, false);
+		this._player.animations.add('runShoot', [15, 16, 17], 8, true);
+		this._player.animations.add('runUpShoot', [18, 19, 20], 8, true);
 	}
 
 	//Unos gets simples para saber las coordenadas del jugador y para devolvernos al propio jugador
