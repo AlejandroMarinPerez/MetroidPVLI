@@ -229,11 +229,20 @@ class Player extends GameSprite{
 	}
 
 	updateBullets(){
+		if(this._bombas !== undefined){
+			game.physics.arcade.collide(this._bombas.grupoBalas, this._colliders, this.bombasAux, null, this);
+		}
 		for(var i = 0; i < this._arrayBalas.length; i++){
 			game.physics.arcade.collide(this._arrayBalas[i], this._colliders, function(bullet){bullet.animations.play('expl');bullet.lifespan = 200;});
 		}
 	}
 
+	bombasAux(bullet){
+		if(this._bombas !== undefined){
+			this._bombas.checkCollisionAndTime(bullet);
+		}
+
+	}
 	construccion_Jugador(){ //construccion de las variables necesarias para el jugador
 		this._player = this._sprite; //asignacion con el sprite del padre para que el nombre sea mas legible
 		this._player.anchor.setTo(0.5, 0.5);
@@ -295,6 +304,9 @@ class Player extends GameSprite{
 	}
 	get grupoBalas(){
 		return this._currentBullets.grupoBalas;
+	}
+	get bomas(){
+		return this._bombas;
 	}
 	set jumpSpeed(vel){
 		this._jumpSpeed = vel;

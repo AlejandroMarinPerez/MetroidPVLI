@@ -1,7 +1,7 @@
 class Potenciadores{ //clase en la que agregaremos todas las funciones necesarias al player para poder hacer nuevas acciones
 	constructor(player){
 		this._player = player;
-		this.arrayPot = [this.agregarBola, this.superSalto, this.rockets]; //Array de funciones, esto molap
+		this.arrayPot = [this.agregarBola, this.superSalto, this.rockets, this.bombas]; //Array de funciones, esto molap
 	}
 
 	agregarBola(self){ //agrega todas las funciones necesarias para que el jugador se transforme en bola
@@ -66,6 +66,47 @@ class Potenciadores{ //clase en la que agregaremos todas las funciones necesaria
 			
 		}
 		self._player.shiftKey.onDown.add(self._player.changeBullets, self._player);
+	}
+
+	bombas(self){
+		self._player._bombas = new Bullets('bomba', 0, 2500, self._player, null);
+		self._timer = 0;
+		for(var i = 0; i < self._player._bombas.grupoBalas.length; i++){
+			self._player._bombas.grupoBalas.children[i].body.bounce.y = 0.5;
+			self._player._bombas.grupoBalas.children[i].body.gravity.y = 200; //ajustes para la estética y eso
+			self._player._bombas.grupoBalas.children[i].scale.setTo(1, 1);
+			self._player._bombas.grupoBalas.children[i].anchor.x = 0.5;
+			self._player._bombas.grupoBalas.children[i].anchor.y = 0.5;
+		}
+		self._player.pKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
+		self._player._bombas.shoot = function(){ //redefino el metodo shoot
+			if(game.time.now > this._tiempoBala){
+				var bal = this._balas.getFirstExists(false);
+				bal.reset(this._shooter.x - 2, this._shooter.y - 10);
+				this._tiempoBala = game.time.now + 500;
+				this._timer = 0;
+			} 
+		}
+		self._player._bombas.checkCollisionAndTime = function(bullet /*enemy maybe ?*/){
+			
+			if(this._timer == 0){
+				this._timer = game.time.now + this._range;
+			}
+			else if(this._timer > 0 && game.time.now > this._timer){
+					bullet.animations.play('expl'); //falta la animacion...
+					bullet.lifespan = 500;
+					this._timer = -1;
+					console.log('exploTa');
+					//faltaria comprobar si algun enemigo esta overlapeando en el momento de la explosion y hacerle daño y eso
+					//para eso aun necesitamos al enemigo... (pa pruebas y eso, que el this puede joder)
+			}
+		}
+		self._player.placeBomb = function(){
+			if(this._bola){
+				this._bombas.shoot();
+			}
+		}
+		self._player.pKey.onDown.add(self._player.placeBomb, self._player);
 	}
 
 	activate(index){ //comienza la funcion en el index

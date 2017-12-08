@@ -12,6 +12,7 @@ var loadState = {
     	game.load.spritesheet('rocket', 'assets/PlayerThings/rocket.png', 112, 176);
     	game.load.tilemap('mapaA', 'assets/Map/Brinstar4.json', null, Phaser.Tilemap.TILED_JSON); //el primer tile
     	game.load.image('gameTiles', 'assets/Map/TilesGrandes.png'); //las imagenes del tile
+    	game.load.image('bomba', 'assets/PlayerThings/bomba.png'); //las imagenes del tile
     	console.log("Cargando..."); //simple debug
 	},
 

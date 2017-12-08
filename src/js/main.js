@@ -13,7 +13,7 @@ var playState = {
 		this.hands.enableBody = true;
 		this.indexPrueba = 0; //pruebas de poitenciadores
 
-		for(var i = 1; i <= 3; i++){ //creamos 2 manos
+		for(var i = 1; i <= 4; i++){ //creamos 2 manos
 
 			//Añadimos una mano al grupo Hands
 			var mano = this.hands.create(i*200, 7780,'hand');
