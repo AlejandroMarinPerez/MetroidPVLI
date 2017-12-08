@@ -77,6 +77,7 @@ class Potenciadores{ //clase en la que agregaremos todas las funciones necesaria
 			self._player._bombas.grupoBalas.children[i].scale.setTo(1, 1);
 			self._player._bombas.grupoBalas.children[i].anchor.x = 0.5;
 			self._player._bombas.grupoBalas.children[i].anchor.y = 0.5;
+			self._player._bombas.grupoBalas.children[i].timer = 0; //les otorgo un timer a cada una
 		}
 		self._player.pKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
 		self._player._bombas.shoot = function(){ //redefino el metodo shoot
@@ -84,21 +85,21 @@ class Potenciadores{ //clase en la que agregaremos todas las funciones necesaria
 				var bal = this._balas.getFirstExists(false);
 				bal.reset(this._shooter.x - 2, this._shooter.y - 10);
 				this._tiempoBala = game.time.now + 500;
-				this._timer = 0;
+				bal.lifespan = 0;
 			} 
 		}
 		self._player._bombas.checkCollisionAndTime = function(bullet /*enemy maybe ?*/){
-			
-			if(this._timer == 0){
-				this._timer = game.time.now + this._range;
+			if(bullet.timer === 0 && bullet.lifespan === 0){
+				bullet.timer = game.time.now + this._range;
 			}
-			else if(this._timer > 0 && game.time.now > this._timer){
+			else if(bullet.timer > 0 && game.time.now > bullet.timer){
 					bullet.animations.play('expl'); //falta la animacion...
 					bullet.lifespan = 500;
-					this._timer = -1;
+					bullet.timer = 0;
 					console.log('exploTa');
 					//faltaria comprobar si algun enemigo esta overlapeando en el momento de la explosion y hacerle daño y eso
 					//para eso aun necesitamos al enemigo... (pa pruebas y eso, que el this puede joder)
+					//ESTO DE AQUÍ SOLO FUNCIONA PARA LA ULTIMA QUE SE HA PUESTO, NECESITAMOS UN TIMER ESPECIFICO DE CADA UNA...(solved)
 			}
 		}
 		self._player.placeBomb = function(){
