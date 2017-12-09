@@ -21,8 +21,10 @@ class Player extends GameSprite{
 			}
 			this._player.scale.x = -1;
 		}
-	else
-		this.cambiaAnim('bolitaIz');
+	else{
+		this.cambiaAnim('bolitaDer');
+			this._player.scale.x = -1;
+	}
 	}
 
 	mueveDerecha(){ //mueve el pj a la derecha, guarda su direccion y gestiona sus animaciones
@@ -40,6 +42,7 @@ class Player extends GameSprite{
 		}
 		else
 			this.cambiaAnim('bolitaDer');
+		this._player.scale.x = 1;
 	}
 
 	apuntaArriba(){
@@ -99,10 +102,10 @@ class Player extends GameSprite{
 	caida(){ //gestiona la animacion de la caida
 		if(this._player.body.velocity.y > 0){
 			if(this.JKey.isDown && !this.cursores.up.isDown){
-				this._animacion = 'fallShoot';
+				this.cambiaAnim('fallShoot');
 			}
 			else
-				this._animacion = 'caida';
+				this.cambiaAnim('caida');
 		}
 	}
 	handle_Events(){
@@ -165,8 +168,7 @@ class Player extends GameSprite{
 				}
 			}
 			else{
-				this.cambiaAnim('bolitaParada');
-				this._player.scale.x = 1;
+				this.cambiaAnim('bolitaDer');
 			}
 	}
 
@@ -229,7 +231,7 @@ class Player extends GameSprite{
 	}
 
 	updateBullets(){
-		if(this._bombas !== undefined){
+		if(this._bombas !== undefined){ //las bombas son especialitas
 			game.physics.arcade.collide(this._bombas.grupoBalas, this._colliders, this.bombasAux, null, this);
 		}
 		for(var i = 0; i < this._arrayBalas.length; i++){

@@ -8,7 +8,7 @@ class Potenciadores{ //clase en la que agregaremos todas las funciones necesaria
 		self._player.bolita = function(){
 			this._bola = true;
 			this._player.body.setSize(this.width, this.height - 31); //cambia los colliders
-			this._animacion = 'bolitaParada';
+			this._animacion = 'bolitaDer';
 		}
 
 		self._player.transformarse = function(){
@@ -22,6 +22,7 @@ class Potenciadores{ //clase en la que agregaremos todas las funciones necesaria
 				this._bola = false;
 				this._player.body.setSize(this.width, this.height);
 				this._player.body.y = this._player.y - 60; //este numero hay que cambiarlo pero no se llegar a él... (es AlturaDeAntes - AlturaEnBola)
+				this._player.body.gravity.y = 400;
 				this._animacion = 'normal';
 				if(this._ultimaDir == 1){
 					this._aim = 'right';
@@ -83,6 +84,7 @@ class Potenciadores{ //clase en la que agregaremos todas las funciones necesaria
 		self._player._bombas.shoot = function(){ //redefino el metodo shoot
 			if(game.time.now > this._tiempoBala){
 				var bal = this._balas.getFirstExists(false);
+				bal.animations.play('normal');
 				bal.reset(this._shooter.x - 2, this._shooter.y - 10);
 				this._tiempoBala = game.time.now + 500;
 				bal.lifespan = 0;
