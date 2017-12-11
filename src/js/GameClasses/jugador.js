@@ -1,8 +1,8 @@
-class Player extends GameSprite{
+class Player extends MovableGroup{
 	constructor(posX, posY, sprite, gravity, speed, jumpSpeed, colliders){
-		super(posX, posY, sprite, gravity);
-		this._speed  = speed;
-		this._jumpSpeed = jumpSpeed;
+		super(posX, posY, sprite, gravity, speed, jumpSpeed);
+		//dthis._speed  = speed;
+		//this._jumpSpeed = jumpSpeed;
 		this._colliders = colliders;
 		this.construccion_Jugador();
 		this.define_Keys();
@@ -10,7 +10,7 @@ class Player extends GameSprite{
 
 	mueveIzquierda(){ //mueve el pj a la izquierda, guarda su direccion y gestiona sus animaciones
 		this._aim = 'left';
-		this._player.body.velocity.x = -this._speed;
+		this.moveLeft(this._player, 0);
 		this._ultimaDir = -1;
 		if(!this._bola){
 			if(this._player.body.onFloor()){
@@ -28,8 +28,8 @@ class Player extends GameSprite{
 	}
 
 	mueveDerecha(){ //mueve el pj a la derecha, guarda su direccion y gestiona sus animaciones
-		this._player.body.velocity.x = this._speed;
 		this._aim = 'right';
+		this.moveRight(this._player, 0);
 		this._ultimaDir = 1;
 		if(!this._bola){
 			if(this._player.body.onFloor()){
@@ -65,6 +65,7 @@ class Player extends GameSprite{
 		this._puedeTrans = true; //si no esta en los overlaps que no le dejan transformarse, se pone a true y le dejan transformarse
 		this.updateBullets();
 		this.caida();
+		console.log(this.vSpeed);
 		/*if(this._player.body.touching.down){
 			this._contSaltos = 0;
 		}*/
@@ -79,7 +80,8 @@ class Player extends GameSprite{
 		if(this.WKey.isDown && this._player.body.onFloor() && !this._bola){
 			this.cambiaAnim('salto');
 			this._jumpTimer = game.time.now + 600;
-			this._player.body.velocity.y = -this._jumpSpeed;
+			//this._player.body.velocity.y = -this._jumpSpeed;
+			this.moveUp(this._player, 0);
 		}
 		else if(this.WKey.isDown && this._jumpTimer != 0){
 			this.cambiaAnim('salto');
@@ -87,7 +89,8 @@ class Player extends GameSprite{
 					this._jumpTimer = 0;
 				}
 				else{
-					this._player.body.velocity.y = -this._jumpSpeed;
+					//this._player.body.velocity.y = -this._jumpSpeed;
+					this.moveUp(this._player, 0);
 				}
 		}
 		else{
@@ -172,15 +175,13 @@ class Player extends GameSprite{
 			}
 	}
 
-	recoil_Damage(posEnemigo){ //esto por ahora nos vale para objetivos estaticos como los pinchos, para objetivos en movimiento habría que mandarle la velocidad del enemigo para saber en que direccion rebota y todo eso
-		var direccion;
+	recoil_Damage(posEnemigo){
 		if(this._player.body.x - posEnemigo <= 0){ //para saber la direccion del rebote
-			direccion = -1;
+			this.moveLeft(this._player, 0);
 		}
 		else{
-			direccion = 1;
+			this.moveRight(this._player, 0);
 		}
-		this._player.body.velocity.x = (direccion) * (this._speed);
 		this._player.damage(1); //si la salud llega a 0, el player muere
 		this._rebote = true;
 		this._immune = true;

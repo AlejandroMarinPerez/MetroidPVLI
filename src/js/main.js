@@ -8,6 +8,7 @@ var playState = {
 		var playerStart = this.map.findObjectsByType('playerStart', this.map.objectsLayer); //un objeto que nos indica el comienzo
 		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 400, 150, 130, this.map._blockedLayer); //una clase o_O (posX,posY, sprite, gravity, scaleX, scaleY)
 		this.capa_Overlaps = this.creacion_Overlaps(); //crea la capa de overlaps para que el jugador no pueda transformarse
+		this.canvas = new Canvas();
 		//Manos que te darán puntos
 		this.hands = game.add.group();
 		this.hands.enableBody = true;
@@ -24,10 +25,9 @@ var playState = {
 		}
 
 		//Añadimos un texto, igualándolo al scoretext, en las coordenadas (16,16) con el texto por defecto "score: 0"
-		//y le decimnos que tenga un tamaño de 32 px y el color.Ademas creamos la variable score y la inicializamos a 0
+		//y le decimos que tenga un tamaño de 32 px y el color.Ademas creamos la variable score y la inicializamos a 0
 		this.energia = this.player.health;
-		this.energiaText = game.add.text(16,16, 'EN: ' + this.energia, {fontSize: '32px', fill: '#FFF'});  //energia por ahora, hay que hacer una clase canvas por ahí y todo eso
-		this.energiaText.fixedToCamera = true;
+		this.canvas.addText(16, 16, 'EN: ' + this.energia, '65px Arial', '#FFF');
 
 		this.spikes = game.add.group(); //pinchitos
 
@@ -81,7 +81,8 @@ var playState = {
 			this.player.recoil_Damage(spike.x); //por ahora aqui...
 			this.player.immune();
 			this.energia = this.player.health;
-			this.energiaText.text = 'EN: ' + this.energia;
+			this.canvas.setText(0, 'EN: ' + this.energia);
+			this.canvas.updateCanvas();
 		}
 	},
 

@@ -10,4 +10,8 @@ class GameSprite{
 	get sprite(){
 		return this._sprite;
 	}
+
+	set sprite(something){
+		this._sprite = something;
+	}
 }

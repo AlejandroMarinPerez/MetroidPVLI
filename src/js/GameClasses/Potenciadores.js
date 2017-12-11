@@ -43,7 +43,7 @@ class Potenciadores{ //clase en la que agregaremos todas las funciones necesaria
 	}
 
 	superSalto(self){
-		self._player.jumpSpeed = self._player.jumpSpeed * 2; //valor que aún no he definido bien, ahora salta mucho creo xD
+		self._player.vSpeed = self._player.vSpeed * 2; //valor que aún no he definido bien, ahora salta mucho creo xD
 	}
 
 
@@ -52,7 +52,8 @@ class Potenciadores{ //clase en la que agregaremos todas las funciones necesaria
 		self._player._arrayBalas.push(self._player._rockets.grupoBalas);
 		self._player._basicBullets = self._player._currentBullets;
 		self._player.shiftKey = game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
-		playState.energiaText.text = 'EN: ' + self._player.health + '\nAMMO: ' + self._player._rockets.ammo; //canvas por probar cosas
+		playState.canvas.setText(0, 'EN: ' + self._player.health + '\nAMMO: ' + self._player._rockets.ammo); //canvas por probar cosas
+		playState.canvas.updateCanvas(); //ME PARECE QUE ACCEDER ASI AL CANVAS ES MALA PRACTICA, POR AHORA NOS VALE PERO DEBERIAMOS PASARSELO COMO ARGUMENTO A TODA CLASE QUE LO NECESITE... --> PLAYER
 		self._player.changeBullets = function(){
 				if(this._currentBullets === this._basicBullets && this._rockets.ammo > 0){
 					this._player.tint = 0xff391f;

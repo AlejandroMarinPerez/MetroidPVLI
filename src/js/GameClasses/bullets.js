@@ -1,8 +1,9 @@
 class Bullets extends MovableGroup{
 	constructor(sprite, speed, range, shooter, ammo){
-		super(speed);
+		super(0, 0, null, 0, speed, speed);
 		//Balas
-		this._balas = this.group;
+		this.sprite = new GroupFather(); //el sprite pasa a ser un nuevo grupo
+		this._balas = this.sprite.group;
 		this._balas.createMultiple(15, sprite); //creamos 20 balas, y luego las reutilizamos tooodo el rato
 		this._balas.setAll('outOfBoundsKill', true); //hacemos que desaparezcan al chocar con los limites
 		this._balas.setAll('checkWorldBounds', true);//comprueba que no se ha chocado con nada
@@ -55,8 +56,10 @@ class Bullets extends MovableGroup{
 				this._shooter.changeBullets(); //se cambia automáticamente
 			}
 		}
-		if(this.ammo !== null)
-			playState.energiaText.text = 'EN: ' + this._shooter.health + '\nAMMO: ' + this.ammo; //canvas por probar cosas
+		if(this.ammo !== null){
+			playState.canvas.setText(0, 'EN: ' + this._shooter.health + '\nAMMO: ' + this.ammo); //canvas
+			playState.canvas.updateCanvas();
+		}
 	}
 
 	aux(){ //metodo auxiliar para ajustar la posicion de la bala si apunta arriba
