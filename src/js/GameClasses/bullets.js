@@ -1,36 +1,41 @@
-class Bullets extends MovableGroup{
+//CLASE BALAS, sprite que tiene la capacidad de moverse. Es un grupo de sprites que pueden ser disparados desde un "shooter". Deben ser capaces de hacer daño a enemigos
+//(aun por implementar)
+
+class Bullets extends Movable{
 	constructor(sprite, speed, range, shooter, ammo){
-		super(0, 0, null, 0, speed, speed);
+		super(0, 0, null, 0, speed, speed); //conctructor de Movable
 		//Balas
 		this.sprite = new GroupFather(); //el sprite pasa a ser un nuevo grupo (reutulizable para enemigos)
 		this._balas = this.sprite.group;
 		this._balas.createMultiple(15, sprite); //creamos 20 balas, y luego las reutilizamos tooodo el rato
 		this._balas.setAll('outOfBoundsKill', true); //hacemos que desaparezcan al chocar con los limites
 		this._balas.setAll('checkWorldBounds', true);//comprueba que no se ha chocado con nada
-		for(var i = 0; i < this._balas.length; i++){
+
+		for(var i = 0; i < this._balas.length; i++){ //escalamos, collider... a todos los hijos
 			this._balas.children[i].scale.setTo(0.10, 0.10); //escalamos sprite & collider
 			this._balas.children[i].body.setSize(0.2,0.2);
 			this._balas.children[i].animations.add('normal',[0], 0, true);
 			this._balas.children[i].animations.add('expl', [1], 0, true);
 		}	
+
 		this._tiempoBala = 0;
 		this._shooter = shooter;
-		//this._speed = speed;
 		this._range = range;
 		this._ammo = ammo;
-
 	}
+
+//--------------------------------------------------------------------DISPARO------------------------------------------------------------------
 
 	shoot(aim){
 		if(game.time.now > this._tiempoBala){
 			var bal = this._balas.getFirstExists(false); //cogemos la primera bala
-			bal.animations.play('normal');
-			this.gestionaBala(aim ,bal); //elige direcciom , ajusta el rango, el tiempo...
-			this.gestionAmmo(); //municion
+			bal.animations.play('normal'); //animacion
+			this.gestionaBala(aim ,bal);
+			this.gestionAmmo(); 
 		}
 	}
 
-	gestionaBala(aim , bullet){
+	gestionaBala(aim , bullet){  //elige direccion , ajusta el rango, el tiempo...
 		if(aim === 'left'){
 			bullet.reset(this._shooter.x - 25, this._shooter.y - 1); //le marcamos su posicion inicial
 			this.moveLeft(bullet, -90);
@@ -49,18 +54,22 @@ class Bullets extends MovableGroup{
 		//los numeritos son para cuadrar las balas (no me mola, pero los anchors...)
 	}
 
-	gestionAmmo(){
-		if(this._ammo !== null){ //reducir la municion de los misiles
-			this._ammo--;
+	gestionAmmo(){ //en caso de tener municion, este metodo reduciria la municion al disparar el tipo de bala que corresponda
+		if(this._ammo !== null){ 
+			this._ammo--; //reducir la municion de los misiles
 			if(this.ammo === 0){
-				this._shooter.changeBullets(); //se cambia automáticamente
+				this._shooter.changeBullets(); //se cambia automáticamente, al igual que en el juego
 			}
 		}
-		if(this.ammo !== null){
-			playState.canvas.setText(0, 'EN: ' + this._shooter.health + '\nAMMO: ' + this.ammo); //canvas
+		if(this.ammo !== null){ //Establece en el Canvas, acceder así no se yo si mola, deberiamos pasarselo al player a lo mejor.... o crearlo en el Player
+			playState.canvas.setText(0, 'EN: ' + this._shooter.health + '\nAMMO: ' + this.ammo); 
 			playState.canvas.updateCanvas();
 		}
 	}
+
+	//FALTAN METODOS PARA EL DAÑO Y ESO....
+
+//--------------------------------------------------------------------AUXILIARES------------------------------------------------------------------
 
 	aux(){ //metodo auxiliar para ajustar la posicion de la bala si apunta arriba
 		var x;
@@ -73,7 +82,9 @@ class Bullets extends MovableGroup{
 		return x;
 	}
 
-	set range(newRange){  //para cambiar el rango de la bala, lo necesitaremos
+//------------------------------------------------GETS & SETS--------------------------------------------------------------------
+
+	set range(newRange){ 
 		this._range = newRange;
 	}
 
@@ -88,7 +99,4 @@ class Bullets extends MovableGroup{
 	set ammo(amount){
 		this._ammo = amount;
 	}
-
-
-	//faltan metodos en plan daño y eso pero por ahora ta bien
 }

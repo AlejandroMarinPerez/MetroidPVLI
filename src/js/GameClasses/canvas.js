@@ -1,21 +1,27 @@
+//CLASE CANVAS, gestiona las imagenes y el texto que aparece en pantalla. Por ahora solo texto.
+
 class Canvas{
+	//Arrays de game.Text y de strings, para cambiarlos cuando sea necesario
 	constructor(){
-		this._elArray = [];
+		this._elemArray = [];
 		this._texts = [];
 	}
+
+//--------------------------------------------------------------------UPDATE------------------------------------------------------------------
+	updateCanvas(){
+		for(var i = 0; i < this._elemArray.length; i++){
+			this._elemArray[i].text = this._texts[i];
+		}
+		console.log(this._texts[0]);
+	}
+
+//-------------------------------------------------------------------MODIFICACION DEL CANVAS--------------------------------------------------
 
 	addText(posX, posY, text, font ,color){
 		this._texts.push(text);
 		this._text = game.add.text(posX, posY, text, {fontSize: font, fill: color});
 		this._text.fixedToCamera = true;
-		this._elArray.push(this._text);
-	}
-
-	updateCanvas(){
-		for(var i = 0; i < this._elArray.length; i++){
-			this._elArray[i].text = this._texts[i];
-		}
-		console.log(this._texts[0]);
+		this._elemArray.push(this._text);
 	}
 
 	setText(i, text){
