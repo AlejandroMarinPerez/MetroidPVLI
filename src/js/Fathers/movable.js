@@ -1,4 +1,4 @@
-//CLASE MOVABLE, cualquier sprites que tenga movimiento debería heredar de esta clase, la cual hereda a su vez de GameSprite.
+//CLASE MOVABLE, cualquier sprite que tenga movimiento debería heredar de esta clase, la cual hereda a su vez de GameSprite.
 
 class Movable extends GameSprite{
 	constructor(posX, posY, sprite, gravity, hSpeed, vSpeed){

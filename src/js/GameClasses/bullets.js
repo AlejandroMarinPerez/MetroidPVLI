@@ -5,7 +5,7 @@ class Bullets extends Movable{
 	constructor(sprite, speed, range, shooter, ammo){
 		super(0, 0, null, 0, speed, speed); //conctructor de Movable
 		//Balas
-		this.sprite = new GroupFather(); //el sprite pasa a ser un nuevo grupo (reutulizable para enemigos)
+		this.sprite = new Group(); //el sprite pasa a ser un nuevo grupo (reutulizable para enemigos)
 		this._balas = this.sprite.group;
 		this._balas.createMultiple(15, sprite); //creamos 20 balas, y luego las reutilizamos tooodo el rato
 		this._balas.setAll('outOfBoundsKill', true); //hacemos que desaparezcan al chocar con los limites

@@ -50,7 +50,7 @@ var playState = {
  //-------------------------------------------------------------------AUXILIARES-----------------------------------------------------------------
  	creacion_Overlaps: function(){
 		var self = this;
-		grupo = new GroupFather(); //crea un nuevo grupo y lo iguala a la variable
+		grupo = new Group(); //crea un nuevo grupo y lo iguala a la variable
     	grupo = grupo.group;
 		var result = self.map.findObjectsByType('overlap', self.map.objectsLayer); //encuentra los objetos del tipo "overlap"
 		result.forEach(function(element){
