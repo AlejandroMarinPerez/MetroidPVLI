@@ -28,15 +28,15 @@ var playState = {
 
 	update: function(){
 
-		this.map.update(this.objetosQueColisionan); //objetos que colisionan con el mapa
-		this.player.update(); // update del player (colision de balas 2)
 		game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this); //Si overlapea con el grupo de objetos de overlap, no podrá transformarse
-
 		//------------COSAS DE PRUEBA----------
 		//Vamos a comprobar si el player hace "overlap" con una mano y llamamos a la funcion collectStar
 		game.physics.arcade.overlap(this.player.player,this.hands, this.collectStar, null, this); //no se que es ni el null ni el this ese
 		//lo mismo pero para los pinchos
 		game.physics.arcade.overlap(this.player.player,this.spikes, this.daño, null, this);
+		//------------COLISION & PLAYERUPDATE----------
+		this.map.update(this.objetosQueColisionan); //objetos que colisionan con el mapa
+		this.player.update(); // update del player (colision de balas 2)
 	},
 
 //-------------------------------------------------------------------RENDER-----------------------------------------------------------------

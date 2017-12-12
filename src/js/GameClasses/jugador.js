@@ -152,7 +152,7 @@ handle_Events(){
 				this._rebote = false;
 				this._reboteTimer = 0;
 		}
-		this.immune();	
+		this.immune();
 	}
 
 	resetAnimaciones(){

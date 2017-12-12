@@ -12,7 +12,8 @@ class Potenciadores{
 		//Agrega la funcion al player de transformarse en pelotita, le cambia el collider, la animacion...
 		self._player.bolita = function(){
 			this._bola = true;
-			this._player.body.setSize(this.width, this.height - 31); //cambia los colliders
+			this._player.body.setSize(this.width, this.height - 30); //cambia los colliders
+			//his._player.body.y = this._player.y - 60;
 			this._animacion = 'bolitaDer';
 		}
 

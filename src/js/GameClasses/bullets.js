@@ -36,12 +36,14 @@ class Bullets extends Movable{
 	}
 
 	gestionaBala(aim , bullet){  //elige direccion , ajusta el rango, el tiempo...
+		console.log(this._shooter.width);
 		if(aim === 'left'){
-			bullet.reset(this._shooter.x - 25, this._shooter.y - 1); //le marcamos su posicion inicial
+			bullet.reset(this._shooter.x - this._shooter.width + 8, this._shooter.y); //le marcamos su posicion inicial
 			this.moveLeft(bullet, -90);
 		}
 		else if(aim === 'right'){
-			bullet.reset(this._shooter.x + 25, this._shooter.y - 11); //le marcamos su posicion inicial
+			console.log(this._shooter.height);
+			bullet.reset(this._shooter.x + this._shooter.width - 8, this._shooter.y - this._shooter.height/6); //le marcamos su posicion inicial
 			this.moveRight(bullet, 90);
 		}
 		else if(aim  === 'up'){
