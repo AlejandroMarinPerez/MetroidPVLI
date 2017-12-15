@@ -21,7 +21,7 @@ var playState = {
 
 		//------------ARRAY DE COLISIONES----------
 		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes]; //metiendo aqui todo lo que colisiona con las paredes, suelo, etc, funciona.
-		
+
 	},
 
 //-------------------------------------------------------------------UPDATE-----------------------------------------------------------------
@@ -98,7 +98,7 @@ var playState = {
 			mano.body.bounce.y = 0.4 + Math.random() *0.2;
 			mano.scale.setTo(0.05,0.05);
 		}
-	
+
 		this.spikes = game.add.group(); //pinchitos
 
 		this.spikes.enableBody = true;

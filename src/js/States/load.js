@@ -13,6 +13,7 @@ var loadState = {
     	game.load.tilemap('mapaA', 'assets/Map/Brinstar5.json', null, Phaser.Tilemap.TILED_JSON); //el primer tile
     	game.load.image('gameTiles', 'assets/Map/s78s2.png'); //las imagenes del tile
     	game.load.spritesheet('bomba', 'assets/PlayerThings/bomba.png', 25, 57); //las imagenes del tile
+			game.floaterGroup = new Group(); //Grupo que contendrá a los floaters del juego
     	console.log("Cargando..."); //simple debug
 	},
 
