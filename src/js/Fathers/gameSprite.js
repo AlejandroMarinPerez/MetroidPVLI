@@ -18,7 +18,7 @@ class GameSprite{
 		return this._sprite;
 	}
 
-	set sprite(something){
-		this._sprite = something;
+	set sprite(sprite){
+		this._sprite = sprite;
 	}
 }
