@@ -61,7 +61,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"..\/..\/..\/..\/..\/Samantha'sSpace Beta1.tsx"
+         "source":"..\/..\/..\/..\/..\/w.tsx"
         }],
  "tilewidth":32,
  "type":"map",

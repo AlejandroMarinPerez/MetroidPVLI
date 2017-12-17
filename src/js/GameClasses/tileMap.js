@@ -11,7 +11,9 @@ class TileMap{
 		//this._blockedLayer.debug = true;
 		this._map.setCollisionBetween(1, 1500, true, this._blockedLayer); //el 1500 es el maximo numero que se encuentra en la parte "layers" del json (unos cuantos aumentados por si acaso)
 		this._blockedLayer.resizeWorld();
+		this._totalEnemies = 0; //Para la actualizacion de los enemigos, calculamos el total según los vamos añadiendo
 	}
+
 
 //--------------------------------------------------------------------UPDATE---------------------------------------------------------------
 
@@ -47,7 +49,13 @@ class TileMap{
 
 	///----------------------------------------Búsqueda de los enemigos-----------------------------------------------------------///
 	addEnemies(type){
-		
+		if (type === 'floater'){
+			var criaturas = this.findObjectsByType(type, this._objectsLayer);
+			for(var i = 0; i < criaturas.length; i++){
+				var enemie = new Floater(criaturas[i].x, criaturas[i].y, 0, 'spike', 50, 0, this._blockedLayer, 10, 3, 0);
+				game.floaterGroup.createEnemies(enemie);
+			}
+			this._totalEnemies += criaturas.length;
+		}
 	}
-
 }

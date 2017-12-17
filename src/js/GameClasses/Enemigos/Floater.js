@@ -10,7 +10,7 @@ class Floater extends Enemies {
   }
 
   ///-------------Lógica del floater-----------///
-  movement(){ //si se llama a esta función desde el main:
+  movement(){ //si se llama a esta función desde el main: cambia la veloc para que patrulle de un lado a otro
       this.speedX *= -1;
   }
 }

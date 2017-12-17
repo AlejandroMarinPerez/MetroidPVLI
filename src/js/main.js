@@ -22,12 +22,24 @@ var playState = {
 		//------------ARRAY DE COLISIONES----------
 		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes]; //metiendo aqui todo lo que colisiona con las paredes, suelo, etc, funciona.
 
+
+		///----------Enemigos & moar------------------------///
+		this.map.addEnemies('floater'); //Enemigos que se mueven horizontalmente
 	},
 
 //-------------------------------------------------------------------UPDATE-----------------------------------------------------------------
 
 	update: function(){
-
+		//Actualizamos todos los enemigos
+		for(var i = 0; i < this.map._totalEnemies; i++){
+			//Comprobamos todos los enemigos de X tipo
+			if(i < this.floaterGroup._group.children.length){
+				if(game.physics.arcade.collide(this.floaterGroup._group.children[i]._floater, this.map._blockedLayer, null, this)){
+					this.floaterGroup._group.children[i].movement();
+				}
+			}
+			//Resto de enemigos cuando estén
+		}
 		game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this); //Si overlapea con el grupo de objetos de overlap, no podrá transformarse
 		//------------COSAS DE PRUEBA----------
 		//Vamos a comprobar si el player hace "overlap" con una mano y llamamos a la funcion collectStar
