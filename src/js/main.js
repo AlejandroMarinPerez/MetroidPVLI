@@ -19,27 +19,28 @@ var playState = {
 		//------------COSAS DE PRUEBA----------
 		this.cosasDePrueba();
 
-		//------------ARRAY DE COLISIONES----------
-		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes]; //metiendo aqui todo lo que colisiona con las paredes, suelo, etc, funciona.
-
+		
 
 		///----------Enemigos & moar------------------------///
 		this.map.addEnemies('floater'); //Enemigos que se mueven horizontalmente
+
+		//------------ARRAY DE COLISIONES----------
+		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes]; //metiendo aqui todo lo que colisiona con las paredes, suelo, etc, funciona.
+
 	},
 
 //-------------------------------------------------------------------UPDATE-----------------------------------------------------------------
 
 	update: function(){
 		//Actualizamos todos los enemigos
-		for(var i = 0; i < this.map._totalEnemies; i++){
+		for(var i = 0; i < 1; i++){
 			//Comprobamos todos los enemigos de X tipo
-			if(i < this.floaterGroup._group.children.length){
-				if(game.physics.arcade.collide(this.floaterGroup._group.children[i]._floater, this.map._blockedLayer, null, this)){
-					this.floaterGroup._group.children[i].movement();
-				}
+			if(i < game.floaterGroup.group.children.length){
+				game.floaterGroup.group.children[i].movement();
 			}
-			//Resto de enemigos cuando estén
 		}
+		
+		game.physics.arcade.collide(game.floaterGroup.group.children[0]._sprite, this.map._blockedLayer, this.auxEnemies);
 		game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this); //Si overlapea con el grupo de objetos de overlap, no podrá transformarse
 		//------------COSAS DE PRUEBA----------
 		//Vamos a comprobar si el player hace "overlap" con una mano y llamamos a la funcion collectStar
@@ -56,10 +57,18 @@ var playState = {
 	render: function() {
         //game.debug.cameraInfo(game.camera, 32, 32);
         //game.debug.spriteCoords(this.player.player, 32, 500);
-        //game.debug.body(this.player.player);
+        game.debug.body(game.floaterGroup.group.children[0]._sprite);
     },
 
  //-------------------------------------------------------------------AUXILIARES-----------------------------------------------------------------
+
+ 	auxEnemies: function(enemie){
+ 		enemie.class.movement = function(){ //PRUEBAS PARA VER QUE FUNCIONAN LAS COSAS ---> YA SE COLISIONA CON LAS COSAS Y SE AÑADEN BIEN AL GRUPO
+ 			 this.moveRight(this._floater, 0);
+ 		}
+ 		//ESTA FUNCION ES LLAMADA CUANDO COLISIONA CON UNA PARED, AHORA LO Q HACE ES CAMBIARLE EL MOVIMIENTO PERO SOLO 1 VEZ (PRUEBAS)
+ 	},
+
  	creacion_Overlaps: function(){
 		var self = this;
 		grupo = new Group(); //crea un nuevo grupo y lo iguala a la variable

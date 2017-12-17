@@ -51,9 +51,9 @@ class TileMap{
 	addEnemies(type){
 		if (type === 'floater'){
 			var criaturas = this.findObjectsByType(type, this._objectsLayer);
-			for(var i = 0; i < criaturas.length; i++){
+			for(var i = 0; i < 1; i++){
 				var enemie = new Floater(criaturas[i].x, criaturas[i].y, 0, 'spike', 50, 0, this._blockedLayer, 10, 3, 0);
-				game.floaterGroup.createEnemies(enemie);
+				game.floaterGroup.group.addChild(enemie);
 			}
 			this._totalEnemies += criaturas.length;
 		}

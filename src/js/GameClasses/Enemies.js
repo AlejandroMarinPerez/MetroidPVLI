@@ -6,7 +6,7 @@ class Enemies extends Movable{
   //A los enemigos igual hay que añadirles gravedad, pero ya se va viendo
   //Constructor of the enemies
   constructor(posX, posY, gravity, sprite, speedX, speedY, colliders, lives, damage, type){
-    super(posX, posY, sprite, gravity, speedY, speedX);
+    super(posX, posY, sprite, gravity, speedX, speedY);
     this._typeGameObject = 'enemie'; //Para los grupos y los accesos a ellos
     this._damage = damage; //Damage to the player
     if (type === 0){ //Tipo de enemigo que serán, pero sólo diferencia entre tanques y normales

@@ -6,11 +6,12 @@ class Floater extends Enemies {
   constructor (posX, posY, gravity, sprite, speedX, speedY, colliders, lives, damage, type){
     super(posX, posY, gravity, sprite, speedX, speedY, colliders, lives, damage, type);
     this._floater = this._sprite;
+    this._floater.class = this;
     this._floater.anchor.setTo(0.5, 0.5);
   }
 
   ///-------------Lógica del floater-----------///
   movement(){ //si se llama a esta función desde el main: cambia la veloc para que patrulle de un lado a otro
-      this.speedX *= -1;
+      this.moveLeft(this._floater, 0);
   }
 }
