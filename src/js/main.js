@@ -19,7 +19,7 @@ var playState = {
 		//------------COSAS DE PRUEBA----------
 		this.cosasDePrueba();
 
-		
+
 
 		///----------Enemigos & moar------------------------///
 		this.map.addEnemies('floater'); //Enemigos que se mueven horizontalmente
@@ -33,14 +33,16 @@ var playState = {
 
 	update: function(){
 		//Actualizamos todos los enemigos
-		for(var i = 0; i < 1; i++){
+		for(var i = 0; i < this.map._totalEnemies; i++){
 			//Comprobamos todos los enemigos de X tipo
 			if(i < game.floaterGroup.group.children.length){
-				game.floaterGroup.group.children[i].movement();
+				console.log('comprueba');
+				console.log(game.floaterGroup.group.children[i]._sprite.body.velocity.x);
+				console.log(game.floaterGroup.group.children[i]);
+				game.physics.arcade.collide(game.floaterGroup.group.children[i]._sprite, this.map._blockedLayer, this.auxEnemies);
 			}
 		}
-		
-		game.physics.arcade.collide(game.floaterGroup.group.children[0]._sprite, this.map._blockedLayer, this.auxEnemies);
+
 		game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this); //Si overlapea con el grupo de objetos de overlap, no podrá transformarse
 		//------------COSAS DE PRUEBA----------
 		//Vamos a comprobar si el player hace "overlap" con una mano y llamamos a la funcion collectStar
@@ -58,13 +60,15 @@ var playState = {
         //game.debug.cameraInfo(game.camera, 32, 32);
         //game.debug.spriteCoords(this.player.player, 32, 500);
         game.debug.body(game.floaterGroup.group.children[0]._sprite);
+				game.debug.body(game.floaterGroup.group.children[1]._sprite);
     },
 
  //-------------------------------------------------------------------AUXILIARES-----------------------------------------------------------------
 
  	auxEnemies: function(enemie){
- 		enemie.class.movement = function(){ //PRUEBAS PARA VER QUE FUNCIONAN LAS COSAS ---> YA SE COLISIONA CON LAS COSAS Y SE AÑADEN BIEN AL GRUPO
- 			 this.moveRight(this._floater, 0);
+ 		enemie.class.moveRight = function(){ //PRUEBAS PARA VER QUE FUNCIONAN LAS COSAS ---> YA SE COLISIONA CON LAS COSAS Y SE AÑADEN BIEN AL GRUPO
+			 console.log('cambio de dir');
+			 this.moveRight(this._floater, 0);
  		}
  		//ESTA FUNCION ES LLAMADA CUANDO COLISIONA CON UNA PARED, AHORA LO Q HACE ES CAMBIARLE EL MOVIMIENTO PERO SOLO 1 VEZ (PRUEBAS)
  	},

@@ -8,6 +8,7 @@ class Floater extends Enemies {
     this._floater = this._sprite;
     this._floater.class = this;
     this._floater.anchor.setTo(0.5, 0.5);
+    this.movement();
   }
 
   ///-------------Lógica del floater-----------///
