@@ -86,7 +86,7 @@ class Player extends Movable{
 		}
 		else
 			this.cambiaAnim('caida');
-	}	
+	}
 
 //--------------------------------------------------------------------UPDATES---------------------------------------------------------------
 
@@ -172,7 +172,7 @@ handle_Events(){
 	}
 
 //--------------------------------------------------------------------DAÑO/INMUNIDAD/REBOTE------------------------------------------------------------------------
-	
+
 	recoil_Damage(posEnemigo){
 		if(this._player.body.x - posEnemigo <= 0){ //para saber la direccion del rebote
 			this.moveLeft(this._player, 0);
@@ -180,7 +180,7 @@ handle_Events(){
 		else{
 			this.moveRight(this._player, 0);
 		}
-		this._player.damage(1); //si la salud llega a 0, el player muere
+		//this._player.damage(1); //si la salud llega a 0, el player muere
 		this._rebote = true;
 		this._immune = true;
 	}
@@ -260,7 +260,7 @@ handle_Events(){
 		this._immuneTimer = 0;  //timers de inmune y de parpadeo
 		this._blinkTimer = 0;
 		this._aim = 'right';
-		this._currentBullets = new Bullets('bala', 300, 300, this, null); //balas añadidas en una clase 
+		this._currentBullets = new Bullets('bala', 300, 300, this, null); //balas añadidas en una clase
 		this.declaracionAnimaciones();
 		this._width = this._player.body.width;
 		this._height = this._player.body.height;

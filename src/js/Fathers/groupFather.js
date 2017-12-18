@@ -8,4 +8,8 @@ class Group{
 	get group(){
 		return this._group;
 	}
+
+	/*createEnemies (enemies){ //para crear los enemigos
+		this._group.create(enemies.x, enemies.y, 'spike');
+	}*/
 }
