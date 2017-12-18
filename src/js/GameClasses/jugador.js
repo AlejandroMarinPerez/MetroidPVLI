@@ -254,7 +254,7 @@ handle_Events(){
 	construccion_Jugador(){ //construccion de las variables necesarias para el jugador
 		this._player = this._sprite; //asignacion con el sprite del padre para que el nombre sea mas legible
 		this._player.anchor.setTo(0.5, 0.5); //ancla
-		//game.camera.follow(this._player);
+		game.camera.follow(this._player);
 		this._player.health = 30; //vida inicial original del juego
 		this._immune = false;
 		this._immuneTimer = 0;  //timers de inmune y de parpadeo
