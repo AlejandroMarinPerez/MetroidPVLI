@@ -8,10 +8,12 @@ var playState = {
 		//------------MAPA----------
 		this.map = new TileMap('gameTiles', 'Background' ,'Main', 'Objects'); //creamos el mapa a partir del Tile
 		var playerStart = this.map.findObjectsByType('playerStart', this.map.objectsLayer); //un objeto que nos indica el comienzo
-		this.capa_Overlaps = this.creacion_Overlaps(); //crea la capa de overlaps para que el jugador no pueda transformarse
+		this.capa_Overlaps = this.creacion_Overlaps('overlap'); //crea la capa de overlaps para que el jugador no pueda transformarse
+		this.capa_Camara = this.creacion_Overlaps('camara');
+		console.log(this.capa_Camara);
 
 		//------------PLAYER & CANVAS----------
-		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 400, 150, 130, this.map._blockedLayer); //una clase o_O (posX,posY, sprite, gravity, scaleX, scaleY)
+		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 400, 150, 200, this.map._blockedLayer); //una clase o_O (posX,posY, sprite, gravity, scaleX, scaleY)
 		this.canvas = new Canvas();
 		this.energia = this.player.health;
 		this.canvas.addText(16, 16, 'EN: ' + this.energia, '65px Arial', '#FFF');
@@ -27,8 +29,9 @@ var playState = {
 //-------------------------------------------------------------------UPDATE-----------------------------------------------------------------
 
 	update: function(){
-
+		game.camera.focusOnXY(this.player.player.x, this.player.player.y);
 		game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this); //Si overlapea con el grupo de objetos de overlap, no podrá transformarse
+		game.physics.arcade.overlap(this.player.player,this.capa_Camara, this.kk, null, this);
 		//------------COSAS DE PRUEBA----------
 		//Vamos a comprobar si el player hace "overlap" con una mano y llamamos a la funcion collectStar
 		game.physics.arcade.overlap(this.player.player,this.hands, this.collectStar, null, this); //no se que es ni el null ni el this ese
@@ -37,22 +40,30 @@ var playState = {
 		//------------COLISION & PLAYERUPDATE----------
 		this.map.update(this.objetosQueColisionan); //objetos que colisionan con el mapa
 		this.player.update(); // update del player (colision de balas 2)
+
+
 	},
 
 //-------------------------------------------------------------------RENDER-----------------------------------------------------------------
 
 	render: function() {
-        //game.debug.cameraInfo(game.camera, 32, 32);
-        //game.debug.spriteCoords(this.player.player, 32, 500);
+        game.debug.cameraInfo(game.camera, 32, 32);
+        game.debug.spriteCoords(this.player.player, 32, 500);
         //game.debug.body(this.player.player);
     },
-
+    kk: function(){
+    	console.log('yey');
+    	/*game.camera.x = 7650;               esto podrá sernos útil una vez que las puertas funcionen, podemos lockear la cámara en una posición si queremos, para que se parezca más al juego
+    	if(game.camera.x >= 7650){
+			game.camera.x = 7650;
+		}*/
+    },
  //-------------------------------------------------------------------AUXILIARES-----------------------------------------------------------------
- 	creacion_Overlaps: function(){
+ 	creacion_Overlaps: function(string){
 		var self = this;
 		grupo = new Group(); //crea un nuevo grupo y lo iguala a la variable
     	grupo = grupo.group;
-		var result = self.map.findObjectsByType('overlap', self.map.objectsLayer); //encuentra los objetos del tipo "overlap"
+		var result = self.map.findObjectsByType(string, self.map.objectsLayer); //encuentra los objetos del tipo "overlap"
 		result.forEach(function(element){
 			self.map.createFromTiledObject(element, grupo, null); //los crea...
 		});
