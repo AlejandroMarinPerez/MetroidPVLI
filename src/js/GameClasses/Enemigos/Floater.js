@@ -1,0 +1,16 @@
+//Los floater son unos enemigos que se mueven de
+//izda a dcha y son invulnerables al daño. Además,
+//flotan.
+class Floater extends Enemies {
+  //COnstructor del floater
+  constructor (posX, posY, gravity, sprite, speedX, speedY, colliders, lives, damage, type){
+    super(posX, posY, gravity, sprite, speedX, speedY, colliders, lives, damage, type);
+    this._floater = this._sprite;
+    this._floater.anchor.setTo(0.5, 0.5);
+  }
+
+  ///-------------Lógica del floater-----------///
+  movement(){ //si se llama a esta función desde el main:
+      this.speedX *= -1;
+  }
+}
