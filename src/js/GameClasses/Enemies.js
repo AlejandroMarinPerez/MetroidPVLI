@@ -16,6 +16,23 @@ class Enemies extends Movable{
       this._lives = lives * 2; //Hit points of a tank
     }
   }
-  //--------------Movement of the enemies-------------//
 
+  ///---------------Daño y demás interacciones-----------------///
+  receiveDmg(damage){ //Función para que los enemigos reciban daño y mueran eventualmente
+    this._lives -= damage;
+
+    if (this._lives <= 0){
+      this.death();
+    }
+  }
+
+  doDamage(player){ //Calcula el daño que recibe el jugador sin modificarla todavía
+    var vida = player._player.health;
+    
+    return vida -= this._damage;
+  }
+
+  death(){ //Muerte de los enemigos (podría estar en GameSprite?)
+    this.kill();
+  }
 }

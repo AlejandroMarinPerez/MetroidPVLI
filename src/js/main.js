@@ -37,6 +37,7 @@ var playState = {
 			//Comprobamos todos los enemigos de X tipo
 			if(i < game.floaterGroup.group.children.length){
 				game.physics.arcade.collide(game.floaterGroup.group.children[i]._sprite, this.map._blockedLayer, this.auxEnemies, null, this);
+				game.physics.arcade.overlap(game.floaterGroup.group.children[i]._sprite, this.player._sprite, this.damagePlayer, null, this);
 			}
 		}
 
@@ -67,6 +68,18 @@ var playState = {
  		enemie.body.velocity.x = enemie.class.hSpeed;
  	},
 
+	damagePlayer: function(enemie){ //El jugador recibe daño de los enemigos
+		if(!this.player._immune){
+			console.log('colision');
+			this.player.recoil_Damage(enemie.x);
+			this.player.immune();
+			var newVida = enemie.class.doDamage(this.player);
+			this.player._player.health = newVida; //Aquí se modifica la vida y se actualiza el daño
+			console.log(this.player.health);
+			this.canvasUpdate();
+		}
+	},
+
  	creacion_Overlaps: function(){
 		var self = this;
 		grupo = new Group(); //crea un nuevo grupo y lo iguala a la variable
@@ -79,14 +92,10 @@ var playState = {
 		return grupo;
 	},
 
-	daño: function(player, spike){ //metodo de daño, que probablemente tengan que llevar los enemigos...
-		if(!this.player._immune){
-			this.player.recoil_Damage(spike.x); //por ahora aqui...
-			this.player.immune();
-			this.energia = this.player.health;
-			this.canvas.setText(0, 'EN: ' + this.energia);
-			this.canvas.updateCanvas();
-		}
+	canvasUpdate: function(){ //metodo de daño, que probablemente tengan que llevar los enemigos...
+		this.energia = this.player.health;
+		this.canvas.setText(0, 'EN: ' + this.energia);
+		this.canvas.updateCanvas();
 	},
 
 	cancelarTransformacion: function(){
