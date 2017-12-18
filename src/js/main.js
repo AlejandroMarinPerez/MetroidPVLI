@@ -36,10 +36,7 @@ var playState = {
 		for(var i = 0; i < this.map._totalEnemies; i++){
 			//Comprobamos todos los enemigos de X tipo
 			if(i < game.floaterGroup.group.children.length){
-				console.log('comprueba');
-				console.log(game.floaterGroup.group.children[i]._sprite.body.velocity.x);
-				console.log(game.floaterGroup.group.children[i]);
-				game.physics.arcade.collide(game.floaterGroup.group.children[i]._sprite, this.map._blockedLayer, this.auxEnemies);
+				game.physics.arcade.collide(game.floaterGroup.group.children[i]._sprite, this.map._blockedLayer, this.auxEnemies, null, this);
 			}
 		}
 
@@ -66,11 +63,8 @@ var playState = {
  //-------------------------------------------------------------------AUXILIARES-----------------------------------------------------------------
 
  	auxEnemies: function(enemie){
- 		enemie.class.moveRight = function(){ //PRUEBAS PARA VER QUE FUNCIONAN LAS COSAS ---> YA SE COLISIONA CON LAS COSAS Y SE AÑADEN BIEN AL GRUPO
-			 console.log('cambio de dir');
-			 this.moveRight(this._floater, 0);
- 		}
- 		//ESTA FUNCION ES LLAMADA CUANDO COLISIONA CON UNA PARED, AHORA LO Q HACE ES CAMBIARLE EL MOVIMIENTO PERO SOLO 1 VEZ (PRUEBAS)
+ 		enemie.class.hSpeed = - enemie.class.hSpeed;
+ 		enemie.body.velocity.x = enemie.class.hSpeed;
  	},
 
  	creacion_Overlaps: function(){
