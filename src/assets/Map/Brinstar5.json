@@ -683,7 +683,7 @@
          "source":"..\/..\/..\/..\/..\/Samantha'sSpace Beta1.tsx"
         }, 
         {
-         "columns":19,
+         "columns":0,
          "firstgid":301,
          "image":"s78s2.png",
          "imageheight":480,
@@ -691,7 +691,7 @@
          "margin":2,
          "name":"w",
          "spacing":0,
-         "tilecount":266,
+         "tilecount":0,
          "tileheight":32,
          "tilewidth":32
         }],
