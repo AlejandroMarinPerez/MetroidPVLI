@@ -9,7 +9,8 @@ var playState = {
 		this.map = new TileMap('gameTiles', 'Background' ,'Main', 'Objects'); //creamos el mapa a partir del Tile
 		var playerStart = this.map.findObjectsByType('playerStart', this.map.objectsLayer); //un objeto que nos indica el comienzo
 		this.capa_Overlaps = this.creacion_Overlaps('overlap'); //crea la capa de overlaps para que el jugador no pueda transformarse
-		this.capa_Camara = this.creacion_Overlaps('camara');
+		//his.capa_Camara = this.creacion_Overlaps('camara');
+		//this.capa_puertas = this.creacion_Overlaps('door');
 		//console.log(this.capa_Camara);
 		this.tps = this.map.findObjectsByType('tp', this.map.objectsLayer);
 
@@ -36,9 +37,10 @@ var playState = {
 
 	update: function(){
 		this.tpDebug();
-		//game.camera.focusOnXY(this.player.player.x, Phaser.Camera.FOLLOW_LOCKON); //util despues creo
+		//game.camera.focusOnXY(this.player.player.x, this.player.player.y); //util despues creo
+		//game.camera.follow(this.player.player);
 		game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this); //Si overlapea con el grupo de objetos de overlap, no podrá transformarse
-		game.physics.arcade.overlap(this.player.player,this.capa_Camara, this.kk, null, this);
+		
 		//------------COSAS DE PRUEBA----------
 		//Vamos a comprobar si el player hace "overlap" con una mano y llamamos a la funcion collectStar
 		game.physics.arcade.overlap(this.player.player,this.hands, this.collectStar, null, this); //no se que es ni el null ni el this ese
@@ -47,6 +49,7 @@ var playState = {
 		//------------COLISION & PLAYERUPDATE----------
 		this.map.update(this.objetosQueColisionan); //objetos que colisionan con el mapa
 		this.player.update(); // update del player (colision de balas 2)
+		//game.physics.arcade.overlap(this.player.player,this.capa_puertas, this.kk, null, this);
 
 
 	},
@@ -58,8 +61,9 @@ var playState = {
         game.debug.spriteCoords(this.player.player, 32, 500);
         //game.debug.body(this.player.player);
     },
-    kk: function(){
-    	console.log('yey');
+    kk: function(player, puerta){
+    	//game.camera.follow(null);
+    	//console.log('yey');
     	/*game.camera.x = 7650;               esto podrá sernos útil una vez que las puertas funcionen, podemos lockear la cámara en una posición si queremos, para que se parezca más al juego
     	if(game.camera.x >= 7650){
 			game.camera.x = 7650;
