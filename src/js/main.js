@@ -10,7 +10,8 @@ var playState = {
 		var playerStart = this.map.findObjectsByType('playerStart', this.map.objectsLayer); //un objeto que nos indica el comienzo
 		this.capa_Overlaps = this.creacion_Overlaps('overlap'); //crea la capa de overlaps para que el jugador no pueda transformarse
 		this.capa_Camara = this.creacion_Overlaps('camara');
-		console.log(this.capa_Camara);
+		//console.log(this.capa_Camara);
+		this.tps = this.map.findObjectsByType('tp', this.map.objectsLayer);
 
 		//------------PLAYER & CANVAS----------
 		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 400, 150, 200, this.map._blockedLayer); //una clase o_O (posX,posY, sprite, gravity, scaleX, scaleY)
@@ -20,6 +21,11 @@ var playState = {
 
 		//------------COSAS DE PRUEBA----------
 		this.cosasDePrueba();
+		this.One = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+		this.TwoKey = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
+		this.ThreeKey = game.input.keyboard.addKey(Phaser.Keyboard.THREE); 
+		this.FourKey = game.input.keyboard.addKey(Phaser.Keyboard.FOUR); 
+		this.FiveKey = game.input.keyboard.addKey(Phaser.Keyboard.FIVE);
 
 		//------------ARRAY DE COLISIONES----------
 		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes]; //metiendo aqui todo lo que colisiona con las paredes, suelo, etc, funciona.
@@ -29,7 +35,8 @@ var playState = {
 //-------------------------------------------------------------------UPDATE-----------------------------------------------------------------
 
 	update: function(){
-		//game.camera.focusOnXY(this.player.player.x, this.player.player.y); util despues creo
+		this.tpDebug();
+		//game.camera.focusOnXY(this.player.player.x, Phaser.Camera.FOLLOW_LOCKON); //util despues creo
 		game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this); //Si overlapea con el grupo de objetos de overlap, no podrá transformarse
 		game.physics.arcade.overlap(this.player.player,this.capa_Camara, this.kk, null, this);
 		//------------COSAS DE PRUEBA----------
@@ -92,6 +99,29 @@ var playState = {
 		hands.kill(); //destruye el objeto star
 		this.player.activarMejoras(this.indexPrueba); //como prueba, las manitas son potenciadores. Serian simples sprites / grupo de sprites que al cogerlos activasen los potenciadores.
 		this.indexPrueba++;
+	},
+
+	tpDebug(){
+		if(this.One.isDown){
+			this.player.player.body.x = this.tps[0].x;
+			this.player.player.body.y = this.tps[0].y;
+		}
+		else if(this.TwoKey.isDown){
+			this.player.player.body.x = this.tps[1].x;
+			this.player.player.body.y = this.tps[1].y;
+		}
+		else if(this.ThreeKey.isDown){
+			this.player.player.body.x = this.tps[2].x;
+			this.player.player.body.y = this.tps[2].y;
+		}
+		else if(this.FourKey.isDown){
+			this.player.player.body.x = this.tps[3].x;
+			this.player.player.body.y = this.tps[3].y;
+		}
+		else if(this.FiveKey.isDown){
+			this.player.player.body.x = this.tps[4].x;
+			this.player.player.body.y = this.tps[4].y;
+		}
 	},
 
 	cosasDePrueba: function(){

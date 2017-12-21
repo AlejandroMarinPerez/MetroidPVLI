@@ -69,6 +69,7 @@ class Player extends Movable{
 		else{
 			this._jumpTimer = 0;
 		}
+		//game.camera.follow(this._player, Phaser.Camera.FOLLOW_PLATFORMER);
 		/*if(this._player.body.velocity.y === 0 && !this._bola){
 			this._player.body.velocity.y = -200;
 			//this._contSaltos++;
@@ -254,7 +255,7 @@ handle_Events(){
 	construccion_Jugador(){ //construccion de las variables necesarias para el jugador
 		this._player = this._sprite; //asignacion con el sprite del padre para que el nombre sea mas legible
 		this._player.anchor.setTo(0.5, 0.5); //ancla
-		game.camera.follow(this._player);
+		game.camera.follow(this._player,Phaser.Camera.FOLLOW_PLATFORMER);
 		this._player.health = 30; //vida inicial original del juego
 		this._immune = false;
 		this._immuneTimer = 0;  //timers de inmune y de parpadeo
