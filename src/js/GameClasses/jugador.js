@@ -51,18 +51,19 @@ class Player extends Movable{
 	//Aquí hacemos el saltito (por tiempo presionando la tecla)
 	saltar(){
 		if(this.WKey.isDown && this._player.body.onFloor() && !this._bola){
-			this.cambiaAnim('salto');
+			var i = Math.floor(Math.random() * 7);
+			if(i === 5 || i === 6) this.cambiaAnim('voltereta'); //la voltereta op
+			else this.cambiaAnim('salto');	
 			this._jumpTimer = game.time.now + 600;
-			//this._player.body.velocity.y = -this._jumpSpeed;
 			this.moveUp(this._player, 0);
 		}
 		else if(this.WKey.isDown && this._jumpTimer != 0){
-			this.cambiaAnim('salto');
+			if(!(this._animacion === 'voltereta'))
+				this.cambiaAnim('salto');
 			if(game.time.now > this._jumpTimer){
 					this._jumpTimer = 0;
 				}
 				else{
-					//this._player.body.velocity.y = -this._jumpSpeed;
 					this.moveUp(this._player, 0);
 				}
 		}
@@ -225,7 +226,8 @@ handle_Events(){
 	}
 
 	cambiaAnim(anim){
-		this._animacion = anim;
+		//if(this._player.animations.currentAnim.loopCount >= 1)
+			this._animacion = anim;
 	}
 
 	caida(){ //gestiona la animacion de la caida
@@ -233,7 +235,7 @@ handle_Events(){
 			if(this.JKey.isDown && !this.cursores.up.isDown){
 				this.cambiaAnim('fallShoot');
 			}
-			else
+			else if(!(this._animacion === 'voltereta'))
 				this.cambiaAnim('caida');
 		}
 	}
@@ -285,18 +287,19 @@ handle_Events(){
 	}
 
 	declaracionAnimaciones(){
-		this._player.animations.add('normal', [1], 0, false);
+		this._player.animations.add('normal', [1], 0, true);
 		this._player.animations.add('bolitaDer', [11, 12, 13, 14], 10, true);
 		this._player.animations.add('bolitaIz', [14, 13, 12, 11], 10, true);
 		this._player.animations.add('salto', [19], 0, true);
 		this._player.animations.add('caida', [20], 0, true);
 		this._player.animations.add('bolitaParada', [11], 0, true);
 		this._player.animations.add('andar', [3, 4, 5], 8, true);
-		this._player.animations.add('apArriba', [2], 0, false);
-		this._player.animations.add('shootJump', [16], 0, false);
-		this._player.animations.add('fallShoot', [17], 0, false);
+		this._player.animations.add('apArriba', [2], 0, true);
+		this._player.animations.add('shootJump', [16], 0, true);
+		this._player.animations.add('fallShoot', [17], 0, true);
 		this._player.animations.add('runShoot', [15, 16, 17], 8, true);
 		this._player.animations.add('runUpShoot', [18, 19, 20], 8, true);
+		this._player.animations.add('voltereta', [7, 8, 9 , 10], 15, true);
 	}
 
 //------------------------------------------------GETS & SETS--------------------------------------------------------------------

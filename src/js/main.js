@@ -4,7 +4,6 @@ var playState = {
 //--------------------------------------------------------------------CREACION---------------------------------------------------------------
 
 	create: function(){
-
 		//------------MAPA----------
 		this.map = new TileMap('gameTiles', 'Background' ,'Main', 'Objects'); //creamos el mapa a partir del Tile
 		var playerStart = this.map.findObjectsByType('playerStart', this.map.objectsLayer); //un objeto que nos indica el comienzo
