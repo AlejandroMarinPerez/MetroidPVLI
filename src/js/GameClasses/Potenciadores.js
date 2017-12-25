@@ -30,7 +30,6 @@ class Potenciadores{
 				this._bola = false;
 				this._player.body.setSize(this.width, this.height);
 				this._player.body.y = this._player.y - 60; //este numero hay que cambiarlo pero no se llegar a él... (es AlturaDeAntes - AlturaEnBola)
-				this._player.body.gravity.y = 400;
 				this._animacion = 'normal';
 				if(this._ultimaDir == 1){
 					this._aim = 'right';
@@ -86,7 +85,7 @@ class Potenciadores{
 
 	bombas(self){
 		self._player._bombas = new Bullets('bomba', 0, 700, self._player, null); //nuevas balas
-
+		self._player.grupoAuxiliar.group.add(self._player._bombas.grupoBalas);
 		for(var i = 0; i < self._player._bombas.grupoBalas.length; i++){ //las bombas son "balas" diferentes, por lo cual hay que hacerle unos pocos ajustillos
 			self._player._bombas.grupoBalas.children[i].body.bounce.y = 0.5; //un poco de rebote como en el juego
 			self._player._bombas.grupoBalas.children[i].body.gravity.y = 200; //ajustes para la estética y eso

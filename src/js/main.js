@@ -15,6 +15,7 @@ var playState = {
 
 		//------------PLAYER & CANVAS----------
 		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 400, 150, 200, this.map._blockedLayer); //una clase o_O (posX,posY, sprite, gravity, scaleX, scaleY)
+		this.map._backgroundLayer2 = this.map._map.createLayer('Tuberias'); //para que quede chulo se crean después, maybe lo hago de otra forma luego...
 		this.canvas = new Canvas();
 		this.energia = this.player.health;
 		this.canvas.addText(16, 16, 'EN: ' + this.energia, '65px Arial', '#FFF');
@@ -26,6 +27,7 @@ var playState = {
 		this.ThreeKey = game.input.keyboard.addKey(Phaser.Keyboard.THREE); 
 		this.FourKey = game.input.keyboard.addKey(Phaser.Keyboard.FOUR); 
 		this.FiveKey = game.input.keyboard.addKey(Phaser.Keyboard.FIVE);
+		this.SixKey = game.input.keyboard.addKey(Phaser.Keyboard.SIX);
 
 		//------------ARRAY DE COLISIONES----------
 		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes]; //metiendo aqui todo lo que colisiona con las paredes, suelo, etc, funciona.
@@ -58,7 +60,7 @@ var playState = {
 	render: function() {
         game.debug.cameraInfo(game.camera, 32, 32);
         game.debug.spriteCoords(this.player.player, 32, 500);
-        //game.debug.body(this.player.player);
+        game.debug.body(this.player.player);
     },
     kk: function(player, puerta){
     	//game.camera.follow(null);
@@ -124,6 +126,11 @@ var playState = {
 		else if(this.FiveKey.isDown){
 			this.player.player.body.x = this.tps[4].x;
 			this.player.player.body.y = this.tps[4].y;
+		}
+		else if(this.SixKey.isDown){
+			console.log(this.tps[5]);
+			this.player.player.body.x = this.tps[5].x;
+			this.player.player.body.y = this.tps[5].y;
 		}
 	},
 

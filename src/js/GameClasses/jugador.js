@@ -90,6 +90,11 @@ class Player extends Movable{
 			this.cambiaAnim('caida');
 	}	
 
+	saltoBomba(player, bomba){
+		if(bomba.animations.currentAnim.name == 'expl' && this._bola){
+			this.aux = true;
+		}
+	}
 //--------------------------------------------------------------------UPDATES---------------------------------------------------------------
 
 	update(){ //update del jugador, se reinicia la velocidad, la gravedad y comprueba si choca o no con el suelo, los eventos de teclado
@@ -99,17 +104,18 @@ class Player extends Movable{
 		this._puedeTrans = true; //si no esta en los overlaps que no le dejan transformarse, se pone a true y le dejan transformarse
 		this.updateBullets();
 		this.caida();
+		this.microSalto();
 	}
 
 	updateBullets(){ //podrian estar en el array de colisiones, pero como cuando colisionan tienen que hacer algo específico, mejor aquí
 		if(this._bombas !== undefined){ //las bombas son especialitas
 			game.physics.arcade.collide(this._bombas.grupoBalas, this._colliders, this.bombasAux, null, this);
+			game.physics.arcade.overlap(this._bombas.grupoBalas, this._player, this.saltoBomba, null, this);
 		}
 		for(var i = 0; i < this._arrayBalas.length; i++){
 			game.physics.arcade.collide(this._arrayBalas[i], this._colliders, function(bullet){bullet.animations.play('expl');bullet.lifespan = 200;});
 		}
 	}
-
 //--------------------------------------------------------------------HANDLE_EVENTS------------------------------------------------------------------------
 
 handle_Events(){
@@ -153,6 +159,9 @@ handle_Events(){
 				this._player.body.velocity.x = 0;
 				this._rebote = false;
 				this._reboteTimer = 0;
+		}
+		if(this._player.body.onFloor() && this._bola){
+			this._player.body.velocity.y = 0; //soluciona un bug super raro loko, si cmabiabas de pestaña en bola te ibas pa abajo lel
 		}
 		this.immune();
 	}
@@ -219,6 +228,18 @@ handle_Events(){
 		this._bombas.checkCollisionAndTime(bullet);
 	}
 
+	microSalto(){
+		if(this.aux){
+			this._player.body.velocity.y = -1150;
+			this._microSalto = true;
+			this.aux = false;
+		}
+		else if(this._microSalto && !this._bola){
+			this._player.body.velocity.y = 0;
+			this._microSalto = false;
+		}
+	}
+
 //--------------------------------------------------------------------ANIMACIONES------------------------------------------------------------------------
 
 	Anima(){
@@ -274,6 +295,8 @@ handle_Events(){
 		this._reboteTimer = 0;
 		this._arrayBalas = [this._currentBullets.grupoBalas]; //array de balas disponibles en el jugador
 		this._ultimaDir = 1; //almacena la ultima direccion pulsada, util para cuadrar las animaciones
+		this.aux = false;
+		this.grupoAuxiliar = new Group(); //le añades objetos q se creen en tiempo de ejecucion para que esten en la layer correcta...
 	}
 
 
