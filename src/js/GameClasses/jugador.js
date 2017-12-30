@@ -105,6 +105,7 @@ class Player extends Movable{
 		this.updateBullets();
 		this.caida();
 		this.microSalto();
+		this.hSpeed = this._speed;
 	}
 
 	updateBullets(){ //podrian estar en el array de colisiones, pero como cuando colisionan tienen que hacer algo específico, mejor aquí
@@ -196,8 +197,12 @@ handle_Events(){
 		this._immune = true;
 	}
 
-	immune(){
+	immune(bool, int){
+		if(bool){
+			this._immune = true;
+		}
 		if(this._immune && this._immuneTimer === 0){
+			this._player.damage(int);
 			this._immuneTimer = game.time.now + 2000;
 		}
 		else if(this._immuneTimer !== 0){
@@ -297,6 +302,8 @@ handle_Events(){
 		this._ultimaDir = 1; //almacena la ultima direccion pulsada, util para cuadrar las animaciones
 		this.aux = false;
 		this.grupoAuxiliar = new Group(); //le añades objetos q se creen en tiempo de ejecucion para que esten en la layer correcta...
+		this._player.class = this;
+		this._speed = this.hSpeed;
 	}
 
 

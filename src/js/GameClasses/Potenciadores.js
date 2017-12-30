@@ -11,12 +11,14 @@ class Potenciadores{
 	agregarBola(self){ //agrega todas las funciones necesarias para que el jugador se transforme en bola
 		//Agrega la funcion al player de transformarse en pelotita, le cambia el collider, la animacion...
 		self._player.bolita = function(){
-			this._bola = true;
-			this._player.body.setSize(this.width, this.height - 30); //cambia los colliders
-			//his._player.body.y = this._player.y - 60;
-			this._animacion = 'bolitaDer';
+			if(this._puedeTrans){
+				this._bola = true;
+				this._player.body.setSize(this.width, this.height - 30); //cambia los colliders
+				//his._player.body.y = this._player.y - 60;
+				this._animacion = 'bolitaDer';
+			}
 		}
-
+		
 		//Hace la comprobacion de que no esta saltando y se transforma en bola
 		self._player.transformarse = function(){
 			if(this._player.body.velocity.y === 0){

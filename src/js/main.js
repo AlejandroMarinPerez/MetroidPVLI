@@ -15,6 +15,12 @@ var playState = {
 
 		//------------PLAYER & CANVAS----------
 		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 400, 150, 200, this.map._blockedLayer); //una clase o_O (posX,posY, sprite, gravity, scaleX, scaleY)
+		var sand = this.map.findObjectsByType('arena', this.map.objectsLayer); //crea los objetos de tipo arena
+		this.Arena = [];
+		for(var i = 0; i < sand.length; i++){
+			var sandy = new DamageZone(sand[i].x, sand[i].y, null, 0 , this.player);
+			this.Arena.push(sandy); //los agrega al array de arenas
+		}
 		this.map._backgroundLayer2 = this.map._map.createLayer('Tuberias'); //para que quede chulo se crean después, maybe lo hago de otra forma luego...
 		this.canvas = new Canvas();
 		this.energia = this.player.health;
@@ -50,6 +56,12 @@ var playState = {
 		//------------COLISION & PLAYERUPDATE----------
 		this.map.update(this.objetosQueColisionan); //objetos que colisionan con el mapa
 		this.player.update(); // update del player (colision de balas 2)
+		for(var i = 0; i < this.Arena.length; i++){
+			this.Arena[i].update(); //comprobacion de overlap entre arena y player
+		}
+		this.energia = this.player.health;
+		this.canvas.setText(0, 'EN: ' + this.energia); //pruebas solo (el canvas me tiene frito en verdad xdd)
+		this.canvas.updateCanvas();
 		//game.physics.arcade.overlap(this.player.player,this.capa_puertas, this.kk, null, this);
 
 
