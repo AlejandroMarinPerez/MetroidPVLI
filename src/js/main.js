@@ -84,7 +84,7 @@ var playState = {
 	render: function() {
         //game.debug.cameraInfo(game.camera, 32, 32);
         //game.debug.spriteCoords(this.player.player, 32, 500);
-        game.debug.body(this.player.player);
+        //game.debug.body(this.player.player);
     },
     kk: function(player, puerta){
     	//game.camera.follow(null);
