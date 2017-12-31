@@ -15,16 +15,25 @@ var playState = {
 
 		//------------PLAYER & CANVAS----------
 		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 400, 150, 200, this.map._blockedLayer); //una clase o_O (posX,posY, sprite, gravity, scaleX, scaleY)
+		this.canvas = new Canvas();
+		this.energia = this.player.health;
+		this.canvas.addText(16, 16, 'EN: ' + this.energia, '65px Arial', '#FFF');
+
+		//--------------------Creacion de arena y purtas -------------------
+
 		var sand = this.map.findObjectsByType('arena', this.map.objectsLayer); //crea los objetos de tipo arena
 		this.Arena = [];
 		for(var i = 0; i < sand.length; i++){
 			var sandy = new DamageZone(sand[i].x, sand[i].y, null, 0 , this.player);
 			this.Arena.push(sandy); //los agrega al array de arenas
 		}
+		var door = this.map.findObjectsByType('door', this.map.objectsLayer); //crea los objetos de tipo arena
+		this.Doors= [];
+		for(var i = 0; i < door.length; i++){
+			var puerta = new Door(door[i].x, door[i].y, 'door', 0 , this.player, i);
+			this.Doors.push(puerta); //los agrega al array de arenas
+		}
 		this.map._backgroundLayer2 = this.map._map.createLayer('Tuberias'); //para que quede chulo se crean después, maybe lo hago de otra forma luego...
-		this.canvas = new Canvas();
-		this.energia = this.player.health;
-		this.canvas.addText(16, 16, 'EN: ' + this.energia, '65px Arial', '#FFF');
 
 		//------------COSAS DE PRUEBA----------
 		this.cosasDePrueba();
@@ -37,6 +46,7 @@ var playState = {
 
 		//------------ARRAY DE COLISIONES----------
 		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes]; //metiendo aqui todo lo que colisiona con las paredes, suelo, etc, funciona.
+		//this.puertaPrueba = new Door(playerStart[0].x, playerStart[0].y, 'door', 0, this.player);
 
 	},
 
@@ -44,7 +54,7 @@ var playState = {
 
 	update: function(){
 		this.tpDebug();
-		//game.camera.focusOnXY(this.player.player.x, this.player.player.y); //util despues creo
+		game.camera.focusOnXY(this.player.player.x, this.player.player.y);
 		//game.camera.follow(this.player.player);
 		game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this); //Si overlapea con el grupo de objetos de overlap, no podrá transformarse
 		
@@ -63,16 +73,18 @@ var playState = {
 		this.canvas.setText(0, 'EN: ' + this.energia); //pruebas solo (el canvas me tiene frito en verdad xdd)
 		this.canvas.updateCanvas();
 		//game.physics.arcade.overlap(this.player.player,this.capa_puertas, this.kk, null, this);
-
+		for(var i = 0; i < this.Doors.length; i++){
+			this.Doors[i].update(); //comprobacion de overlap entre arena y players
+		}
 
 	},
 
 //-------------------------------------------------------------------RENDER-----------------------------------------------------------------
 
 	render: function() {
-        game.debug.cameraInfo(game.camera, 32, 32);
-        game.debug.spriteCoords(this.player.player, 32, 500);
-        game.debug.body(this.player.player);
+        //game.debug.cameraInfo(game.camera, 32, 32);
+        //game.debug.spriteCoords(this.player.player, 32, 500);
+        //game.debug.body(this.player.player);
     },
     kk: function(player, puerta){
     	//game.camera.follow(null);
@@ -99,9 +111,6 @@ var playState = {
 		if(!this.player._immune){
 			this.player.recoil_Damage(spike.x); //por ahora aqui...
 			this.player.immune();
-			this.energia = this.player.health;
-			this.canvas.setText(0, 'EN: ' + this.energia);
-			this.canvas.updateCanvas();
 		}
 	},
 

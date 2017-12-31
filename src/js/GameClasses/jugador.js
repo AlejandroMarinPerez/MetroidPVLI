@@ -121,7 +121,8 @@ class Player extends Movable{
 
 handle_Events(){
 		//If del movimiento...
-		if(this.AKey.isDown && !this._rebote){ //si presiona izquierda
+		if(this._puedeControlar){
+			if(this.AKey.isDown && !this._rebote){ //si presiona izquierda
 			this.mueveIzquierda();
 		}
 		else if(this.DKey.isDown && !this._rebote){ //si presiona derecha
@@ -145,7 +146,8 @@ handle_Events(){
 				this.cambiaAnim('shootJump'); //si dispara mientras salta cambia de animacion
 			this._currentBullets.shoot(this._aim);
 		}
-	}
+	}		
+}
 
 //--------------------------------------------------------------------RESETS------------------------------------------------------------------------
 
@@ -202,7 +204,9 @@ handle_Events(){
 			this._immune = true;
 		}
 		if(this._immune && this._immuneTimer === 0){
-			this._player.damage(int);
+			if(bool){
+				this._player.damage(int); //cosas de prueba que probablemente haya q quitar
+			}
 			this._immuneTimer = game.time.now + 2000;
 		}
 		else if(this._immuneTimer !== 0){
@@ -283,7 +287,6 @@ handle_Events(){
 	construccion_Jugador(){ //construccion de las variables necesarias para el jugador
 		this._player = this._sprite; //asignacion con el sprite del padre para que el nombre sea mas legible
 		this._player.anchor.setTo(0.5, 0.5); //ancla
-		game.camera.follow(this._player,Phaser.Camera.FOLLOW_PLATFORMER);
 		this._player.health = 30; //vida inicial original del juego
 		this._immune = false;
 		this._immuneTimer = 0;  //timers de inmune y de parpadeo
@@ -304,6 +307,7 @@ handle_Events(){
 		this.grupoAuxiliar = new Group(); //le añades objetos q se creen en tiempo de ejecucion para que esten en la layer correcta...
 		this._player.class = this;
 		this._speed = this.hSpeed;
+		this._puedeControlar = true;
 	}
 
 
