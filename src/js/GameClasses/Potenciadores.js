@@ -13,7 +13,7 @@ class Potenciadores{
 		self._player.bolita = function(){
 			if(this._puedeTrans){
 				this._bola = true;
-				this._player.body.setSize(this.width, this.height - 30); //cambia los colliders
+				//this._player.body.setSize(this.width, this.height - 30); //cambia los colliders
 				//his._player.body.y = this._player.y - 60;
 				this._animacion = 'bolitaDer';
 			}
@@ -30,8 +30,8 @@ class Potenciadores{
 		self._player.normal = function(){ 
 			if(this._bola && this._puedeTrans){
 				this._bola = false;
-				this._player.body.setSize(this.width, this.height);
-				this._player.body.y = this._player.y - 60; //este numero hay que cambiarlo pero no se llegar a él... (es AlturaDeAntes - AlturaEnBola)
+				//this._player.body.setSize(this.width, this.height);
+				//this._player.body.y = this._player.y - 60; //este numero hay que cambiarlo pero no se llegar a él... (es AlturaDeAntes - AlturaEnBola)
 				this._animacion = 'normal';
 				if(this._ultimaDir == 1){
 					this._aim = 'right';
