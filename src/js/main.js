@@ -33,17 +33,24 @@ var playState = {
 			var puerta = new Door(door[i].x, door[i].y, 'door', 0 , this.player, i);
 			this.Doors.push(puerta); //los agrega al array de arenas
 		}
+		var length = this.Doors.length;
+		door = [];
+		door = this.map.findObjectsByType('rocketDoor', this.map.objectsLayer);
+		for(var i = 0; i < door.length; i++){
+			var puerta = new RocketDoor(door[i].x, door[i].y, 'rocketDoor', 0 , this.player, i + length, 'rocket');
+			this.Doors.push(puerta); //los agrega al array de arenas
+		} 
 		this.map._backgroundLayer2 = this.map._map.createLayer('Tuberias'); //para que quede chulo se crean después, maybe lo hago de otra forma luego...
 
 		//------------COSAS DE PRUEBA----------
 		this.cosasDePrueba();
+		//this.prueba = new RocketDoor(playerStart[0].x, playerStart[0].y, 'door', 0 , this.player, 3, 'rocket');
 		this.One = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
 		this.TwoKey = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
 		this.ThreeKey = game.input.keyboard.addKey(Phaser.Keyboard.THREE); 
 		this.FourKey = game.input.keyboard.addKey(Phaser.Keyboard.FOUR); 
 		this.FiveKey = game.input.keyboard.addKey(Phaser.Keyboard.FIVE);
 		this.SixKey = game.input.keyboard.addKey(Phaser.Keyboard.SIX);
-
 		//------------ARRAY DE COLISIONES----------
 		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes]; //metiendo aqui todo lo que colisiona con las paredes, suelo, etc, funciona.
 		//this.puertaPrueba = new Door(playerStart[0].x, playerStart[0].y, 'door', 0, this.player);
@@ -76,6 +83,7 @@ var playState = {
 		for(var i = 0; i < this.Doors.length; i++){
 			this.Doors[i].update(); //comprobacion de overlap entre arena y players
 		}
+		//this.kk();
 
 	},
 
@@ -92,6 +100,12 @@ var playState = {
     	/*game.camera.x = 7650;               esto podrá sernos útil una vez que las puertas funcionen, podemos lockear la cámara en una posición si queremos, para que se parezca más al juego
     	if(game.camera.x >= 7650){
 			game.camera.x = 7650;
+		}*/
+		/*console.log(game.numDoor);
+		if(game.numDoor === 2){
+			if(game.camera.x > game.doorSprite.x - 700){
+				game.camera.x = game.doorSprite.x - 700;
+			}
 		}*/
     },
  //-------------------------------------------------------------------AUXILIARES-----------------------------------------------------------------

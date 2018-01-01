@@ -14,6 +14,7 @@ var loadState = {
     	game.load.image('gameTiles', 'assets/Map/tiles.png'); //las imagenes del tile
     	game.load.spritesheet('bomba', 'assets/PlayerThings/bomba.png', 25, 57);
     	game.load.spritesheet('door', 'assets/Map/door.png', 160, 92);
+    	game.load.spritesheet('rocketDoor', 'assets/Map/rocketDoor.png', 160, 92);
 		game.floaterGroup = new Group(); //Grupo que contendrá a los floaters del juego
     	console.log("Cargando..."); //simple debug
 	},
