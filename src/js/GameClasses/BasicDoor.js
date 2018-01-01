@@ -1,4 +1,4 @@
-class BasicDoor extends Door{
+class BasicDoor extends DoorFather{
 	constructor(posX, posY, sprite, gravity, player, numPuerta, tipoBala){
 		super(posX, posY, sprite, gravity, player, numPuerta, tipoBala);
 		this._openTimer = 0;
@@ -14,14 +14,14 @@ class BasicDoor extends Door{
 			this._open = false; //timer
 		}
 
-		if(!this._open){
+		if(!this._open){ //reset timer
 			this._openTimer = 0;
 		}
 	}
 
 	abrir_Puerta(){
 		this._open = true; 
-		this._openTimer = game.time.now + 3000; 
+		this._openTimer = game.time.now + 3000; //activa el timer, animacion y abre la puerta
 		this.sprite.animations.play('abierta');
 	}
 }

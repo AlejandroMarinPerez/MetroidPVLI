@@ -1,4 +1,4 @@
-class RocketDoor extends Door{
+class RocketDoor extends DoorFather{
 	constructor(posX, posY, sprite, gravity, player, numPuerta, tipoBala){
 		super(posX, posY, sprite, gravity, player, numPuerta);
 		this._tipoBala = tipoBala;
@@ -11,7 +11,7 @@ class RocketDoor extends Door{
 
 	abrir_Puerta(){
 		this._open = true;
-		this._activa = false; 
+		this._activa = false;  //desactiva la puerta para que no se abra más, animacion y abre la puerta
 		this.sprite.animations.play('abierta');
 	}
 
