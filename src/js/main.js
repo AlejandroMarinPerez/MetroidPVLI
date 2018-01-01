@@ -30,7 +30,7 @@ var playState = {
 		var door = this.map.findObjectsByType('door', this.map.objectsLayer); //crea los objetos de tipo arena
 		this.Doors= [];
 		for(var i = 0; i < door.length; i++){
-			var puerta = new Door(door[i].x, door[i].y, 'door', 0 , this.player, i);
+			var puerta = new BasicDoor(door[i].x, door[i].y, 'door', 0 , this.player, i, 'bala');
 			this.Doors.push(puerta); //los agrega al array de arenas
 		}
 		var length = this.Doors.length;

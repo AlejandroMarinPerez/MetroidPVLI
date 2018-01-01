@@ -2,10 +2,22 @@ class RocketDoor extends Door{
 	constructor(posX, posY, sprite, gravity, player, numPuerta, tipoBala){
 		super(posX, posY, sprite, gravity, player, numPuerta);
 		this._tipoBala = tipoBala;
-		//this.sprite.tint = 0xFF2525;
+	}
+
+	update(){
+		this.logicaPuerta();
+		this.desactivar();
+	}
+
+	abrir_Puerta(){
+		this._open = true;
+		this._activa = false; 
+		this.sprite.animations.play('abierta');
 	}
 
 	desactivar(){
-		this._activa = false;
+		if(!this._activa){
+			this._open = true;
+		}
 	}
 }
