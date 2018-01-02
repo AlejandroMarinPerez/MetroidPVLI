@@ -2,7 +2,7 @@ class DoorFather extends GameSprite{
 	constructor(posX, posY, sprite, gravity, player, numPuerta, tipoBala){
 		super(posX, posY, sprite, gravity);
 		this._player = player;
-		this.setImmovable(true);
+		this.sprite.body.immovable = true;
 		this._open = false;
 		this.sprite.animations.add('cerrada', [0], 0, false);
 		this.sprite.animations.add('abierta', [1, 2], 5, false);

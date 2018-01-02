@@ -39,6 +39,12 @@ var playState = {
 		for(var i = 0; i < door.length; i++){
 			var puerta = new RocketDoor(door[i].x, door[i].y, 'rocketDoor', 0 , this.player, i + length, 'rocket');
 			this.Doors.push(puerta); //los agrega al array de arenas
+		}
+		var nest = this.map.findObjectsByType('nest', this.map.objectsLayer); //crea los objetos de tipo arena
+		this.nests = [];
+		for(var i = 0; i < nest.length; i++){
+			var spawn = new WaspSpawn(nest[i].x, nest[i].y, null, 0, 10000, this.player);
+			this.nests.push(spawn); //los agrega al array de arenas
 		} 
 		this.map._backgroundLayer2 = this.map._map.createLayer('Tuberias'); //para que quede chulo se crean después, maybe lo hago de otra forma luego...
 
@@ -54,7 +60,10 @@ var playState = {
 		//------------ARRAY DE COLISIONES----------
 		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes]; //metiendo aqui todo lo que colisiona con las paredes, suelo, etc, funciona.
 		//this.puertaPrueba = new Door(playerStart[0].x, playerStart[0].y, 'door', 0, this.player);
-
+		//this.prueba = new WaspSpawn(17260, 2496,'bala', 0, 10000, this.player);
+		/*this.prueba = new Wasp(17137, 2756, 0,'dude', 150, 250, 0, 10, 5, 0, this.player);
+		this.prueba2 = new Wasp(16789, 2756, 0, 'dude', 150, 250, 0, 10, 5, 0, this.player);
+		this.prueba1 = new Wasp(18999,2756, 0, 'dude', 150, 250, 0, 10, 5, 0, this.player);*/
 	},
 
 //-------------------------------------------------------------------UPDATE-----------------------------------------------------------------
@@ -84,14 +93,16 @@ var playState = {
 			this.Doors[i].update(); //comprobacion de overlap entre arena y players
 		}
 		//this.kk();
-
+		for(var i = 0; i < this.nests.length; i++){
+			this.nests[i].update(); //comprobacion de overlap entre arena y players
+		}
 	},
 
 //-------------------------------------------------------------------RENDER-----------------------------------------------------------------
 
 	render: function() {
         //game.debug.cameraInfo(game.camera, 32, 32);
-        //game.debug.spriteCoords(this.player.player, 32, 500);
+        game.debug.spriteCoords(this.player.player, 32, 500);
         //game.debug.body(this.player.player);
     },
     kk: function(player, puerta){
@@ -123,7 +134,7 @@ var playState = {
 
 	daño: function(player, spike){ //metodo de daño, que probablemente tengan que llevar los enemigos...
 		if(!this.player._immune){
-			this.player.recoil_Damage(spike.x); //por ahora aqui...
+			this.player.recoil_Damage(spike.x, 1); //por ahora aqui...
 			this.player.immune();
 		}
 	},

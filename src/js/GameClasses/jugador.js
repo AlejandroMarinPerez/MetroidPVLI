@@ -187,16 +187,18 @@ handle_Events(){
 
 //--------------------------------------------------------------------DAÑO/INMUNIDAD/REBOTE------------------------------------------------------------------------
 	
-	recoil_Damage(posEnemigo){
-		if(this._player.body.x - posEnemigo <= 0){ //para saber la direccion del rebote
-			this.moveLeft(this._player, 0);
-		}
-		else{
-			this.moveRight(this._player, 0);
-		}
-		this._player.damage(1); //si la salud llega a 0, el player muere
-		this._rebote = true;
-		this._immune = true;
+	recoil_Damage(posEnemigo, damage){
+		if(!this._immune){
+			if(this._player.body.x - posEnemigo <= 0){ //para saber la direccion del rebote
+				this.moveLeft(this._player, 0);
+			}
+			else{
+				this.moveRight(this._player, 0);
+			}
+			this._player.damage(damage); //si la salud llega a 0, el player muere
+			this._rebote = true;
+			this._immune = true;
+		}	
 	}
 
 	immune(bool, int){

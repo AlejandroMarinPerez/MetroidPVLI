@@ -15,6 +15,7 @@ var loadState = {
     	game.load.spritesheet('bomba', 'assets/PlayerThings/bomba.png', 25, 57);
     	game.load.spritesheet('door', 'assets/Map/door.png', 160, 92);
     	game.load.spritesheet('rocketDoor', 'assets/Map/rocketDoor.png', 160, 92);
+    	game.load.spritesheet('wasp', 'assets/Enemies/wasp2.png', 25, 28);
 		game.floaterGroup = new Group(); //Grupo que contendrá a los floaters del juego
     	console.log("Cargando..."); //simple debug
 	},
