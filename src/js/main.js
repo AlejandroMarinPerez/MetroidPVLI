@@ -19,14 +19,16 @@ var playState = {
 		this.energia = this.player.health;
 		this.canvas.addText(16, 16, 'EN: ' + this.energia, '65px Arial', '#FFF');
 
-		//--------------------Creacion de arena y purtas -------------------
+		//--------------------Creacion de arena, puetas, enemigos... (posiblemente metodo q esta quedando to suciooo) -------------------
 
+		//ARENAAAAAA
 		var sand = this.map.findObjectsByType('arena', this.map.objectsLayer); //crea los objetos de tipo arena
 		this.Arena = [];
 		for(var i = 0; i < sand.length; i++){
 			var sandy = new DamageZone(sand[i].x, sand[i].y, null, 0 , this.player);
 			this.Arena.push(sandy); //los agrega al array de arenas
 		}
+		//PUERTAAAAAS
 		var door = this.map.findObjectsByType('door', this.map.objectsLayer); //crea los objetos de tipo arena
 		this.Doors= [];
 		for(var i = 0; i < door.length; i++){
@@ -40,17 +42,25 @@ var playState = {
 			var puerta = new RocketDoor(door[i].x, door[i].y, 'rocketDoor', 0 , this.player, i + length, 'rocket');
 			this.Doors.push(puerta); //los agrega al array de arenas
 		}
+		//NIDOS DE AVISPAAAAAAA
 		var nest = this.map.findObjectsByType('nest', this.map.objectsLayer); //crea los objetos de tipo arena
 		this.nests = [];
 		for(var i = 0; i < nest.length; i++){
 			var spawn = new WaspSpawn(nest[i].x, nest[i].y, null, 0, 10000, this.player);
 			this.nests.push(spawn); //los agrega al array de arenas
-		} 
+		}
+		//NO SE QUE ES ESTO, COSAS QUE FLOTAAAAN
+		var cositasQueFlotan = this.map.findObjectsByType('floater', this.map.objectsLayer); //crea los objetos de tipo arena
+		this.floaters = [];
+		for(var i = 0; i < cositasQueFlotan.length; i++){
+			var flo = new Floater(cositasQueFlotan[i].x, cositasQueFlotan[i].y, 0,'floater', 75, 0, this.map._blockedLayer, 1, 7, 0, this.player);
+			this.floaters.push(flo); //los agrega al array de arenas
+		}
+		//CAPA POR DELANTE DEL PLAYER!  
 		this.map._backgroundLayer2 = this.map._map.createLayer('Tuberias'); //para que quede chulo se crean después, maybe lo hago de otra forma luego...
 
 		//------------COSAS DE PRUEBA----------
 		this.cosasDePrueba();
-		//this.prueba = new RocketDoor(playerStart[0].x, playerStart[0].y, 'door', 0 , this.player, 3, 'rocket');
 		this.One = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
 		this.TwoKey = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
 		this.ThreeKey = game.input.keyboard.addKey(Phaser.Keyboard.THREE); 
@@ -59,11 +69,6 @@ var playState = {
 		this.SixKey = game.input.keyboard.addKey(Phaser.Keyboard.SIX);
 		//------------ARRAY DE COLISIONES----------
 		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes]; //metiendo aqui todo lo que colisiona con las paredes, suelo, etc, funciona.
-		//this.puertaPrueba = new Door(playerStart[0].x, playerStart[0].y, 'door', 0, this.player);
-		//this.prueba = new WaspSpawn(17260, 2496,'bala', 0, 10000, this.player);
-		/*this.prueba = new Wasp(17137, 2756, 0,'dude', 150, 250, 0, 10, 5, 0, this.player);
-		this.prueba2 = new Wasp(16789, 2756, 0, 'dude', 150, 250, 0, 10, 5, 0, this.player);
-		this.prueba1 = new Wasp(18999,2756, 0, 'dude', 150, 250, 0, 10, 5, 0, this.player);*/
 	},
 
 //-------------------------------------------------------------------UPDATE-----------------------------------------------------------------
@@ -82,19 +87,24 @@ var playState = {
 		//------------COLISION & PLAYERUPDATE----------
 		this.map.update(this.objetosQueColisionan); //objetos que colisionan con el mapa
 		this.player.update(); // update del player (colision de balas 2)
-		for(var i = 0; i < this.Arena.length; i++){
-			this.Arena[i].update(); //comprobacion de overlap entre arena y player
-		}
 		this.energia = this.player.health;
 		this.canvas.setText(0, 'EN: ' + this.energia); //pruebas solo (el canvas me tiene frito en verdad xdd)
 		this.canvas.updateCanvas();
-		//game.physics.arcade.overlap(this.player.player,this.capa_puertas, this.kk, null, this);
-		for(var i = 0; i < this.Doors.length; i++){
-			this.Doors[i].update(); //comprobacion de overlap entre arena y players
+
+		for(var i = 0; i < this.Arena.length; i++){
+			this.Arena[i].update(); //comprobacion de overlap entre arena y player
 		}
-		//this.kk();
+
+		for(var i = 0; i < this.Doors.length; i++){
+			this.Doors[i].update(); //UPDATE DE DOORS
+		}
+
 		for(var i = 0; i < this.nests.length; i++){
-			this.nests[i].update(); //comprobacion de overlap entre arena y players
+			this.nests[i].update(); //UPDATE DE AVISPILLAS
+		}
+
+		for(var i = 0; i < this.floaters.length; i++){
+			this.floaters[i].update(); //UPDATE DE ESO
 		}
 	},
 
@@ -103,7 +113,7 @@ var playState = {
 	render: function() {
         //game.debug.cameraInfo(game.camera, 32, 32);
         game.debug.spriteCoords(this.player.player, 32, 500);
-        //game.debug.body(this.player.player);
+        //game.debug.body(this.prueba.sprite);
     },
     kk: function(player, puerta){
     	//game.camera.follow(null);

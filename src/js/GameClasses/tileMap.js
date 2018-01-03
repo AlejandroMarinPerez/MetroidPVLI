@@ -19,7 +19,7 @@ class TileMap{
 
 	update(objects){ //pura comprobacion de colisiones
 		for(var i = 0; i < objects.length; i++){
-			if(i === 1 && !objects[i].class._bola){
+			if(i === 1 && !objects[i].class._bola){ //player ahi guarrete :P
 				game.physics.arcade.collide(objects[i], this._bolaLayer);
 			}
 			game.physics.arcade.collide(objects[i], this._blockedLayer);

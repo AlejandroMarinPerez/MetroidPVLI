@@ -5,8 +5,8 @@ que hacen al jugador y que reciben del jugador.
 class Enemies extends Movable{
   //A los enemigos igual hay que añadirles gravedad, pero ya se va viendo
   //Constructor of the enemies
-  constructor(posX, posY, gravity, sprite, speedX, speedY, colliders, lives, damage, type, player){
-    super(posX, posY, sprite, gravity, speedY, speedX);
+  constructor(posX, posY, gravity, sprite, speedX, speedY, colisionParedes, lives, damage, type, player){
+    super(posX, posY, sprite, gravity, speedX, speedY);
     this.sprite.body.immovable = true;
     this.sprite.anchor.setTo(0.5, 0.5); //ancla
     this._damage = damage; //Damage to the player
@@ -20,6 +20,7 @@ class Enemies extends Movable{
     else {
       this._lives = lives * 2; //Hit points of a tank
     }
+    this._seChoca = colisionParedes;
   }
 
   colision(){
@@ -27,6 +28,9 @@ class Enemies extends Movable{
   		for(var i = 0; i < this._player._arrayBalas.length; i++){
 			game.physics.arcade.collide(this.sprite, this._player._arrayBalas[i], function(enemie, bullet){bullet.animations.play('expl');bullet.lifespan = 200;this.get_Damaged();}, null, this);
 		}
+    if(this._seChoca){
+      game.physics.arcade.collide(this.sprite, this._seChoca);
+    }
 		this.reset();
   }
 
@@ -45,9 +49,9 @@ class Enemies extends Movable{
   	if(game.time.now > this._velocityTimer){
   		this.hSpeed = this._hSpeedAux;  //resetea las velocidades y comprueba si ha muerto
   		this.vSpeed = this._vSpeedAux;
-      this.sprite.body.velocity.x = 0;
-      this.sprite.body.velocity.y = 0;
   	}
+    this.sprite.body.velocity.x = 0;
+    this.sprite.body.velocity.y = 0;
   	this.killThisShit();
   }
 

@@ -364,7 +364,7 @@ handle_Events(){
 	get grupoBalas(){
 		return this._currentBullets.grupoBalas;
 	}
-	get bomas(){
+	get bombas(){
 		return this._bombas;
 	}
 	set jumpSpeed(vel){

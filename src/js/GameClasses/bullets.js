@@ -46,7 +46,7 @@ class Bullets extends Movable{
 		}
 		else if(aim  === 'up'){
 			var x = this.aux();
-			bullet.reset(this._shooter.x + x, this._shooter.y - 42); //le marcamos su posicion inicial
+			bullet.reset(this._shooter.x + x, this._shooter.y - 35); //le marcamos su posicion inicial
 			this.moveUp(bullet, 0);
 		}
 		this._tiempoBala = game.time.now + 250; //temporizador para que no dispare chorrocientas balas de golpe

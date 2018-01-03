@@ -4,7 +4,7 @@ class WaspSpawn extends GameSprite{
 		this._time = time;
 		this._timer = 0;
 		this._player = player;
-		this._bichito = new Wasp(this.sprite.body.x, this.sprite.body.y, 0,'wasp', 250, 350, 0, 10, 7, 0, this._player);
+		this._bichito = new Wasp(this.sprite.body.x, this.sprite.body.y, 0,'wasp', 350, 250, false, 10, 7, 0, this._player);
 		this._bichito._lives = 0;
 	}
 
