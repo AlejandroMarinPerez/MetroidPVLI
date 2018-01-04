@@ -13,6 +13,7 @@ class DoorFather extends GameSprite{
 	}
 
 	logicaPuerta(){
+		//game.debug.body(this.sprite);
 		if(!this._open){ //si no está, abierta, colisiona con player y balas
 			this.sprite.animations.play('cerrada');
 			game.physics.arcade.collide(this._player.player, this.sprite);
@@ -20,7 +21,7 @@ class DoorFather extends GameSprite{
 				game.physics.arcade.collide(this._player._arrayBalas[i], this.sprite, function(door, bullet){console.log(bullet);bullet.animations.play('expl'); bullet.lifespan = 200;if(bullet.key === this._tipoBala){this.abrir_Puerta();}}, null, this); //abrir la puerta
 			}
 		}
-		else if(this._player.player.x >= this.sprite.x - 15 && this._player.player.x <= this.sprite.x + this.sprite.width + 15){ //si esta dentro de la puerta
+		else if(this._player.player.x >= this.sprite.x - 20 && this._player.player.x <= this.sprite.x + this.sprite.width + 20){ //si esta dentro de la puerta
 				this._enCurso = true;
 				this._player._puedeControlar = false; //controla al jugador solo
 				this.aux = this._player.hSpeed;

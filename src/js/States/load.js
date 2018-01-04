@@ -13,10 +13,11 @@ var loadState = {
     	game.load.tilemap('mapaA', 'assets/Map/Brinstar5.json', null, Phaser.Tilemap.TILED_JSON); //el primer tile
     	game.load.image('gameTiles', 'assets/Map/tiles.png'); //las imagenes del tile
     	game.load.spritesheet('bomba', 'assets/PlayerThings/bomba.png', 25, 57);
-    	game.load.spritesheet('door', 'assets/Map/door.png', 160, 92);
+    	game.load.spritesheet('door', 'assets/Map/door2.png', 127, 99);
     	game.load.spritesheet('rocketDoor', 'assets/Map/rocketDoor.png', 160, 92);
     	game.load.spritesheet('wasp', 'assets/Enemies/wasp.png', 25, 24);
     	game.load.spritesheet('floater', 'assets/Enemies/floater.png', 30, 24);
+    	game.load.spritesheet('bat', 'assets/Enemies/bat.png', 28, 40);
 		game.floaterGroup = new Group(); //Grupo que contendrá a los floaters del juego
 		/*game.scale.pageAlignHorizontally = true;
 		game.scale.pageAlignVertically = true;*/

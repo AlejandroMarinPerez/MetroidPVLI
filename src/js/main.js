@@ -31,33 +31,41 @@ var playState = {
 			this.Arena.push(sandy); //los agrega al array de arenas
 		}
 		//PUERTAAAAAS
-		var door = this.map.findObjectsByType('door', this.map.objectsLayer); //crea los objetos de tipo arena
+		var door = this.map.findObjectsByType('door', this.map.objectsLayer); 
 		this.Doors= [];
 		for(var i = 0; i < door.length; i++){
 			var puerta = new BasicDoor(door[i].x, door[i].y, 'door', 0 , this.player, i, 'bala');
-			this.Doors.push(puerta); //los agrega al array de arenas
+			this.Doors.push(puerta); 
 		}
 		var length = this.Doors.length;
 		door = [];
 		door = this.map.findObjectsByType('rocketDoor', this.map.objectsLayer);
 		for(var i = 0; i < door.length; i++){
 			var puerta = new RocketDoor(door[i].x, door[i].y, 'rocketDoor', 0 , this.player, i + length, 'rocket');
-			this.Doors.push(puerta); //los agrega al array de arenas
+			this.Doors.push(puerta); 
 		}
 		//NIDOS DE AVISPAAAAAAA
-		var nest = this.map.findObjectsByType('nest', this.map.objectsLayer); //crea los objetos de tipo arena
+		var nest = this.map.findObjectsByType('nest', this.map.objectsLayer);
 		this.nests = [];
 		for(var i = 0; i < nest.length; i++){
 			var spawn = new WaspSpawn(nest[i].x, nest[i].y, null, 0, 10000, this.player);
-			this.nests.push(spawn); //los agrega al array de arenas
+			this.nests.push(spawn); 
 		}
 		//NO SE QUE ES ESTO, COSAS QUE FLOTAAAAN
 		var cositasQueFlotan = this.map.findObjectsByType('floater', this.map.objectsLayer); //crea los objetos de tipo arena
 		this.floaters = [];
 		for(var i = 0; i < cositasQueFlotan.length; i++){
 			var flo = new Floater(cositasQueFlotan[i].x, cositasQueFlotan[i].y, 0,'floater', 75, 0, this.map._blockedLayer, 1, 7, 0, this.player);
-			this.floaters.push(flo); //los agrega al array de arenas
+			this.floaters.push(flo); 
 		}
+
+		var murcielagos = this.map.findObjectsByType('bat', this.map.objectsLayer);
+		this.bats = [];
+		for(var i = 0; i < murcielagos.length; i++){
+			var b = new Bat(murcielagos[i].x, murcielagos[i].y, 0,'bat', 60, 230, this.map._blockedLayer, 8, 7, 0, this.player);
+			this.bats.push(b); 
+		}
+
 		//CAPA POR DELANTE DEL PLAYER!
 		this.map._backgroundLayer2 = this.map._map.createLayer('Tuberias'); //para que quede chulo se crean después, maybe lo hago de otra forma luego...
 
@@ -70,7 +78,7 @@ var playState = {
 		this.FiveKey = game.input.keyboard.addKey(Phaser.Keyboard.FIVE);
 		this.SixKey = game.input.keyboard.addKey(Phaser.Keyboard.SIX);
 		//------------ARRAY DE COLISIONES----------
-		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes]; //metiendo aqui todo lo que colisiona con las paredes, suelo, etc, funciona.
+		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes]; //metiendo aqui todo lo que colisiona con las paredes, suelo, etc.
 	},
 
 //-------------------------------------------------------------------UPDATE-----------------------------------------------------------------
@@ -93,12 +101,12 @@ var playState = {
 		this.canvas.setText(0, 'EN: ' + this.energia); //pruebas solo (el canvas me tiene frito en verdad xdd)
 		this.canvas.updateCanvas();
 
-		for(var i = 0; i < this.Arena.length; i++){
-			this.Arena[i].update(); //comprobacion de overlap entre arena y player
-		}
-
 		for(var i = 0; i < this.Doors.length; i++){
 			this.Doors[i].update(); //UPDATE DE DOORS
+		}
+
+		for(var i = 0; i < this.Arena.length; i++){
+			this.Arena[i].update(); //comprobacion de overlap entre arena y player
 		}
 
 		for(var i = 0; i < this.nests.length; i++){
@@ -108,6 +116,13 @@ var playState = {
 		for(var i = 0; i < this.floaters.length; i++){
 			this.floaters[i].update(); //UPDATE DE ESO
 		}
+
+		for(var i = 0; i < this.bats.length; i++){
+			this.bats[i].update(); //UPDATE DE ESO
+		}
+
+		//this.prueba.update();
+		//game.debug.body(this.player.player);
 	},
 
 //-------------------------------------------------------------------RENDER-----------------------------------------------------------------
@@ -115,7 +130,6 @@ var playState = {
 	render: function() {
         //game.debug.cameraInfo(game.camera, 32, 32);
         game.debug.spriteCoords(this.player.player, 32, 500);
-        //game.debug.body(this.prueba.sprite);
     },
     kk: function(player, puerta){
     	//game.camera.follow(null);

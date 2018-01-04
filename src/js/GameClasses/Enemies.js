@@ -26,7 +26,7 @@ class Enemies extends Movable{
   colision(){
   		game.physics.arcade.overlap(this.sprite, this._player.player, this.damagePlayer, null, this);
   		for(var i = 0; i < this._player._arrayBalas.length; i++){
-			game.physics.arcade.collide(this.sprite, this._player._arrayBalas[i], function(enemie, bullet){bullet.animations.play('expl');bullet.lifespan = 200;this.get_Damaged();}, null, this);
+			game.physics.arcade.collide(this.sprite, this._player._arrayBalas[i], function(enemie, bullet){bullet.animations.play('expl');bullet.lifespan = 100;this.get_Damaged();}, null, this);
 		}
     if(this._seChoca){
       game.physics.arcade.collide(this.sprite, this._seChoca);
@@ -40,6 +40,7 @@ class Enemies extends Movable{
 
   get_Damaged(){
   	this._lives--;
+   // console.log(this._lives)
   	this.hSpeed = 10;  //quita vida, reduce su velocidad y empieza el timer de velocidad bajada
   	this.vSpeed = 10;
   	this._velocityTimer = game.time.now + 300;
@@ -60,6 +61,8 @@ class Enemies extends Movable{
  		this.kill();
  	}
  }
+
+ //RESPAWNNNN y LOOOOOOT
   //--------------Movement of the enemies-------------//
 
 }

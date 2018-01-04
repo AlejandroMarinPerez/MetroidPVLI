@@ -241,7 +241,7 @@ handle_Events(){
 
 	microSalto(){
 		if(this.aux){
-			this._player.body.velocity.y = -1150;
+			this._player.body.velocity.y = -150;
 			this._microSalto = true;
 			this.aux = false;
 		}

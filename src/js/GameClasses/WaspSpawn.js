@@ -6,6 +6,7 @@ class WaspSpawn extends GameSprite{
 		this._player = player;
 		this._bichito = new Wasp(this.sprite.body.x, this.sprite.body.y, 0,'wasp', 350, 250, false, 10, 7, 0, this._player);
 		this._bichito._lives = 0;
+		this._area = new Phaser.Rectangle(this.sprite.x - 450, this.sprite.y - 30, 900, -400);
 	}
 
 	spawn(){
@@ -19,6 +20,7 @@ class WaspSpawn extends GameSprite{
 	}
 
 	update(){
+		//game.debug.geom(this._area,'#0fffff');
 		this._bichito.update();
 		this.timing();
 	}
@@ -31,7 +33,7 @@ class WaspSpawn extends GameSprite{
 	}
 
 	esta_Cerca(){
-		return (this._player.player.body.x < this.sprite.body.x + 250 && this._player.player.body.x > this.sprite.body.x - 250);
+		return (this._player.player.body.x < this._area.x + this._area.width && this._player.player.body.x > this._area.x && this._player.player.body.y < this._area.y && this._player.player.body.y > this._area.y + this._area.height);
 	}
 
 	rotacionSprite(){

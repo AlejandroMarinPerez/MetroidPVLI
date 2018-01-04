@@ -16,6 +16,8 @@ class Potenciadores{
 				//this._player.body.setSize(this.width, this.height - 30); //cambia los colliders
 				//his._player.body.y = this._player.y - 60;
 				this._animacion = 'bolitaDer';
+				//console.log(this.player.body);
+				//this.player.body.bounce.y = 0.2;
 			}
 		}
 		
@@ -104,8 +106,8 @@ class Potenciadores{
 			if(game.time.now > this._tiempoBala){
 				var bal = this._balas.getFirstExists(false);
 				bal.animations.play('normal');
-				bal.reset(this._shooter.x - 2, this._shooter.y - 10);
-				this._tiempoBala = game.time.now + 500;
+				bal.reset(this._shooter.x + 5, this._shooter.y + 20);
+				this._tiempoBala = game.time.now + 1000;
 				bal.lifespan = 0;
 			} 
 		}
