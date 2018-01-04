@@ -64,7 +64,7 @@ class Potenciadores{
 //--------------------------------------------------------------------COHETES e.e------------------------------------------------------------------------
 
 	rockets(self){
-		self._player._rockets = new Bullets('rocket', 300, null, self._player, 5); //nuevas balas
+		self._player._rockets = new Bullets('rocket', 300, null, self._player, 5, true); //nuevas balas
 		self._player._arrayBalas.push(self._player._rockets.grupoBalas); //push al array de balas
 		self._player._basicBullets = self._player._currentBullets; //guardamos en basicBullets las balas básicas
 		self._player.shiftKey = game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
@@ -88,7 +88,7 @@ class Potenciadores{
 //--------------------------------------------------------------------BOMBAS------------------------------------------------------------------------
 
 	bombas(self){
-		self._player._bombas = new Bullets('bomba', 0, 700, self._player, null); //nuevas balas
+		self._player._bombas = new Bullets('bomba', 0, 700, self._player, null, true); //nuevas balas
 		self._player.grupoAuxiliar.group.add(self._player._bombas.grupoBalas);
 		for(var i = 0; i < self._player._bombas.grupoBalas.length; i++){ //las bombas son "balas" diferentes, por lo cual hay que hacerle unos pocos ajustillos
 			self._player._bombas.grupoBalas.children[i].body.bounce.y = 0.5; //un poco de rebote como en el juego

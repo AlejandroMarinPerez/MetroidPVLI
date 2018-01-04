@@ -294,7 +294,7 @@ handle_Events(){
 		this._immuneTimer = 0;  //timers de inmune y de parpadeo
 		this._blinkTimer = 0;
 		this._aim = 'right';
-		this._currentBullets = new Bullets('bala', 300, 300, this, null); //balas añadidas en una clase 
+		this._currentBullets = new Bullets('bala', 300, 300, this, null, true); //balas añadidas en una clase 
 		this.declaracionAnimaciones();
 		this._width = this._player.body.width;
 		this._height = this._player.body.height;

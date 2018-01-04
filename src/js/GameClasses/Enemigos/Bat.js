@@ -2,8 +2,8 @@ class Bat extends Enemies{
 	constructor(posX, posY, gravity, sprite, speedX, speedY, colisionParedes, lives, damage, type, player){
 		super(posX, posY, gravity, sprite, speedX, speedY, colisionParedes, lives, damage, type, player);
 		this._area = new Phaser.Rectangle(this.sprite.x - this.sprite.width*3, this.sprite.y, this.sprite.width*6, this.sprite.height*20); //area de "vision" del murcielago
-		this._Bullets = new Bullets('bala', 300, 200, this.sprite, null);
-		this._Bullets.shoot = function(dir){
+		this._Bullets = new Bullets('balaBat', 300, 200, this.sprite, null, false);
+		this._Bullets.shoot = function(dir){ //redefino el método shoot de las balas
 			var bal = this._balas.getFirstExists(false);
 			bal.reset(this._shooter.x, this._shooter.y); //le marcamos su posicion inicial
 			switch(dir){
@@ -31,7 +31,7 @@ class Bat extends Enemies{
 	}
 
 	caidaLibre(){
-		this.moveDown(this.sprite, 0);
+		this.moveDown(this.sprite, 0); //mueve hacia abajo y e intenta igualar su x con tu x
 		this.selectDir();
 	}
 
@@ -62,19 +62,24 @@ class Bat extends Enemies{
 		//game.debug.geom(this._area,'#0fffff');
 		this.colision();
 		this.wakeUp();
-		game.physics.arcade.collide(this._Bullets._balas, this._player.player, this.damagePlayer, null, this); //balas del enemigo
+		game.physics.arcade.collide(this._Bullets._balas, this._player.player, this.dañoPorBala, null, this); //balas del enemigo
 		this.sprite.animations.play('default');
 	}
 
 	explosion(){
 		if(game.time.now > this._timer && this._timer !== 0){
 			this._Bullets.shoot('dRight');
-			this._Bullets.shoot('dLeft');
+			this._Bullets.shoot('dLeft'); //envia balas en las 4 direcciones
 			this._Bullets.shoot('right');
 			this._Bullets.shoot('left');
 			this._lives = 0;
 			this._timer = 0;
 			this.wakeUp = this._fAux; //cuando explota, la funcion vuelve a ser la original
 		}
+	}
+
+	dañoPorBala(player, bullet){ //método estetico, lo unico diferente que hace es que la bala desaparece si se choca contigo
+		this.damagePlayer();
+		bullet.lifespan = 10;
 	}
 }

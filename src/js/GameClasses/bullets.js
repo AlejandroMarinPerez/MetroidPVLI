@@ -2,7 +2,7 @@
 //(aun por implementar)
 
 class Bullets extends Movable{
-	constructor(sprite, speed, range, shooter, ammo){
+	constructor(sprite, speed, range, shooter, ammo, bool){
 		super(0, 0, null, 0, speed, speed); //conctructor de Movable
 		//Balas
 		this.sprite = new Group(); //el sprite pasa a ser un nuevo grupo (reutulizable para enemigos)
@@ -14,8 +14,10 @@ class Bullets extends Movable{
 		for(var i = 0; i < this._balas.length; i++){ //escalamos, collider... a todos los hijos
 			this._balas.children[i].scale.setTo(0.10, 0.10); //escalamos sprite & collider
 			this._balas.children[i].body.setSize(0.2,0.2);
-			this._balas.children[i].animations.add('normal',[0], 0, true);
-			this._balas.children[i].animations.add('expl', [1], 0, true);
+			if(bool){
+				this._balas.children[i].animations.add('normal',[0], 0, true);
+				this._balas.children[i].animations.add('expl', [1], 0, true);
+			}
 		}	
 
 		this._tiempoBala = 0;

@@ -24,23 +24,22 @@ class Enemies extends Movable{
   }
 
   colision(){
-  		game.physics.arcade.overlap(this.sprite, this._player.player, this.damagePlayer, null, this);
-  		for(var i = 0; i < this._player._arrayBalas.length; i++){
-			game.physics.arcade.collide(this.sprite, this._player._arrayBalas[i], function(enemie, bullet){bullet.animations.play('expl');bullet.lifespan = 100;this.get_Damaged();}, null, this);
-		}
-    if(this._seChoca){
-      game.physics.arcade.collide(this.sprite, this._seChoca);
-    }
-		this.reset();
+  		game.physics.arcade.overlap(this.sprite, this._player.player, this.damagePlayer, null, this); //overlap con el jugador
+  		for(var i = 0; i < this._player._arrayBalas.length; i++){ //colision con las balas del jugador
+			 game.physics.arcade.collide(this.sprite, this._player._arrayBalas[i], function(enemie, bullet){bullet.animations.play('expl');bullet.lifespan = 100;this.get_Damaged();}, null, this);
+		  }
+      if(this._seChoca){ //hay algunos enemigos que atraviesan paredes (avispas)
+       game.physics.arcade.collide(this.sprite, this._seChoca);
+      }
+		  this.reset();
   }
 
   damagePlayer(){
-  	this._player.recoil_Damage(this.sprite.body.x, this._damage);
+  	this._player.recoil_Damage(this.sprite.body.x, this._damage); //llama al método de rebote, daño e invulnerabilidad del jugador
   }
 
   get_Damaged(){
   	this._lives--;
-   // console.log(this._lives)
   	this.hSpeed = 10;  //quita vida, reduce su velocidad y empieza el timer de velocidad bajada
   	this.vSpeed = 10;
   	this._velocityTimer = game.time.now + 300;
@@ -48,7 +47,7 @@ class Enemies extends Movable{
 
   reset(){
   	if(game.time.now > this._velocityTimer){
-  		this.hSpeed = this._hSpeedAux;  //resetea las velocidades y comprueba si ha muerto
+  		this.hSpeed = this._hSpeedAux;  //resetea las velocidades (si ha sido ralentizado le devuelve su velocidad normal) y comprueba si ha muerto
   		this.vSpeed = this._vSpeedAux;
   	}
     this.sprite.body.velocity.x = 0;
@@ -57,12 +56,9 @@ class Enemies extends Movable{
   }
 
  killThisShit(){
- 	if(this._lives <= 0){
+ 	if(this._lives <= 0){ //si sus vidas son iguales o menores a 0, muere o_O
  		this.kill();
  	}
  }
-
  //RESPAWNNNN y LOOOOOOT
-  //--------------Movement of the enemies-------------//
-
 }
