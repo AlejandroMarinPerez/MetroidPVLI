@@ -5,6 +5,8 @@ class Canvas{
 	constructor(){
 		this._elemArray = [];
 		this._texts = [];
+		game.scale.pageAlignHorizontally = true;
+		game.scale.pageAlignVertically = true;
 	}
 
 //--------------------------------------------------------------------UPDATE------------------------------------------------------------------

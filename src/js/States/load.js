@@ -18,6 +18,8 @@ var loadState = {
     	game.load.spritesheet('wasp', 'assets/Enemies/wasp.png', 25, 24);
     	game.load.spritesheet('floater', 'assets/Enemies/floater.png', 30, 24);
 		game.floaterGroup = new Group(); //Grupo que contendrá a los floaters del juego
+		/*game.scale.pageAlignHorizontally = true;
+		game.scale.pageAlignVertically = true;*/
     	console.log("Cargando..."); //simple debug
 	},
 

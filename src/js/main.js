@@ -4,6 +4,8 @@ var playState = {
 //--------------------------------------------------------------------CREACION---------------------------------------------------------------
 
 	create: function(){
+		this.game.stage.scale.pageAlignHorizontally = true;
+		this.game.stage.scale.pageAlignVeritcally = true;
 		//------------MAPA----------
 		this.map = new TileMap('gameTiles', 'Background' ,'Main', 'Objects'); //creamos el mapa a partir del Tile
 		var playerStart = this.map.findObjectsByType('playerStart', this.map.objectsLayer); //un objeto que nos indica el comienzo
@@ -56,15 +58,15 @@ var playState = {
 			var flo = new Floater(cositasQueFlotan[i].x, cositasQueFlotan[i].y, 0,'floater', 75, 0, this.map._blockedLayer, 1, 7, 0, this.player);
 			this.floaters.push(flo); //los agrega al array de arenas
 		}
-		//CAPA POR DELANTE DEL PLAYER!  
+		//CAPA POR DELANTE DEL PLAYER!
 		this.map._backgroundLayer2 = this.map._map.createLayer('Tuberias'); //para que quede chulo se crean después, maybe lo hago de otra forma luego...
 
 		//------------COSAS DE PRUEBA----------
 		this.cosasDePrueba();
 		this.One = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
 		this.TwoKey = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
-		this.ThreeKey = game.input.keyboard.addKey(Phaser.Keyboard.THREE); 
-		this.FourKey = game.input.keyboard.addKey(Phaser.Keyboard.FOUR); 
+		this.ThreeKey = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
+		this.FourKey = game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
 		this.FiveKey = game.input.keyboard.addKey(Phaser.Keyboard.FIVE);
 		this.SixKey = game.input.keyboard.addKey(Phaser.Keyboard.SIX);
 		//------------ARRAY DE COLISIONES----------
@@ -78,7 +80,7 @@ var playState = {
 		game.camera.focusOnXY(this.player.player.x, this.player.player.y);
 		//game.camera.follow(this.player.player);
 		game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this); //Si overlapea con el grupo de objetos de overlap, no podrá transformarse
-		
+
 		//------------COSAS DE PRUEBA----------
 		//Vamos a comprobar si el player hace "overlap" con una mano y llamamos a la funcion collectStar
 		game.physics.arcade.overlap(this.player.player,this.hands, this.collectStar, null, this); //no se que es ni el null ni el this ese
