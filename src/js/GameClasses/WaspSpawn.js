@@ -5,7 +5,7 @@ class WaspSpawn extends GameSprite{
 		this._timer = 0;
 		this._player = player;
 		this._bichito = new Wasp(this.sprite.body.x, this.sprite.body.y, 0,'wasp', 350, 250, false, 10, 7, 0, this._player);
-		this._bichito._lives = 0;
+		this._activo = false;
 		this._area = new Phaser.Rectangle(this.sprite.x - 450, this.sprite.y - 30, 900, -400);
 	}
 
@@ -20,13 +20,15 @@ class WaspSpawn extends GameSprite{
 	}
 
 	update(){
-		//game.debug.geom(this._area,'#0fffff');
-		this._bichito.update();
+		game.debug.geom(this._area,'#0fffff');
+		if(this._activo)
+			this._bichito.update();
 		this.timing();
 	}
 
 	timing(){
 		if(game.time.now > this._timer && this.esta_Cerca()){
+			this._activo = true;
 			this.spawn();
 			this._timer = game.time.now + Math.floor(Math.random() * (this._time - this._time/2) + this._time/2); //no sé si he hecho bien este random , teoricamente genera un numero entre this._time/2 y this._time
 		}

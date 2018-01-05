@@ -1,6 +1,6 @@
 class Bat extends Enemies{
-	constructor(posX, posY, gravity, sprite, speedX, speedY, colisionParedes, lives, damage, type, player){
-		super(posX, posY, gravity, sprite, speedX, speedY, colisionParedes, lives, damage, type, player);
+	constructor(posX, posY, gravity, sprite, speedX, speedY, colisionParedes, lives, damage, type, player, kk){
+		super(posX, posY, gravity, sprite, speedX, speedY, colisionParedes, lives, damage, type, player, kk);
 		this._area = new Phaser.Rectangle(this.sprite.x - this.sprite.width*3, this.sprite.y, this.sprite.width*6, this.sprite.height*20); //area de "vision" del murcielago
 		this._Bullets = new Bullets('balaBat', 300, 200, this.sprite, null, false);
 		this._Bullets.shoot = function(dir){ //redefino el método shoot de las balas
@@ -45,7 +45,7 @@ class Bat extends Enemies{
 	}
 
 	wakeUp(){
-		if(this._player.player.body.x < this._area.x + this._area.width && this._player.player.body.x > this._area.x && this._player.player.body.y > this._area.y && this._player.player.body.y < this._area.y + this._area.height){
+		if(!this._haMuerto && this._player.player.body.x < this._area.x + this._area.width && this._player.player.body.x > this._area.x && this._player.player.body.y > this._area.y && this._player.player.body.y < this._area.y + this._area.height){
 			this.wakeUp = function(){ //si esta dentro del area, cambiamos la funcion a caida Libre
 				this.caidaLibre();
 				if(this.sprite.body.onFloor()){
@@ -64,17 +64,20 @@ class Bat extends Enemies{
 		this.wakeUp();
 		game.physics.arcade.collide(this._Bullets._balas, this._player.player, this.dañoPorBala, null, this); //balas del enemigo
 		this.sprite.animations.play('default');
+		this.respawn();
 	}
 
 	explosion(){
 		if(game.time.now > this._timer && this._timer !== 0){
+			this.wakeUp = this._fAux; //cuando explota, la funcion vuelve a ser la original
 			this._Bullets.shoot('dRight');
 			this._Bullets.shoot('dLeft'); //envia balas en las 4 direcciones
 			this._Bullets.shoot('right');
 			this._Bullets.shoot('left');
 			this._lives = 0;
+			this.killThis();
 			this._timer = 0;
-			this.wakeUp = this._fAux; //cuando explota, la funcion vuelve a ser la original
+			//this.loot();
 		}
 	}
 

@@ -2,12 +2,8 @@ class Wasp extends Enemies{
 	 constructor(posX, posY, gravity, sprite, speedX, speedY, colliders, lives, damage, type, player){
 	 	super(posX, posY, gravity, sprite, speedX, speedY, colliders, lives, damage, type, player);
 	 	this._direccionTomada = false;
-	 	this.sprite.body.setSize(this.sprite.width, this.sprite.height/10);
+	 	this.sprite.body.setSize(this.sprite.width, this.sprite.height/2);
 	 	this.sprite.animations.add('fly',[0, 1], 10, true);
-	 	/*this.damagePlayer = function(){
-	 		if(!this._player._bola) //evita colisiones por arriba, el haber quitado la reduccion de collider da problemas con los bichillos estos ç(con la reduccion de collider se forman mazo bugs q no entiendo...)
-  				this._player.recoil_Damage(this.sprite.body.x, this._damage);
-  			};*/
 	 }
 
 	 update(){

@@ -10,10 +10,14 @@ class DoorFather extends GameSprite{
 		this._tipoBala = tipoBala;
 		this._enCurso = false;
 		this._activa = true;
+		this._posAux = 0;
+		this._dirAux = 0;
+		this._timer = 0;
 	}
 
 	logicaPuerta(){
 		//game.debug.body(this.sprite);
+		//this.camera();
 		if(!this._open){ //si no está, abierta, colisiona con player y balas
 			this.sprite.animations.play('cerrada');
 			game.physics.arcade.collide(this._player.player, this.sprite);
@@ -38,5 +42,23 @@ class DoorFather extends GameSprite{
 				this._player._puedeControlar = true;
 				this._player.hSpeed = this.aux;
 		}	
+	}
+
+	camera(){ //emmplfpl no se si me convence esto...
+		if(this.sprite.inCamera){
+			if(this._player.player.x < this.sprite.x){
+				if(game.camera.x + 800 - this.sprite.width/2 > this.sprite.x){
+					game.camera.x = this.sprite.x - 800 + this.sprite.width/2;
+					this._dirAux = 1;
+				}
+			}
+			else{
+				if(game.camera.x - this.sprite.width/2 < this.sprite.x){
+					game.camera.x = this.sprite.x + this.sprite.width/2;
+					this._dirAux = -1;
+				}
+			}
+			this._posAux = this.sprite.x;
+		}
 	}
 }

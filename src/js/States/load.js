@@ -19,6 +19,7 @@ var loadState = {
     	game.load.spritesheet('floater', 'assets/Enemies/floater.png', 30, 24);
     	game.load.spritesheet('bat', 'assets/Enemies/bat.png', 28, 40);
     	game.load.image('balaBat', 'assets/Enemies/balaBat.png', 125, 125);
+        game.load.spritesheet('dropVida', 'assets/Enemies/drop.png', 12.5, 12);
 		game.floaterGroup = new Group(); //Grupo que contendrá a los floaters del juego
 		/*game.scale.pageAlignHorizontally = true;
 		game.scale.pageAlignVertically = true;*/

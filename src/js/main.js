@@ -62,7 +62,7 @@ var playState = {
 		var murcielagos = this.map.findObjectsByType('bat', this.map.objectsLayer);
 		this.bats = [];
 		for(var i = 0; i < murcielagos.length; i++){
-			var b = new Bat(murcielagos[i].x, murcielagos[i].y, 0,'bat', 60, 230, this.map._blockedLayer, 8, 7, 0, this.player);
+			var b = new Bat(murcielagos[i].x, murcielagos[i].y, 0,'bat', 60, 275, this.map._blockedLayer, 8, 7, 0, this.player, i);
 			this.bats.push(b); 
 		}
 
@@ -120,16 +120,15 @@ var playState = {
 		for(var i = 0; i < this.bats.length; i++){
 			this.bats[i].update(); //UPDATE DE ESO
 		}
-
 		//this.prueba.update();
-		//game.debug.body(this.player.player);
+		//ame.debug.body(this.bats[0].sprite);
 	},
 
 //-------------------------------------------------------------------RENDER-----------------------------------------------------------------
 
 	render: function() {
         //game.debug.cameraInfo(game.camera, 32, 32);
-        game.debug.spriteCoords(this.player.player, 32, 500);
+        //game.debug.spriteCoords(this.player.player, 32, 500);
     },
     kk: function(player, puerta){
     	//game.camera.follow(null);
