@@ -89,7 +89,7 @@ class Enemies extends Movable{
  }
 
  loot(){ //por ahora solo dan vida, deberian dar tmbn misiles...
-  var rnd = Math.floor(Math.random()*1); //generacion numero random
+  var rnd = Math.floor(Math.random()*10); //generacion numero random
   if(rnd === 0 || rnd === 8){
     this.spriteAux = game.add.sprite(this.sprite.x - 10, this.sprite.y, 'dropVida');
     this.spriteAux.animations.add('def', [0, 1], 20, true);
