@@ -5,7 +5,7 @@ que hacen al jugador y que reciben del jugador.
 class Enemies extends Movable{
   //A los enemigos igual hay que añadirles gravedad, pero ya se va viendo
   //Constructor of the enemies
-  constructor(posX, posY, gravity, sprite, speedX, speedY, colisionParedes, lives, damage, type, player, kk){
+  constructor(posX, posY, gravity, sprite, speedX, speedY, colisionParedes, lives, damage, type, player){
     super(posX, posY, sprite, gravity, speedX, speedY);
     this.sprite.body.immovable = true;
     this.sprite.anchor.setTo(0.5, 0.5); //ancla
@@ -13,7 +13,6 @@ class Enemies extends Movable{
     this._player = player;
     this._velocityTimer = 0; //tiempo el cual los enemigos son frenados al ser disparados (igual que en el juego original)
     this._hSpeedAux = this.hSpeed;
-    this.kk = kk;
     this._vSpeedAux = this.vSpeed;
     this._posIniX = this.sprite.x - 15;
     this._posIniY = this.sprite.y - 20;
@@ -33,7 +32,7 @@ class Enemies extends Movable{
   colision(){
   		game.physics.arcade.overlap(this.sprite, this._player.player, this.damagePlayer, null, this); //overlap con el jugador
   		for(var i = 0; i < this._player._arrayBalas.length; i++){ //colision con las balas del jugador
-			 game.physics.arcade.collide(this.sprite, this._player._arrayBalas[i], function(enemie, bullet){bullet.animations.play('expl');bullet.lifespan = 100;this.get_Damaged();}, null, this);
+			 game.physics.arcade.collide(this.sprite, this._player._arrayBalas[i], function(enemie, bullet){bullet.animations.play('expl');bullet.lifespan = 100; this.get_Damaged();}, null, this);
 		  }
       if(this._seChoca){ //hay algunos enemigos que atraviesan paredes (avispas)
        game.physics.arcade.collide(this.sprite, this._seChoca);

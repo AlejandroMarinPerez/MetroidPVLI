@@ -1,6 +1,6 @@
 class Bat extends Enemies{
-	constructor(posX, posY, gravity, sprite, speedX, speedY, colisionParedes, lives, damage, type, player, kk){
-		super(posX, posY, gravity, sprite, speedX, speedY, colisionParedes, lives, damage, type, player, kk);
+	constructor(posX, posY, gravity, sprite, speedX, speedY, colisionParedes, lives, damage, type, player){
+		super(posX, posY, gravity, sprite, speedX, speedY, colisionParedes, lives, damage, type, player);
 		this._area = new Phaser.Rectangle(this.sprite.x - this.sprite.width*3, this.sprite.y, this.sprite.width*6, this.sprite.height*20); //area de "vision" del murcielago
 		this._Bullets = new Bullets('balaBat', 300, 200, this.sprite, null, false);
 		this._Bullets.shoot = function(dir){ //redefino el método shoot de las balas

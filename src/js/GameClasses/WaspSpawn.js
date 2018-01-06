@@ -20,7 +20,7 @@ class WaspSpawn extends GameSprite{
 	}
 
 	update(){
-		game.debug.geom(this._area,'#0fffff');
+		//game.debug.geom(this._area,'#0fffff');
 		if(this._activo)
 			this._bichito.update();
 		this.timing();

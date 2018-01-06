@@ -59,11 +59,20 @@ var playState = {
 			this.floaters.push(flo); 
 		}
 
+		//Murcielagoooos
 		var murcielagos = this.map.findObjectsByType('bat', this.map.objectsLayer);
 		this.bats = [];
 		for(var i = 0; i < murcielagos.length; i++){
-			var b = new Bat(murcielagos[i].x, murcielagos[i].y, 0,'bat', 60, 275, this.map._blockedLayer, 8, 7, 0, this.player, i);
+			var b = new Bat(murcielagos[i].x, murcielagos[i].y, 0,'bat', 60, 275, this.map._blockedLayer, 8, 7, 0, this.player);
 			this.bats.push(b); 
+		}
+
+		//Waveeeers
+		var wav = this.map.findObjectsByType('waver', this.map.objectsLayer);
+		this.wavers = [];
+		for(var i = 0; i < wav.length; i++){
+			var w = new Waver(wav[i].x, wav[i].y, 0,'waver', 160, 160, this.map._blockedLayer, 8, 7, 0, this.player);
+			this.wavers.push(w); 
 		}
 
 		//CAPA POR DELANTE DEL PLAYER!
@@ -79,6 +88,7 @@ var playState = {
 		this.SixKey = game.input.keyboard.addKey(Phaser.Keyboard.SIX);
 		//------------ARRAY DE COLISIONES----------
 		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes]; //metiendo aqui todo lo que colisiona con las paredes, suelo, etc.
+		//this.prueba= new Waver(this.player.player.x, this.player.player.y, 0,'waver', 160, 160, this.map._blockedLayer, 8, 7, 0, this.player)
 	},
 
 //-------------------------------------------------------------------UPDATE-----------------------------------------------------------------
@@ -120,7 +130,10 @@ var playState = {
 		for(var i = 0; i < this.bats.length; i++){
 			this.bats[i].update(); //UPDATE DE ESO
 		}
-		//this.prueba.update();
+
+		for(var i = 0; i < this.wavers.length; i++){
+			this.wavers[i].update(); //UPDATE DE ESO
+		}
 		//ame.debug.body(this.bats[0].sprite);
 	},
 
