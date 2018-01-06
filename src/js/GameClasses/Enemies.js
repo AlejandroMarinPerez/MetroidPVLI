@@ -17,6 +17,9 @@ class Enemies extends Movable{
     this._posIniX = this.sprite.x - 15;
     this._posIniY = this.sprite.y - 20;
     this._resTimer = 0;
+    this.prueba = new Group(); //el sprite pasa a ser un nuevo grupo (reutulizable para enemigos)
+    this.pruebaG = this.prueba.group;
+    this.pruebaG.createMultiple(1, 'dropVida');
     if (type === 0){ //Tipo de enemigo que serán, pero sólo diferencia entre tanques y normales
       this._lives = lives; //Hit points
     }
@@ -37,9 +40,9 @@ class Enemies extends Movable{
       if(this._seChoca){ //hay algunos enemigos que atraviesan paredes (avispas)
        game.physics.arcade.collide(this.sprite, this._seChoca);
       }
-      if(this.spriteAux !== null){
+      //if(this.spriteAux !== null){
         this.collectLoot();
-      }
+      //}
 		  this.reset();
   }
 
@@ -90,22 +93,15 @@ class Enemies extends Movable{
  loot(){ //por ahora solo dan vida, deberian dar tmbn misiles...
   var rnd = Math.floor(Math.random()*10); //generacion numero random
   if(rnd === 0 || rnd === 8){
-    this.spriteAux = game.add.sprite(this.sprite.x - 10, this.sprite.y, 'dropVida');
-    this.spriteAux.animations.add('def', [0, 1], 20, true);
-    this.spriteAux.animations.play('def');
+    var drop = this.pruebaG.getFirstExists(false);
+    drop.reset(this.sprite.x - 5, this.sprite.y);
+    drop.lifespan = 5000; //duran 5 segunditos
   }
 
  }
 
  collectLoot(){
-  //no sé que pasa, pero al hacer news ingame, desaparecen esos news, y los sprites se van. Tampoco me deja hacer unsprite a mano asi que
-  //he tenido que inventarme mi propio "overlap" con un sprite sin fisicas. Funciona peeeero xD
-  if(this._player.player.x > this.spriteAux.x && this._player.player.x < this.spriteAux.x + this.spriteAux.width && this._player.player.y > this.spriteAux.y - 20 && this._player.player.y < this.spriteAux.y + this.spriteAux.height + 20){
-    this.spriteAux.destroy();
-    this.spriteAux = null;
-    this._player.heal(5);
-  }
+  game.physics.arcade.overlap(this._player.player, this.pruebaG, function(player, sprite){sprite.lifespan = 10; player.class.heal(5);});
  }
-
 
 }
