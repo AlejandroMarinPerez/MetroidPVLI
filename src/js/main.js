@@ -88,7 +88,7 @@ var playState = {
 		this.SixKey = game.input.keyboard.addKey(Phaser.Keyboard.SIX);
 		//------------ARRAY DE COLISIONES----------
 		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes]; //metiendo aqui todo lo que colisiona con las paredes, suelo, etc.
-		this.prueba= new Crawler(this.player.player.x, this.player.player.y, 0,'waver', 160, 160, this.map._blockedLayer, 8, 7, 0, this.player);
+		this.prueba= new Crawler(this.player.player.x, this.player.player.y, 0,'waver', 40, 40, this.map._blockedLayer, 8, 7, 0, this.player);
 	},
 
 //-------------------------------------------------------------------UPDATE-----------------------------------------------------------------
@@ -142,7 +142,7 @@ var playState = {
 
 	render: function() {
         //game.debug.cameraInfo(game.camera, 32, 32);
-        //game.debug.spriteCoords(this.player.player, 32, 500);
+        game.debug.spriteCoords(this.player.player, 32, 500);
     },
     kk: function(player, puerta){
     	//game.camera.follow(null);
