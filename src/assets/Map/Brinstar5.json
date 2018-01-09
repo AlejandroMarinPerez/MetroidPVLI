@@ -13754,8 +13754,8 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":12364,
-                 "y":5572
+                 "x":12338,
+                 "y":5680
                 }, 
                 {
                  "gid":427,
@@ -13855,7 +13855,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":1042,
+ "nextobjectid":1043,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tileheight":32,

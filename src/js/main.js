@@ -88,7 +88,7 @@ var playState = {
 		this.SixKey = game.input.keyboard.addKey(Phaser.Keyboard.SIX);
 		//------------ARRAY DE COLISIONES----------
 		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes]; //metiendo aqui todo lo que colisiona con las paredes, suelo, etc.
-		//this.prueba= new Waver(this.player.player.x, this.player.player.y, 0,'waver', 160, 160, this.map._blockedLayer, 8, 7, 0, this.player)
+		this.prueba= new Crawler(this.player.player.x, this.player.player.y, 0,'waver', 160, 160, this.map._blockedLayer, 8, 7, 0, this.player);
 	},
 
 //-------------------------------------------------------------------UPDATE-----------------------------------------------------------------
@@ -135,6 +135,7 @@ var playState = {
 			this.wavers[i].update(); //UPDATE DE ESO
 		}
 		//ame.debug.body(this.bats[0].sprite);
+		this.prueba.update();
 	},
 
 //-------------------------------------------------------------------RENDER-----------------------------------------------------------------

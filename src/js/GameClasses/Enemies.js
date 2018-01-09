@@ -30,6 +30,7 @@ class Enemies extends Movable{
     this._seChoca = colisionParedes;
     this._haMuerto = false;
     this.spriteAux = null;
+    this._col = false;
   }
 
   colision(){
@@ -38,7 +39,7 @@ class Enemies extends Movable{
 			 game.physics.arcade.collide(this.sprite, this._player._arrayBalas[i], function(enemie, bullet){bullet.animations.play('expl');bullet.lifespan = 100; this.get_Damaged();}, null, this);
 		  }
       if(this._seChoca){ //hay algunos enemigos que atraviesan paredes (avispas)
-       game.physics.arcade.collide(this.sprite, this._seChoca);
+       game.physics.arcade.collide(this.sprite, this._seChoca, this.col, null, this);
       }
       //if(this.spriteAux !== null){
         this.collectLoot();
@@ -102,6 +103,10 @@ class Enemies extends Movable{
 
  collectLoot(){
   game.physics.arcade.overlap(this._player.player, this.pruebaG, function(player, sprite){sprite.lifespan = 10; player.class.heal(5);});
+ }
+
+ col(){
+  this._col = true;
  }
 
 }
