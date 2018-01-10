@@ -21,29 +21,65 @@ var playState = {
 		this.energia = this.player.health;
 		this.canvas.addText(16, 16, 'EN: ' + this.energia, '65px Arial', '#FFF');
 
-		//--------------------Creacion de arena, puetas, enemigos... (posiblemente metodo q esta quedando to suciooo) -------------------
+		//--------------------Creacion de arena, puetas, enemigos...-------------------
+		this.creacion_ElementosMapa();
+		this.creacion_Enemigos();
+		//CAPA POR DELANTE DEL PLAYER!
+		this.map._backgroundLayer2 = this.map._map.createLayer('Tuberias'); //para que quede chulo se crean después, maybe lo hago de otra forma luego...
 
-		//ARENAAAAAA
-		var sand = this.map.findObjectsByType('arena', this.map.objectsLayer); //crea los objetos de tipo arena
-		this.Arena = [];
-		for(var i = 0; i < sand.length; i++){
-			var sandy = new DamageZone(sand[i].x, sand[i].y, null, 0 , this.player);
-			this.Arena.push(sandy); //los agrega al array de arenas
-		}
-		//PUERTAAAAAS
-		var door = this.map.findObjectsByType('door', this.map.objectsLayer); 
-		this.Doors= [];
-		for(var i = 0; i < door.length; i++){
-			var puerta = new BasicDoor(door[i].x, door[i].y, 'door', 0 , this.player, i, 'bala');
-			this.Doors.push(puerta); 
-		}
-		var length = this.Doors.length;
-		door = [];
-		door = this.map.findObjectsByType('rocketDoor', this.map.objectsLayer);
-		for(var i = 0; i < door.length; i++){
-			var puerta = new RocketDoor(door[i].x, door[i].y, 'rocketDoor', 0 , this.player, i + length, 'rocket');
-			this.Doors.push(puerta); 
-		}
+		//------------COSAS DE PRUEBA----------
+		this.cosasDePrueba();
+		this.One = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+		this.TwoKey = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
+		this.ThreeKey = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
+		this.FourKey = game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
+		this.FiveKey = game.input.keyboard.addKey(Phaser.Keyboard.FIVE);
+		this.SixKey = game.input.keyboard.addKey(Phaser.Keyboard.SIX);
+		//------------ARRAY DE COLISIONES----------
+		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes];
+		//this.prueba= new Bee(this.player.player.x, 5345, 0,'bee', 100, 200, this.map._blockedLayer, 8, 7, 0, this.player);
+	},
+
+//-------------------------------------------------------------------UPDATE-----------------------------------------------------------------
+
+	update: function(){
+		this.tpDebug();
+		game.camera.focusOnXY(this.player.player.x, this.player.player.y);
+		//game.camera.follow(this.player.player);
+		game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this); //Si overlapea con el grupo de objetos de overlap, no podrá transformarse
+
+		//------------COSAS DE PRUEBA----------
+		//Vamos a comprobar si el player hace "overlap" con una mano y llamamos a la funcion collectStar
+		game.physics.arcade.overlap(this.player.player,this.hands, this.collectStar, null, this); //no se que es ni el null ni el this ese
+		//------------COLISION & PLAYERUPDATE----------
+		this.map.update(this.objetosQueColisionan); //objetos que colisionan con el mapa
+		this.player.update(); // update del player (colision de balas 2)
+		this.energia = this.player.health;
+		this.canvas.setText(0, 'EN: ' + this.energia); //pruebas solo (el canvas me tiene frito en verdad xdd)
+		this.canvas.updateCanvas();
+		this.updateEnemigos();
+	},
+
+//-------------------------------------------------------------------RENDER-----------------------------------------------------------------
+
+	render: function() {
+        //game.debug.cameraInfo(game.camera, 32, 32);
+        game.debug.spriteCoords(this.player.player, 32, 500);
+    },
+ //-------------------------------------------------------------------AUXILIARES-----------------------------------------------------------------
+ 	creacion_Overlaps: function(string){
+		var self = this;
+		grupo = new Group(); //crea un nuevo grupo y lo iguala a la variable
+    	grupo = grupo.group;
+		var result = self.map.findObjectsByType(string, self.map.objectsLayer); //encuentra los objetos del tipo "overlap"
+		result.forEach(function(element){
+			self.map.createFromTiledObject(element, grupo, null); //los crea...
+		});
+
+		return grupo;
+	},
+
+	creacion_Enemigos: function(){
 		//NIDOS DE AVISPAAAAAAA
 		var nest = this.map.findObjectsByType('nest', this.map.objectsLayer);
 		this.nests = [];
@@ -75,42 +111,46 @@ var playState = {
 			this.wavers.push(w); 
 		}
 
-		//CAPA POR DELANTE DEL PLAYER!
-		this.map._backgroundLayer2 = this.map._map.createLayer('Tuberias'); //para que quede chulo se crean después, maybe lo hago de otra forma luego...
+		//Abejaaaaas
+		var bees= this.map.findObjectsByType('bee', this.map.objectsLayer);
+		this.Bees = [];
+		for(var i = 0; i < bees.length; i++){
+			var b = new Bee(bees[i].x, bees[i].y, 0,'bee', 100, 200, this.map._blockedLayer, 8, 7, 0, this.player);
+			this.Bees.push(b); 
+		}
 
-		//------------COSAS DE PRUEBA----------
-		this.cosasDePrueba();
-		this.One = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
-		this.TwoKey = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
-		this.ThreeKey = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
-		this.FourKey = game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
-		this.FiveKey = game.input.keyboard.addKey(Phaser.Keyboard.FIVE);
-		this.SixKey = game.input.keyboard.addKey(Phaser.Keyboard.SIX);
-		//------------ARRAY DE COLISIONES----------
-		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes]; //metiendo aqui todo lo que colisiona con las paredes, suelo, etc.
-		this.prueba= new Crawler(this.player.player.x, this.player.player.y, 0,'waver', 40, 40, this.map._blockedLayer, 8, 7, 0, this.player);
 	},
 
-//-------------------------------------------------------------------UPDATE-----------------------------------------------------------------
+	creacion_ElementosMapa(){
+		//ARENAAAAAA
+		var sand = this.map.findObjectsByType('arena', this.map.objectsLayer); //crea los objetos de tipo arena
+		this.Arena = [];
+		for(var i = 0; i < sand.length; i++){
+			var sandy = new DamageZone(sand[i].x, sand[i].y, null, 0 , this.player);
+			this.Arena.push(sandy); //los agrega al array de arenas
+		}
+		//PUERTAAAAAS
+		var door = this.map.findObjectsByType('door', this.map.objectsLayer); 
+		this.Doors= [];
+		for(var i = 0; i < door.length; i++){
+			var puerta = new BasicDoor(door[i].x, door[i].y, 'door', 0 , this.player, i, 'bala');
+			this.Doors.push(puerta); 
+		}
+		var length = this.Doors.length;
+		door = [];
+		door = this.map.findObjectsByType('rocketDoor', this.map.objectsLayer);
+		for(var i = 0; i < door.length; i++){
+			var puerta = new RocketDoor(door[i].x, door[i].y, 'rocketDoor', 0 , this.player, i + length, 'rocket');
+			this.Doors.push(puerta); 
+		}
+	}, 
 
-	update: function(){
-		this.tpDebug();
-		game.camera.focusOnXY(this.player.player.x, this.player.player.y);
-		//game.camera.follow(this.player.player);
-		game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this); //Si overlapea con el grupo de objetos de overlap, no podrá transformarse
+	cancelarTransformacion: function(){
+		if(this.player.no_PuedeTransformarse != undefined)
+			this.player.no_PuedeTransformarse();
+	},
 
-		//------------COSAS DE PRUEBA----------
-		//Vamos a comprobar si el player hace "overlap" con una mano y llamamos a la funcion collectStar
-		game.physics.arcade.overlap(this.player.player,this.hands, this.collectStar, null, this); //no se que es ni el null ni el this ese
-		//lo mismo pero para los pinchos
-		game.physics.arcade.overlap(this.player.player,this.spikes, this.daño, null, this);
-		//------------COLISION & PLAYERUPDATE----------
-		this.map.update(this.objetosQueColisionan); //objetos que colisionan con el mapa
-		this.player.update(); // update del player (colision de balas 2)
-		this.energia = this.player.health;
-		this.canvas.setText(0, 'EN: ' + this.energia); //pruebas solo (el canvas me tiene frito en verdad xdd)
-		this.canvas.updateCanvas();
-
+	updateEnemigos(){
 		for(var i = 0; i < this.Doors.length; i++){
 			this.Doors[i].update(); //UPDATE DE DOORS
 		}
@@ -134,53 +174,10 @@ var playState = {
 		for(var i = 0; i < this.wavers.length; i++){
 			this.wavers[i].update(); //UPDATE DE ESO
 		}
-		//ame.debug.body(this.bats[0].sprite);
-		this.prueba.update();
-	},
 
-//-------------------------------------------------------------------RENDER-----------------------------------------------------------------
-
-	render: function() {
-        //game.debug.cameraInfo(game.camera, 32, 32);
-        game.debug.spriteCoords(this.player.player, 32, 500);
-    },
-    kk: function(player, puerta){
-    	//game.camera.follow(null);
-    	//console.log('yey');
-    	/*game.camera.x = 7650;               esto podrá sernos útil una vez que las puertas funcionen, podemos lockear la cámara en una posición si queremos, para que se parezca más al juego
-    	if(game.camera.x >= 7650){
-			game.camera.x = 7650;
-		}*/
-		/*console.log(game.numDoor);
-		if(game.numDoor === 2){
-			if(game.camera.x > game.doorSprite.x - 700){
-				game.camera.x = game.doorSprite.x - 700;
-			}
-		}*/
-    },
- //-------------------------------------------------------------------AUXILIARES-----------------------------------------------------------------
- 	creacion_Overlaps: function(string){
-		var self = this;
-		grupo = new Group(); //crea un nuevo grupo y lo iguala a la variable
-    	grupo = grupo.group;
-		var result = self.map.findObjectsByType(string, self.map.objectsLayer); //encuentra los objetos del tipo "overlap"
-		result.forEach(function(element){
-			self.map.createFromTiledObject(element, grupo, null); //los crea...
-		});
-
-		return grupo;
-	},
-
-	daño: function(player, spike){ //metodo de daño, que probablemente tengan que llevar los enemigos...
-		if(!this.player._immune){
-			this.player.recoil_Damage(spike.x, 1); //por ahora aqui...
-			this.player.immune();
+		for(var i = 0; i < this.Bees.length; i++){
+			this.Bees[i].update(); //UPDATE DE ESO
 		}
-	},
-
-	cancelarTransformacion: function(){
-		if(this.player.no_PuedeTransformarse != undefined)
-			this.player.no_PuedeTransformarse();
 	},
 
 //-------------------------------------------------------------------PRUEBAS-----------------------------------------------------------------
