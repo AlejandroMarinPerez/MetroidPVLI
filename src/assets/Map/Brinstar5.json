@@ -340,26 +340,6 @@
                 {
                  "gid":262,
                  "height":32,
-                 "id":68,
-                 "name":"",
-                 "properties":
-                    {
-                     "type":"tp"
-                    },
-                 "propertytypes":
-                    {
-                     "type":"string"
-                    },
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":32,
-                 "x":1244,
-                 "y":8072
-                }, 
-                {
-                 "gid":262,
-                 "height":32,
                  "id":72,
                  "name":"",
                  "properties":
@@ -2696,26 +2676,6 @@
                  "width":32,
                  "x":12032,
                  "y":1324.66666666667
-                }, 
-                {
-                 "gid":144,
-                 "height":32,
-                 "id":273,
-                 "name":"",
-                 "properties":
-                    {
-                     "type":"tp"
-                    },
-                 "propertytypes":
-                    {
-                     "type":"string"
-                    },
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":32,
-                 "x":11966.6666666667,
-                 "y":1182
                 }, 
                 {
                  "gid":199,
@@ -10904,7 +10864,7 @@
                  "name":"",
                  "properties":
                     {
-                     "type":"door"
+                     "type":"rocketDoor"
                     },
                  "propertytypes":
                     {
@@ -13818,26 +13778,6 @@
                  "y":5446
                 }, 
                 {
-                 "gid":47,
-                 "height":32,
-                 "id":1046,
-                 "name":"",
-                 "properties":
-                    {
-                     "type":"playerStart"
-                    },
-                 "propertytypes":
-                    {
-                     "type":"string"
-                    },
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":32,
-                 "x":5267.39393939394,
-                 "y":8146.78787878788
-                }, 
-                {
                  "gid":378,
                  "height":32,
                  "id":1049,
@@ -14236,6 +14176,242 @@
                  "width":32,
                  "x":7120,
                  "y":7877
+                }, 
+                {
+                 "gid":137,
+                 "height":32,
+                 "id":1070,
+                 "name":"",
+                 "properties":
+                    {
+                     "numAActivar":"0",
+                     "type":"pot"
+                    },
+                 "propertytypes":
+                    {
+                     "numAActivar":"string",
+                     "type":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":227,
+                 "y":8144
+                }, 
+                {
+                 "gid":137,
+                 "height":32,
+                 "id":1071,
+                 "name":"",
+                 "properties":
+                    {
+                     "numAActivar":"2",
+                     "type":"pot"
+                    },
+                 "propertytypes":
+                    {
+                     "numAActivar":"string",
+                     "type":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":12963,
+                 "y":5520
+                }, 
+                {
+                 "gid":137,
+                 "height":32,
+                 "id":1072,
+                 "name":"",
+                 "properties":
+                    {
+                     "numAActivar":"10",
+                     "type":"pot"
+                    },
+                 "propertytypes":
+                    {
+                     "numAActivar":"string",
+                     "type":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":18051.3333333333,
+                 "y":3952.66666666667
+                }, 
+                {
+                 "gid":137,
+                 "height":32,
+                 "id":1078,
+                 "name":"",
+                 "properties":
+                    {
+                     "numAActivar":"3",
+                     "type":"pot"
+                    },
+                 "propertytypes":
+                    {
+                     "numAActivar":"string",
+                     "type":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":16675,
+                 "y":2416
+                }, 
+                {
+                 "gid":137,
+                 "height":32,
+                 "id":1079,
+                 "name":"",
+                 "properties":
+                    {
+                     "numAActivar":"5",
+                     "type":"pot"
+                    },
+                 "propertytypes":
+                    {
+                     "numAActivar":"string",
+                     "type":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":16323,
+                 "y":1296
+                }, 
+                {
+                 "gid":144,
+                 "height":32,
+                 "id":1088,
+                 "name":"",
+                 "properties":
+                    {
+                     "type":"tp"
+                    },
+                 "propertytypes":
+                    {
+                     "type":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":16540,
+                 "y":1312
+                }, 
+                {
+                 "gid":137,
+                 "height":32,
+                 "id":1089,
+                 "name":"",
+                 "properties":
+                    {
+                     "numAActivar":"10",
+                     "type":"pot"
+                    },
+                 "propertytypes":
+                    {
+                     "numAActivar":"string",
+                     "type":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":17859,
+                 "y":1392
+                }, 
+                {
+                 "gid":137,
+                 "height":32,
+                 "id":1092,
+                 "name":"",
+                 "properties":
+                    {
+                     "numAActivar":"1",
+                     "type":"pot"
+                    },
+                 "propertytypes":
+                    {
+                     "numAActivar":"string",
+                     "type":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":11651,
+                 "y":496
+                }, 
+                {
+                 "gid":137,
+                 "height":32,
+                 "id":1094,
+                 "name":"",
+                 "properties":
+                    {
+                     "numAActivar":"4",
+                     "type":"pot"
+                    },
+                 "propertytypes":
+                    {
+                     "numAActivar":"string",
+                     "type":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":3971,
+                 "y":2576.33333333333
+                }, 
+                {
+                 "gid":47,
+                 "height":32,
+                 "id":1095,
+                 "name":"",
+                 "properties":
+                    {
+                     "type":"playerStart"
+                    },
+                 "propertytypes":
+                    {
+                     "type":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":12600,
+                 "y":5624
+                }, 
+                {
+                 "gid":262,
+                 "height":32,
+                 "id":1096,
+                 "name":"",
+                 "properties":
+                    {
+                     "type":"tp"
+                    },
+                 "propertytypes":
+                    {
+                     "type":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":4156,
+                 "y":2544
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -14255,7 +14431,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":1070,
+ "nextobjectid":1097,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tileheight":32,

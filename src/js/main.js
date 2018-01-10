@@ -4,8 +4,9 @@ var playState = {
 //--------------------------------------------------------------------CREACION---------------------------------------------------------------
 
 	create: function(){
-		this.game.stage.scale.pageAlignHorizontally = true;
-		this.game.stage.scale.pageAlignVeritcally = true;
+		//this.game.stage.scale.pageAlignHorizontally = true;
+		//this.game.stage.scale.pageAlignVeritcally = true;
+		this._potActivados = 0;
 		//------------MAPA----------
 		this.map = new TileMap('gameTiles', 'Background' ,'Main', 'Objects'); //creamos el mapa a partir del Tile
 		var playerStart = this.map.findObjectsByType('playerStart', this.map.objectsLayer); //un objeto que nos indica el comienzo
@@ -36,8 +37,15 @@ var playState = {
 		this.FiveKey = game.input.keyboard.addKey(Phaser.Keyboard.FIVE);
 		this.SixKey = game.input.keyboard.addKey(Phaser.Keyboard.SIX);
 		//------------ARRAY DE COLISIONES----------
+		//this.prueba= new ObjectPot(this.player.player.x + 200, 7845, 'bee', 0, 1, this.player);
+		var p = this.map.findObjectsByType('pot', this.map.objectsLayer);
+		this.pots = [];
+		for(var i = 0; i < p.length; i++){
+			var po = new ObjectPot(p[i].x, p[i].y,'pot', 0, p[i].properties.numAActivar, this.player);
+			this.pots.push(po); 
+		}
 		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes];
-		//this.prueba= new Bee(this.player.player.x, 5345, 0,'bee', 100, 200, this.map._blockedLayer, 8, 7, 0, this.player);
+	
 	},
 
 //-------------------------------------------------------------------UPDATE-----------------------------------------------------------------
@@ -47,17 +55,19 @@ var playState = {
 		game.camera.focusOnXY(this.player.player.x, this.player.player.y);
 		//game.camera.follow(this.player.player);
 		game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this); //Si overlapea con el grupo de objetos de overlap, no podrá transformarse
-
-		//------------COSAS DE PRUEBA----------
-		//Vamos a comprobar si el player hace "overlap" con una mano y llamamos a la funcion collectStar
-		game.physics.arcade.overlap(this.player.player,this.hands, this.collectStar, null, this); //no se que es ni el null ni el this ese
+		
 		//------------COLISION & PLAYERUPDATE----------
 		this.map.update(this.objetosQueColisionan); //objetos que colisionan con el mapa
 		this.player.update(); // update del player (colision de balas 2)
+		this.updateEnemigos();
 		this.energia = this.player.health;
 		this.canvas.setText(0, 'EN: ' + this.energia); //pruebas solo (el canvas me tiene frito en verdad xdd)
 		this.canvas.updateCanvas();
-		this.updateEnemigos();
+		//this.prueba.update();
+
+		for(var i = 0; i < this.pots.length; i++){
+			this.pots[i].update(); //UPDATE DE DOORS
+		}
 	},
 
 //-------------------------------------------------------------------RENDER-----------------------------------------------------------------

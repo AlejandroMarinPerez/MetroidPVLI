@@ -3,21 +3,19 @@
 class Potenciadores{ 
 	constructor(player){
 		this._player = player;
-		this.arrayPot = [this.agregarBola, this.superSalto, this.rockets, this.bombas]; //Array de funciones, esto molap
+		this.arrayPot = [this.agregarBola, this.superSalto, this.rockets, this.bombas, this.extRange]; //Array de funciones, esto molap
 	}
 
 //--------------------------------------------------------------------BOLA------------------------------------------------------------------------
-
+	extRange(self){
+		self._player._basicBullets._range = null;
+	}
 	agregarBola(self){ //agrega todas las funciones necesarias para que el jugador se transforme en bola
 		//Agrega la funcion al player de transformarse en pelotita, le cambia el collider, la animacion...
 		self._player.bolita = function(){
 			if(this._puedeTrans){
 				this._bola = true;
-				//this._player.body.setSize(this.width, this.height - 30); //cambia los colliders
-				//his._player.body.y = this._player.y - 60;
 				this._animacion = 'bolitaDer';
-				//console.log(this.player.body);
-				//this.player.body.bounce.y = 0.2;
 			}
 		}
 		
@@ -32,8 +30,6 @@ class Potenciadores{
 		self._player.normal = function(){ 
 			if(this._bola && this._puedeTrans){
 				this._bola = false;
-				//this._player.body.setSize(this.width, this.height);
-				//this._player.body.y = this._player.y - 60; //este numero hay que cambiarlo pero no se llegar a él... (es AlturaDeAntes - AlturaEnBola)
 				this._animacion = 'normal';
 				if(this._ultimaDir == 1){
 					this._aim = 'right';
@@ -58,7 +54,7 @@ class Potenciadores{
 //--------------------------------------------------------------------SALTO POTENCIADO------------------------------------------------------------------------
 
 	superSalto(self){
-		self._player.vSpeed = self._player.vSpeed * 2; //valor que aún no he definido bien, ahora salta mucho creo xD
+		self._player.vSpeed = self._player.vSpeed * 1.5; //valor que aún no he definido bien, ahora salta mucho creo xD
 	}
 
 //--------------------------------------------------------------------COHETES e.e------------------------------------------------------------------------

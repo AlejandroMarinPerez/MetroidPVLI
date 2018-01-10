@@ -7,7 +7,7 @@ class Bullets extends Movable{
 		//Balas
 		this.sprite = new Group(); //el sprite pasa a ser un nuevo grupo (reutulizable para enemigos)
 		this._balas = this.sprite.group;
-		this._balas.createMultiple(15, sprite); //creamos 20 balas, y luego las reutilizamos tooodo el rato
+		this._balas.createMultiple(50, sprite); //creamos 20 balas, y luego las reutilizamos tooodo el rato
 		this._balas.setAll('outOfBoundsKill', true); //hacemos que desaparezcan al chocar con los limites
 		this._balas.setAll('checkWorldBounds', true);//comprueba que no se ha chocado con nada
 

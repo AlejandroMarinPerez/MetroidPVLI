@@ -229,6 +229,9 @@ handle_Events(){
 
 	heal(int){
 		this._player.health += int;
+		if(this._player.health > this._maxHealth){
+			this._player.health = this._maxHealth;
+		}
 	}
 
 	morir(){
@@ -290,6 +293,7 @@ handle_Events(){
 		this._player = this._sprite; //asignacion con el sprite del padre para que el nombre sea mas legible
 		this._player.anchor.setTo(0.5, 0.5); //ancla
 		this._player.health = 30; //vida inicial original del juego
+		this._maxHealth = 100;
 		this._immune = false;
 		this._immuneTimer = 0;  //timers de inmune y de parpadeo
 		this._blinkTimer = 0;
