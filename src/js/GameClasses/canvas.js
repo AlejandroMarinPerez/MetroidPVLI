@@ -5,6 +5,8 @@ class Canvas{
 	constructor(){
 		this._elemArray = [];
 		this._texts = [];
+		game.scale.pageAlignHorizontally = true;
+		game.scale.pageAlignVertically = true;
 	}
 
 //--------------------------------------------------------------------UPDATE------------------------------------------------------------------
@@ -12,7 +14,6 @@ class Canvas{
 		for(var i = 0; i < this._elemArray.length; i++){
 			this._elemArray[i].text = this._texts[i];
 		}
-		console.log(this._texts[0]);
 	}
 
 //-------------------------------------------------------------------MODIFICACION DEL CANVAS--------------------------------------------------

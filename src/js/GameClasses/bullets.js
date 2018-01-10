@@ -2,20 +2,22 @@
 //(aun por implementar)
 
 class Bullets extends Movable{
-	constructor(sprite, speed, range, shooter, ammo){
+	constructor(sprite, speed, range, shooter, ammo, bool){
 		super(0, 0, null, 0, speed, speed); //conctructor de Movable
 		//Balas
 		this.sprite = new Group(); //el sprite pasa a ser un nuevo grupo (reutulizable para enemigos)
 		this._balas = this.sprite.group;
-		this._balas.createMultiple(15, sprite); //creamos 20 balas, y luego las reutilizamos tooodo el rato
+		this._balas.createMultiple(50, sprite); //creamos 20 balas, y luego las reutilizamos tooodo el rato
 		this._balas.setAll('outOfBoundsKill', true); //hacemos que desaparezcan al chocar con los limites
 		this._balas.setAll('checkWorldBounds', true);//comprueba que no se ha chocado con nada
 
 		for(var i = 0; i < this._balas.length; i++){ //escalamos, collider... a todos los hijos
 			this._balas.children[i].scale.setTo(0.10, 0.10); //escalamos sprite & collider
 			this._balas.children[i].body.setSize(0.2,0.2);
-			this._balas.children[i].animations.add('normal',[0], 0, true);
-			this._balas.children[i].animations.add('expl', [1], 0, true);
+			if(bool){
+				this._balas.children[i].animations.add('normal',[0], 0, true);
+				this._balas.children[i].animations.add('expl', [1], 0, true);
+			}
 		}	
 
 		this._tiempoBala = 0;
@@ -36,19 +38,17 @@ class Bullets extends Movable{
 	}
 
 	gestionaBala(aim , bullet){  //elige direccion , ajusta el rango, el tiempo...
-		console.log(this._shooter.width);
 		if(aim === 'left'){
 			bullet.reset(this._shooter.x - this._shooter.width + 8, this._shooter.y); //le marcamos su posicion inicial
 			this.moveLeft(bullet, -90);
 		}
 		else if(aim === 'right'){
-			console.log(this._shooter.height);
 			bullet.reset(this._shooter.x + this._shooter.width - 8, this._shooter.y - this._shooter.height/6); //le marcamos su posicion inicial
 			this.moveRight(bullet, 90);
 		}
 		else if(aim  === 'up'){
 			var x = this.aux();
-			bullet.reset(this._shooter.x + x, this._shooter.y - 42); //le marcamos su posicion inicial
+			bullet.reset(this._shooter.x + x, this._shooter.y - 35); //le marcamos su posicion inicial
 			this.moveUp(bullet, 0);
 		}
 		this._tiempoBala = game.time.now + 250; //temporizador para que no dispare chorrocientas balas de golpe

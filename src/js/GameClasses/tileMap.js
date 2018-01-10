@@ -7,18 +7,24 @@ class TileMap{
 		this._map.addTilesetImage(image);
 		this._backgroundLayer = this._map.createLayer(backLayerName); //los names de las layers tienen que ser iguales que en tile
 		this._blockedLayer = this._map.createLayer(collisionLayerName);
+		this._bolaLayer = this._map.createLayer('bola');
+		//this.c = this._map.createLayer('Crawlers');
+		//this.c.visible = false;
 		this._objectsLayer = objectLayerName;
 		//this._blockedLayer.debug = true;
-		this._map.setCollisionBetween(1, 1500, true, this._blockedLayer); //el 1500 es el maximo numero que se encuentra en la parte "layers" del json (unos cuantos aumentados por si acaso)
-		this._blockedLayer.resizeWorld();
-		this._totalEnemies = 0; //Para la actualizacion de los enemigos, calculamos el total según los vamos añadiendo
+		this._map.setCollisionBetween(1, 900, true, this._blockedLayer); //el 1500 es el maximo numero que se encuentra en la parte "layers" del json (unos cuantos aumentados por si acaso)
+		this._map.setCollisionBetween(1, 500, true, this._bolaLayer);
+		//this._map.setCollisionBetween(1, 900, true, this.c);
+		this._blockedLayer.resizeWorld();	
 	}
-
 
 //--------------------------------------------------------------------UPDATE---------------------------------------------------------------
 
 	update(objects){ //pura comprobacion de colisiones
 		for(var i = 0; i < objects.length; i++){
+			if(i === 1 && !objects[i].class._bola){ //player ahi guarrete :P
+				game.physics.arcade.collide(objects[i], this._bolaLayer);
+			}
 			game.physics.arcade.collide(objects[i], this._blockedLayer);
 		}
 	}
@@ -49,14 +55,7 @@ class TileMap{
 
 	///----------------------------------------Búsqueda de los enemigos-----------------------------------------------------------///
 	addEnemies(type){
-		if (type === 'floater'){
-			var criaturas = this.findObjectsByType(type, this._objectsLayer);
-			console.log(criaturas.length);
-			for(var i = 0; i < criaturas.length; i++){
-				var enemie = new Floater(criaturas[i].x, criaturas[i].y, 0, 'spike', 50, 0, this._blockedLayer, 10, 3, 0);
-				game.floaterGroup.group.addChild(enemie);
-			}
-			this._totalEnemies += criaturas.length;
-		}
+		
 	}
+
 }

@@ -12,6 +12,9 @@ class GameSprite{
 		this._sprite.kill();
 	}
 
+	setImmovable(bool){
+		this._sprite.body.immovable = bool; 
+	}
 //------------------------------------------------GETS & SETS--------------------------------------------------------------------
 
 	get sprite(){
