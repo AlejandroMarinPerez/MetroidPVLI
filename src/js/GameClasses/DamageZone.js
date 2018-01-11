@@ -11,7 +11,10 @@ class DamageZone extends GameSprite {
 
 	damage(player){
 		player.class.hSpeed = 50;
-		player.class.immune(true, 1);
+		if(!player.class._immune){
+			player.class.damage(1);
+			player.class.immune(true);
+		}
 		if(player.class.normal != null){
 			player.class.normal();
 		}

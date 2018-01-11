@@ -15,7 +15,6 @@ class Potenciadores{
 		self._player.bolita = function(){
 			if(this._puedeTrans){
 				this._bola = true;
-				this._animacion = 'bolitaDer';
 			}
 		}
 		
@@ -30,7 +29,6 @@ class Potenciadores{
 		self._player.normal = function(){ 
 			if(this._bola && this._puedeTrans){
 				this._bola = false;
-				this._animacion = 'normal';
 				if(this._ultimaDir == 1){
 					this._aim = 'right';
 					this._player.scale.x = 1;

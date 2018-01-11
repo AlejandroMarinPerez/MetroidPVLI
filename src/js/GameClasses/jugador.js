@@ -170,7 +170,7 @@ handle_Events(){
 	}
 
 	resetAnimaciones(){
-		if(!this._bola){ //si no es bola y toca el suelo, pone la animacion normal, si es bola, pone la animacion de bola. Ajusta el aim también
+			if(!this._bola){ //si no es bola y toca el suelo, pone la animacion normal, si es bola, pone la animacion de bola. Ajusta el aim también
 				if(this._player.body.onFloor())
 				this.cambiaAnim('normal');
 				if(this._player.scale.x === -1){
@@ -195,20 +195,15 @@ handle_Events(){
 			else{
 				this.moveRight(this._player, 0);
 			}
-			this._player.damage(damage); //si la salud llega a 0, el player muere
+			this.damage(damage); //si la salud llega a 0, el player muere
 			this._rebote = true;
-			this._immune = true;
+			this.immune(true);
 		}	
 	}
 
-	immune(bool, int){
-		if(bool){
+	immune(bool){
+		if(this._immuneTimer === 0 && bool){
 			this._immune = true;
-		}
-		if(this._immune && this._immuneTimer === 0){
-			if(bool){
-				this._player.damage(int); //cosas de prueba que probablemente haya q quitar
-			}
 			this._immuneTimer = game.time.now + 2000;
 		}
 		else if(this._immuneTimer !== 0){
@@ -228,18 +223,29 @@ handle_Events(){
 	}
 
 	heal(int){
-		this._player.health += int;
-		if(this._player.health > this._maxHealth){
-			this._player.health = this._maxHealth;
+		this._player._Health += int;
+		if(this._player._Health > this._maxHealth){
+			this._player._Health = this._maxHealth;
 		}
+	}
+
+	damage(int){
+		this._player._Health -= int;
+		if(this._player._Health <= 0){ //muere y hace la animacion!!
+			this.morir();
+		}
+	}
+
+	morir(){
+		this.cambiaAnim('morir');
+		this.Anima();
+		this._puedeControlar = false; //guay!!!!!!!!!!!!!!!!!!!!!!!!
+		this.sprite.body.moves = false;
+		this._player.animations.currentAnim.killOnComplete = true;
 	}
 
 	moreAmmo(int){
 		this._rockets.ammo += int;
-	}
-
-	morir(){
-		this.kill(); //destruye el objeto Jugador
 	}
 
 	bombasAux(bullet){
@@ -265,7 +271,7 @@ handle_Events(){
 	}
 
 	cambiaAnim(anim){
-		//if(this._player.animations.currentAnim.loopCount >= 1)
+		if(this._animacion !== 'morir')
 			this._animacion = anim;
 	}
 
@@ -296,7 +302,7 @@ handle_Events(){
 	construccion_Jugador(){ //construccion de las variables necesarias para el jugador
 		this._player = this._sprite; //asignacion con el sprite del padre para que el nombre sea mas legible
 		this._player.anchor.setTo(0.5, 0.5); //ancla
-		this._player.health = 30; //vida inicial original del juego
+		this._player._Health = 1; //vida inicial original del juego
 		this._maxHealth = 100;
 		this._immune = false;
 		this._immuneTimer = 0;  //timers de inmune y de parpadeo
@@ -344,6 +350,7 @@ handle_Events(){
 		this._player.animations.add('runShoot', [15, 16, 17], 8, true);
 		this._player.animations.add('runUpShoot', [18, 19, 20], 8, true);
 		this._player.animations.add('voltereta', [7, 8, 9 , 10], 15, true);
+		this._player.animations.add('morir', [24, 25, 26], 5, false);
 	}
 
 //------------------------------------------------GETS & SETS--------------------------------------------------------------------
@@ -364,7 +371,7 @@ handle_Events(){
 		return this._player;
 	}
 	get health(){
-		return this._player.health;
+		return this._player._Health;
 	}
 	get jumpSpeed(){
 		return this._jumpSpeed;
