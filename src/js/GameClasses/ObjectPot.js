@@ -3,8 +3,10 @@ class ObjectPot extends GameSprite{
 		super(posX, posY, sprite, gravity);
 		this._type = type;
 		this._player = player;
-		this.sprite.animations.add('def', [0, 1, 2, 3], 8, true);
+		this.sprite.animations.add('def', [0, 1, 2, 3], 15, true);
 		this.sprite.animations.play('def');
+		this._AMMO = 5;
+		this._tipoRecargaAMMO = 5; //numero que aparece en el tileMap
 	}
 
 	update(){
@@ -13,12 +15,12 @@ class ObjectPot extends GameSprite{
 
 	activarMejora(){
 		this.kill();
-		if(this._type < 5){
+		if(this._type < this._tipoRecargaAMMO){
 			this._player.activarMejoras(this._type);
 			playState._potActivados++;
 		}
-		else if(this._type == 5){
-			this._player._rockets.ammo += 5;
+		else if(this._type == this._tipoRecargaAMMO){
+			this._player.moreAmmo(this._AMMO);
 		}
 		else{
 			this._player.heal(this._player._maxHealth);

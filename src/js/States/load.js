@@ -23,6 +23,7 @@ var loadState = {
         game.load.spritesheet('waver', 'assets/Enemies/waver.png', 25, 22);
         game.load.spritesheet('bee', 'assets/Enemies/bee.png', 38, 30);
         game.load.spritesheet('pot', 'assets/PlayerThings/pot.png', 28, 32);
+        game.load.image('dropMisiles', 'assets/PlayerThings/dropMisiles.png', 20, 13);
 		game.floaterGroup = new Group(); //Grupo que contendrá a los floaters del juego
 		/*game.scale.pageAlignHorizontally = true;
 		game.scale.pageAlignVertically = true;*/

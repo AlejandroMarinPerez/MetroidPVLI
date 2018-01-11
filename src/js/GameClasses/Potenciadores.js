@@ -96,7 +96,7 @@ class Potenciadores{
 		}
 
 		//TECLA P (PUEDE CAMBIARSE OBVIAMENTE, SON PRUEBAS SOLO)
-		self._player.pKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
+		self._player.pKey = game.input.keyboard.addKey(Phaser.Keyboard.J);
 
 		self._player._bombas.shoot = function(){ //redefinimos el metodo shoot original de las balas
 			if(game.time.now > this._tiempoBala){

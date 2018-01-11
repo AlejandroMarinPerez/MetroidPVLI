@@ -234,6 +234,10 @@ handle_Events(){
 		}
 	}
 
+	moreAmmo(int){
+		this._rockets.ammo += int;
+	}
+
 	morir(){
 		this.kill(); //destruye el objeto Jugador
 	}

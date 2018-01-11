@@ -14288,26 +14288,6 @@
                  "y":1296
                 }, 
                 {
-                 "gid":144,
-                 "height":32,
-                 "id":1088,
-                 "name":"",
-                 "properties":
-                    {
-                     "type":"tp"
-                    },
-                 "propertytypes":
-                    {
-                     "type":"string"
-                    },
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":32,
-                 "x":16540,
-                 "y":1312
-                }, 
-                {
                  "gid":137,
                  "height":32,
                  "id":1089,
@@ -14396,7 +14376,7 @@
                 {
                  "gid":262,
                  "height":32,
-                 "id":1096,
+                 "id":1099,
                  "name":"",
                  "properties":
                     {
@@ -14410,8 +14390,28 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":4156,
-                 "y":2544
+                 "x":16872.3616666667,
+                 "y":2394.96833333333
+                }, 
+                {
+                 "gid":144,
+                 "height":32,
+                 "id":1102,
+                 "name":"",
+                 "properties":
+                    {
+                     "type":"tp"
+                    },
+                 "propertytypes":
+                    {
+                     "type":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":729.454545454546,
+                 "y":8065.81818181818
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -14431,7 +14431,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":1097,
+ "nextobjectid":1104,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tileheight":32,

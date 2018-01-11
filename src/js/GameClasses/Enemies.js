@@ -17,9 +17,12 @@ class Enemies extends Movable{
     this._posIniX = this.sprite.x - 15;
     this._posIniY = this.sprite.y - 20;
     this._resTimer = 0;
-    this.prueba = new Group(); //el sprite pasa a ser un nuevo grupo (reutulizable para enemigos)
-    this.pruebaG = this.prueba.group;
-    this.pruebaG.createMultiple(1, 'dropVida');
+    var prueba = new Group();
+    this._Botiquines = prueba.group;
+    this._Botiquines.createMultiple(2, 'dropVida');
+    var a = new Group();
+    this._dropMisiles = a.group;
+    this._dropMisiles.createMultiple(2, 'dropMisiles');
     if (type === 0){ //Tipo de enemigo que serán, pero sólo diferencia entre tanques y normales
       this._lives = lives; //Hit points
     }
@@ -30,7 +33,6 @@ class Enemies extends Movable{
     this._seChoca = colisionParedes;
     this._haMuerto = false;
     this.spriteAux = null;
-    this._col = false;
   }
 
   colision(){
@@ -72,11 +74,9 @@ class Enemies extends Movable{
   }
 
  killThis(){
- 	//if(!this._haMuerto){
  		this.sprite.kill();
     this._haMuerto = true;
     this._resTimer = game.time.now + 10000;
- 	//}
  }
 
  respawn(){
@@ -94,19 +94,21 @@ class Enemies extends Movable{
  loot(){ //por ahora solo dan vida, deberian dar tmbn misiles...
   var rnd = Math.floor(Math.random()*10); //generacion numero random
   if(rnd === 0 || rnd === 8){
-    var drop = this.pruebaG.getFirstExists(false);
+    var drop = this._Botiquines.getFirstExists(false);
     drop.reset(this.sprite.x - 5, this.sprite.y);
     drop.lifespan = 5000; //duran 5 segunditos
   }
-
+  else if((rnd === 2 || rnd === 9) && this._player._rockets !== undefined){
+    var drop = this._dropMisiles.getFirstExists(false);
+    drop.reset(this.sprite.x - 5, this.sprite.y);
+    drop.angle= -90;
+    drop.lifespan = 5000;
+  }
  }
 
  collectLoot(){
-  game.physics.arcade.overlap(this._player.player, this.pruebaG, function(player, sprite){sprite.lifespan = 10; player.class.heal(5);});
- }
-
- col(){
-  this._col = true;
+  game.physics.arcade.overlap(this._player.player, this._Botiquines, function(player, sprite){sprite.lifespan = 10; player.class.heal(5);});
+  game.physics.arcade.overlap(this._player.player, this._dropMisiles, function(player, sprite){sprite.lifespan = 10; player.class.moreAmmo(2);});
  }
 
 }
