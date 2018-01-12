@@ -5,6 +5,8 @@ var loadState = {
 		var loading = game.add.text(80,150,'loading...',{font: '40px Courier', fill: '#FFF'}); //una textito de carga
 
 		//game.load.image('dude', 'assets/PlayerThings/personaje.png'); //Cargamos tooodos los recursos que vamos a necesitar
+		game.load.spritesheet('menu', 'assets/PlayerThings/Menu.png', 744.75, 600);
+		game.load.image('menuAux', 'assets/PlayerThings/MenuLados.png');
 		game.load.spritesheet('dude', 'assets/PlayerThings/samus3.png', 33, 64);
     	game.load.image('hand', 'assets/PowerUps/hand.png');
     	game.load.image('spike', 'assets/Enemies/spikes.png');
@@ -25,8 +27,6 @@ var loadState = {
         game.load.spritesheet('pot', 'assets/PlayerThings/pot.png', 28, 32);
         game.load.image('dropMisiles', 'assets/PlayerThings/dropMisiles.png', 20, 13);
 		game.floaterGroup = new Group(); //Grupo que contendrá a los floaters del juego
-		/*game.scale.pageAlignHorizontally = true;
-		game.scale.pageAlignVertically = true;*/
     	console.log("Cargando..."); //simple debug
 	},
 
