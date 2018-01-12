@@ -52,10 +52,4 @@ class TileMap{
 		return this._objectsLayer;
 	}
 
-
-	///----------------------------------------Búsqueda de los enemigos-----------------------------------------------------------///
-	addEnemies(type){
-		
-	}
-
 }

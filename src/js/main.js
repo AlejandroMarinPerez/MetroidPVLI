@@ -17,7 +17,7 @@ var playState = {
 		this.tps = this.map.findObjectsByType('tp', this.map.objectsLayer);
 
 		//------------PLAYER & CANVAS----------
-		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 400, 150, 200, this.map._blockedLayer); //una clase o_O (posX,posY, sprite, gravity, scaleX, scaleY)
+		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 400, 150, 200, this.map._blockedLayer, playerStart[0].x, playerStart[0].y);
 		this.canvas = new Canvas();
 		this.energia = this.player.health;
 		this.canvas.addText(16, 16, 'EN: ' + this.energia, '65px Arial', '#FFF');
@@ -29,7 +29,6 @@ var playState = {
 		this.map._backgroundLayer2 = this.map._map.createLayer('Tuberias'); //para que quede chulo se crean después, maybe lo hago de otra forma luego...
 
 		//------------COSAS DE PRUEBA----------
-		this.cosasDePrueba();
 		this.One = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
 		this.TwoKey = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
 		this.ThreeKey = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
@@ -45,6 +44,7 @@ var playState = {
 			this.pots.push(po); 
 		}
 		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes];
+		this.player.activarMejoras(0); this.player.activarMejoras(1); this.player.activarMejoras(2); this.player.activarMejoras(3);
 	
 	},
 
@@ -66,7 +66,7 @@ var playState = {
 		//this.prueba.update();
 
 		for(var i = 0; i < this.pots.length; i++){
-			this.pots[i].update(); //UPDATE DE DOORS
+			this.pots[i].update();
 		}
 	},
 
@@ -192,12 +192,6 @@ var playState = {
 
 //-------------------------------------------------------------------PRUEBAS-----------------------------------------------------------------
 
-	collectStar: function(player, hands){
-		hands.kill(); //destruye el objeto star
-		this.player.activarMejoras(this.indexPrueba); //como prueba, las manitas son potenciadores. Serian simples sprites / grupo de sprites que al cogerlos activasen los potenciadores.
-		this.indexPrueba++;
-	},
-
 	tpDebug(){
 		if(this.One.isDown){
 			this.player.player.body.x = this.tps[0].x;
@@ -223,34 +217,6 @@ var playState = {
 			console.log(this.tps[5]);
 			this.player.player.body.x = this.tps[5].x;
 			this.player.player.body.y = this.tps[5].y;
-		}
-	},
-
-	cosasDePrueba: function(){
-		//Manos que te darán puntos
-		this.hands = game.add.group();
-		this.hands.enableBody = true;
-		this.indexPrueba = 0; //pruebas de potenciadores
-
-		for(var i = 1; i <= 4; i++){ //creamos 2 manos
-
-			//Añadimos una mano al grupo Hands
-			var mano = this.hands.create(i*200, 7780,'hand');
-			//Fisicas...
-			mano.body.gravity.y = 100;
-			mano.body.bounce.y = 0.4 + Math.random() *0.2;
-			mano.scale.setTo(0.05,0.05);
-		}
-
-		this.spikes = game.add.group(); //pinchitos
-
-		this.spikes.enableBody = true;
-
-		for(var i = 1; i < 4; i++){
-			var spike = this.spikes.create(i*200 + 70, 7780,'spike');
-			spike.body.gravity.y = 1000;
-			spike.body.velocity.x = 5;
-			spike.scale.setTo(0.25,0.25);
 		}
 	}
 }

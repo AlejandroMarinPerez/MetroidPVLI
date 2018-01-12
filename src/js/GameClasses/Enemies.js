@@ -20,9 +20,11 @@ class Enemies extends Movable{
     var prueba = new Group();
     this._Botiquines = prueba.group;
     this._Botiquines.createMultiple(2, 'dropVida');
+    this.VIDA_A_RECUPERAR = 5;
     var a = new Group();
     this._dropMisiles = a.group;
     this._dropMisiles.createMultiple(2, 'dropMisiles');
+    this.AMMO_A_RECUPERAR = 2;
     if (type === 0){ //Tipo de enemigo que serán, pero sólo diferencia entre tanques y normales
       this._lives = lives; //Hit points
     }
@@ -33,6 +35,10 @@ class Enemies extends Movable{
     this._seChoca = colisionParedes;
     this._haMuerto = false;
     this.spriteAux = null;
+    this.H_VEL_REDUCIDA = 10; //velocidad a la que baja
+    this.V_VEL_REDUCIDA = 10;
+    this.TIEMPO_REDUCCION_VEL = 400; //tiempo que los enemigos estan lentos
+    this.TIEMPO_RESPAWN = 10000; //tiempo al cual respawnean
   }
 
   colision(){
@@ -55,9 +61,9 @@ class Enemies extends Movable{
 
   get_Damaged(){
   	this._lives--;
-  	this.hSpeed = 10;  //quita vida, reduce su velocidad y empieza el timer de velocidad bajada
-  	this.vSpeed = 10;
-  	this._velocityTimer = game.time.now + 300;
+  	this.hSpeed = this.H_VEL_REDUCIDA;  //quita vida, reduce su velocidad y empieza el timer de velocidad bajada
+  	this.vSpeed = this.V_VEL_REDUCIDA;
+  	this._velocityTimer = game.time.now + this.TIEMPO_REDUCCION_VEL;
     if(this._lives <= 0){
       this.killThis();
       this.loot();
@@ -76,11 +82,11 @@ class Enemies extends Movable{
  killThis(){
  		this.sprite.kill();
     this._haMuerto = true;
-    this._resTimer = game.time.now + 10000;
+    this._resTimer = game.time.now + this.TIEMPO_RESPAWN;
  }
 
- respawn(){
-    if(this._haMuerto && (this._posIniX + 300 < game.camera.x || game.camera.x + 800 < this._posIniX)){
+ respawn(){ //respawn, si la camara/player esta suficientemente lejos de su punto de respawn y ha pasado el tiempo especificado, respawnea
+    if(this._haMuerto && (this._posIniX + game.camera.width/2 < game.camera.x || game.camera.x + game.camera.width < this._posIniX)){
       if(game.time.now > this._resTimer){
         this.sprite.revive();
         this._lives = this._auxLives;
@@ -95,20 +101,20 @@ class Enemies extends Movable{
   var rnd = Math.floor(Math.random()*10); //generacion numero random
   if(rnd === 0 || rnd === 8){
     var drop = this._Botiquines.getFirstExists(false);
-    drop.reset(this.sprite.x - 5, this.sprite.y);
+    drop.reset(this.sprite.x - this.sprite.width/5, this.sprite.y);
     drop.lifespan = 5000; //duran 5 segunditos
   }
   else if((rnd === 2 || rnd === 9) && this._player._rockets !== undefined){
     var drop = this._dropMisiles.getFirstExists(false);
-    drop.reset(this.sprite.x - 5, this.sprite.y);
+    drop.reset(this.sprite.x - this.sprite.width/5, this.sprite.y);
     drop.angle= -90;
     drop.lifespan = 5000;
   }
  }
 
  collectLoot(){
-  game.physics.arcade.overlap(this._player.player, this._Botiquines, function(player, sprite){sprite.lifespan = 10; player.class.heal(5);});
-  game.physics.arcade.overlap(this._player.player, this._dropMisiles, function(player, sprite){sprite.lifespan = 10; player.class.moreAmmo(2);});
+  game.physics.arcade.overlap(this._player.player, this._Botiquines, function(player, sprite){sprite.lifespan = 10; player.class.heal(this.VIDA_A_RECUPERAR);}, null, this);
+  game.physics.arcade.overlap(this._player.player, this._dropMisiles, function(player, sprite){sprite.lifespan = 10; player.class.moreAmmo(this.AMMO_A_RECUPERAR);}, null, this);
  }
 
 }

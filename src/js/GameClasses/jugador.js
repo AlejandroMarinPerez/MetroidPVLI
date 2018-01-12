@@ -2,11 +2,14 @@
 // del movimiento obviamente, pero como no está en nuestros objetivos por ahora se puede mantener así). Movimiento, animaciones...
 
 class Player extends Movable{
-	constructor(posX, posY, sprite, gravity, speed, jumpSpeed, colliders){
+	constructor(posX, posY, sprite, gravity, speed, jumpSpeed, colliders, posIniX, posIniY){
 		super(posX, posY, sprite, gravity, speed, jumpSpeed); //constructor de Movable
 		this._colliders = colliders; //capa con la que ha de colisionarse
+		this._posIniX = posIniX;
+		this._posIniY = posIniY; //posiciones de inicio
 		this.construccion_Jugador();
 		this.define_Keys();
+		
 	}
 
 //--------------------------------------------------------------------MOVIMIENTO---------------------------------------------------------------
@@ -105,7 +108,7 @@ class Player extends Movable{
 		this.updateBullets();
 		this.caida();
 		this.microSalto();
-		this.hSpeed = this._speed;
+		this.hSpeed = this._speed; //por si es ralentizado, para recuperar su velocidad
 	}
 
 	updateBullets(){ //podrian estar en el array de colisiones, pero como cuando colisionan tienen que hacer algo específico, mejor aquí
@@ -165,6 +168,9 @@ handle_Events(){
 		}
 		if(this._player.body.onFloor() && this._bola){
 			this._player.body.velocity.y = 0; //soluciona un bug super raro loko, si cmabiabas de pestaña en bola te ibas pa abajo lel
+		}
+		if(!this._player.alive){
+			this.res();
 		}
 		this.immune();
 	}
@@ -237,11 +243,21 @@ handle_Events(){
 	}
 
 	morir(){
-		this.cambiaAnim('morir');
+		this.cambiaAnim('morir'); //cambia la animacion
 		this.Anima();
-		this._puedeControlar = false; //guay!!!!!!!!!!!!!!!!!!!!!!!!
+		this._puedeControlar = false; //le quita los controles y el movimiento al player
 		this.sprite.body.moves = false;
-		this._player.animations.currentAnim.killOnComplete = true;
+		this._player.animations.currentAnim.killOnComplete = true; //cuando acaba a animacion, muere
+	}
+
+	res(){
+		this._player._Health = 30; //si el player ha muerto, reestablece su vida inicial, le revive, cambia su animacion a la normal, le devuelve controles y movimiento
+		this._player.revive();
+		this._animacion = 'normal';
+		this._puedeControlar = true;
+		this.sprite.body.moves = true;
+		this._player.body.x = this._posIniX;
+		this._player.body.y = this._posIniY;
 	}
 
 	moreAmmo(int){
@@ -271,7 +287,7 @@ handle_Events(){
 	}
 
 	cambiaAnim(anim){
-		if(this._animacion !== 'morir')
+		if(this._animacion !== 'morir') //para evitar cosas raras al morir
 			this._animacion = anim;
 	}
 
@@ -350,7 +366,7 @@ handle_Events(){
 		this._player.animations.add('runShoot', [15, 16, 17], 8, true);
 		this._player.animations.add('runUpShoot', [18, 19, 20], 8, true);
 		this._player.animations.add('voltereta', [7, 8, 9 , 10], 15, true);
-		this._player.animations.add('morir', [24, 25, 26], 5, false);
+		this._player.animations.add('morir', [24, 25, 26], 2, false);
 	}
 
 //------------------------------------------------GETS & SETS--------------------------------------------------------------------
