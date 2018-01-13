@@ -23,14 +23,14 @@ var playState = {
 
 		//--------------------Creacion de arena, puetas, enemigos... (posiblemente metodo q esta quedando to suciooo) -------------------
 
-		//ARENAAAAAA
+		//ARENA
 		var sand = this.map.findObjectsByType('arena', this.map.objectsLayer); //crea los objetos de tipo arena
 		this.Arena = [];
 		for(var i = 0; i < sand.length; i++){
 			var sandy = new DamageZone(sand[i].x, sand[i].y, null, 0 , this.player);
 			this.Arena.push(sandy); //los agrega al array de arenas
 		}
-		//PUERTAAAAAS
+		//PUERTAS
 		var door = this.map.findObjectsByType('door', this.map.objectsLayer); //crea los objetos de tipo arena
 		this.Doors= [];
 		for(var i = 0; i < door.length; i++){
@@ -44,14 +44,14 @@ var playState = {
 			var puerta = new RocketDoor(door[i].x, door[i].y, 'rocketDoor', 0 , this.player, i + length, 'rocket');
 			this.Doors.push(puerta); //los agrega al array de arenas
 		}
-		//NIDOS DE AVISPAAAAAAA
+		//NIDOS DE AVISPA
 		var nest = this.map.findObjectsByType('nest', this.map.objectsLayer); //crea los objetos de tipo arena
 		this.nests = [];
 		for(var i = 0; i < nest.length; i++){
 			var spawn = new WaspSpawn(nest[i].x, nest[i].y, null, 0, 10000, this.player);
 			this.nests.push(spawn); //los agrega al array de arenas
 		}
-		//NO SE QUE ES ESTO, COSAS QUE FLOTAAAAN
+		//NO SE QUE ES ESTO, COSAS QUE FLOTAN
 		var cositasQueFlotan = this.map.findObjectsByType('floater', this.map.objectsLayer); //crea los objetos de tipo arena
 		this.floaters = [];
 		for(var i = 0; i < cositasQueFlotan.length; i++){
