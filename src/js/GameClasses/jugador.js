@@ -2,13 +2,31 @@
 // del movimiento obviamente, pero como no está en nuestros objetivos por ahora se puede mantener así). Movimiento, animaciones...
 
 class Player extends Movable{
-	constructor(posX, posY, sprite, gravity, speed, jumpSpeed, colliders){
+	constructor(posX, posY, sprite, gravity, speed, jumpSpeed, colliders, posIniX, posIniY){
 		super(posX, posY, sprite, gravity, speed, jumpSpeed); //constructor de Movable
 		this._colliders = colliders; //capa con la que ha de colisionarse
+		this._posIniX = posIniX;
+		this._posIniY = posIniY; //posiciones de inicio
 		this.construccion_Jugador();
 		this.define_Keys();
+		
 	}
 
+//----------------------------------------------------------CONSTANTES JUGADOR ----------------------------------------------------------------
+
+	declaracionConstantes(){
+		this._TIMESALTO = 600; //tiempo que`puede saltar (+ tiempo, + salta)
+		this._TIEMPOREBOTE = 200; //tiempo que rebota al hacerse daño con un enemigo (+ tiempo, + rebote)
+		this._TIEMPOINMUNIDAD = 2000; //tiempo en el q es inmune el jugador
+		this._STARTINGHEALTH = 30; //vida con la que comienza el jugador
+		this._VELMICROSALTO = -150; //velocidad del saltito de la bomba
+		this._ALPHAMAX = 0.75;
+		this._ALPHAMIN = 0.25; //desde que alpha a que alpha intercala al parpadear
+		this._TIEMPOTRANSICIONPARPADEO = 50; //tiempo en el que cambia un alpha y otra
+		this._MAXHEALTH = 100;
+		this._SPEEDBALAS = 300;
+		this._RANGEBALAS = 300;
+	}
 //--------------------------------------------------------------------MOVIMIENTO---------------------------------------------------------------
 
 	mueveIzquierda(){ //mueve el pj a la izquierda, guarda su direccion y gestiona sus animaciones
@@ -17,7 +35,7 @@ class Player extends Movable{
 		this._ultimaDir = -1;
 		if(!this._bola){
 			if(this._player.body.onFloor()){
-				if(this.JKey.isDown)
+				if(this.ZKey.isDown)
 					this.cambiaAnim('runShoot'); //las condiciones de las animaciones, que son horribles
 				else
 					this.cambiaAnim('andar');
@@ -36,7 +54,7 @@ class Player extends Movable{
 		this._ultimaDir = 1;
 		if(!this._bola){
 			if(this._player.body.onFloor()){
-				if(this.JKey.isDown)
+				if(this.ZKey.isDown)
 					this.cambiaAnim('runShoot');
 				else
 					this.cambiaAnim('andar');
@@ -50,14 +68,14 @@ class Player extends Movable{
 
 	//Aquí hacemos el saltito (por tiempo presionando la tecla)
 	saltar(){
-		if(this.WKey.isDown && this._player.body.onFloor() && !this._bola){
+		if(this.XKey.isDown && this._player.body.onFloor() && !this._bola){
 			var i = Math.floor(Math.random() * 7);
 			if(i === 5 || i === 6) this.cambiaAnim('voltereta'); //la voltereta op
 			else this.cambiaAnim('salto');	
-			this._jumpTimer = game.time.now + 600;
+			this._jumpTimer = game.time.now + this._TIMESALTO;
 			this.moveUp(this._player, 0);
 		}
-		else if(this.WKey.isDown && this._jumpTimer != 0){
+		else if(this.XKey.isDown && this._jumpTimer != 0){
 			if(!(this._animacion === 'voltereta'))
 				this.cambiaAnim('salto');
 			if(game.time.now > this._jumpTimer){
@@ -70,11 +88,6 @@ class Player extends Movable{
 		else{
 			this._jumpTimer = 0;
 		}
-		//game.camera.follow(this._player, Phaser.Camera.FOLLOW_PLATFORMER);
-		/*if(this._player.body.velocity.y === 0 && !this._bola){
-			this._player.body.velocity.y = -200;
-			//this._contSaltos++;
-		}*/
 	}
 
 	apuntaArriba(){
@@ -105,7 +118,7 @@ class Player extends Movable{
 		this.updateBullets();
 		this.caida();
 		this.microSalto();
-		this.hSpeed = this._speed;
+		this.hSpeed = this._speed; //por si es ralentizado, para recuperar su velocidad
 	}
 
 	updateBullets(){ //podrian estar en el array de colisiones, pero como cuando colisionan tienen que hacer algo específico, mejor aquí
@@ -122,10 +135,10 @@ class Player extends Movable{
 handle_Events(){
 		//If del movimiento...
 		if(this._puedeControlar){
-			if(this.AKey.isDown && !this._rebote){ //si presiona izquierda
+			if(this.cursores.left.isDown && !this._rebote){ //si presiona izquierda
 			this.mueveIzquierda();
 		}
-		else if(this.DKey.isDown && !this._rebote){ //si presiona derecha
+		else if(this.cursores.right.isDown && !this._rebote){ //si presiona derecha
 			this.mueveDerecha();
 		}
 		else{
@@ -141,7 +154,7 @@ handle_Events(){
 
 		this.saltar();
 
-		if(this.JKey.isDown && !this._bola){ //si presiona la tecla de disparo...
+		if(this.ZKey.isDown && !this._bola){ //si presiona la tecla de disparo...
 			if(!this.player.body.onFloor() && this._player.body.velocity.y < 0 && !this.cursores.up.isDown)
 				this.cambiaAnim('shootJump'); //si dispara mientras salta cambia de animacion
 			this._currentBullets.shoot(this._aim);
@@ -156,7 +169,7 @@ handle_Events(){
 			this._player.body.velocity.x = 0;  //reiniciamos variables...
 		}
 		else if (this._rebote && this._reboteTimer == 0){
-			this._reboteTimer = game.time.now + 200;
+			this._reboteTimer = game.time.now + this._TIEMPOREBOTE;
 		}
 		else if(game.time.now > this._reboteTimer){
 				this._player.body.velocity.x = 0;
@@ -166,11 +179,14 @@ handle_Events(){
 		if(this._player.body.onFloor() && this._bola){
 			this._player.body.velocity.y = 0; //soluciona un bug super raro loko, si cmabiabas de pestaña en bola te ibas pa abajo lel
 		}
+		if(!this._player.alive){
+			this.res();
+		}
 		this.immune();
 	}
 
 	resetAnimaciones(){
-		if(!this._bola){ //si no es bola y toca el suelo, pone la animacion normal, si es bola, pone la animacion de bola. Ajusta el aim también
+			if(!this._bola){ //si no es bola y toca el suelo, pone la animacion normal, si es bola, pone la animacion de bola. Ajusta el aim también
 				if(this._player.body.onFloor())
 				this.cambiaAnim('normal');
 				if(this._player.scale.x === -1){
@@ -195,21 +211,16 @@ handle_Events(){
 			else{
 				this.moveRight(this._player, 0);
 			}
-			this._player.damage(damage); //si la salud llega a 0, el player muere
+			this.damage(damage); //si la salud llega a 0, el player muere
 			this._rebote = true;
-			this._immune = true;
+			this.immune(true);
 		}	
 	}
 
-	immune(bool, int){
-		if(bool){
+	immune(bool){
+		if(this._immuneTimer === 0 && bool){
 			this._immune = true;
-		}
-		if(this._immune && this._immuneTimer === 0){
-			if(bool){
-				this._player.damage(int); //cosas de prueba que probablemente haya q quitar
-			}
-			this._immuneTimer = game.time.now + 2000;
+			this._immuneTimer = game.time.now + this._TIEMPOINMUNIDAD;
 		}
 		else if(this._immuneTimer !== 0){
 			this.blink();
@@ -228,14 +239,42 @@ handle_Events(){
 	}
 
 	heal(int){
-		this._player.health += int;
-		if(this._player.health > this._maxHealth){
-			this._player.health = this._maxHealth;
+		this._player._Health += int;
+		if(this._player._Health > this._MAXHEALTH){
+			this._player._Health = this._MAXHEALTH;
+		}
+		else if(this._player._Health < 0){
+			this._player._Health = 0;
+		}
+	}
+
+	damage(int){
+		this._player._Health -= int;
+		if(this._player._Health <= 0){ //muere y hace la animacion!!
+			this.morir();
 		}
 	}
 
 	morir(){
-		this.kill(); //destruye el objeto Jugador
+		this.cambiaAnim('morir'); //cambia la animacion
+		this.Anima();
+		this._puedeControlar = false; //le quita los controles y el movimiento al player
+		this.sprite.body.moves = false;
+		this._player.animations.currentAnim.killOnComplete = true; //cuando acaba a animacion, muere
+	}
+
+	res(){
+		this._player._Health = this._STARTINGHEALTH; //si el player ha muerto, reestablece su vida inicial, le revive, cambia su animacion a la normal, le devuelve controles y movimiento
+		this._player.revive();
+		this._animacion = 'normal';
+		this._puedeControlar = true;
+		this.sprite.body.moves = true;
+		this._player.body.x = this._posIniX;
+		this._player.body.y = this._posIniY;
+	}
+
+	moreAmmo(int){
+		this._rockets.ammo += int;
 	}
 
 	bombasAux(bullet){
@@ -244,7 +283,7 @@ handle_Events(){
 
 	microSalto(){
 		if(this.aux){
-			this._player.body.velocity.y = -150;
+			this._player.body.velocity.y = this._VELMICROSALTO;
 			this._microSalto = true;
 			this.aux = false;
 		}
@@ -261,13 +300,13 @@ handle_Events(){
 	}
 
 	cambiaAnim(anim){
-		//if(this._player.animations.currentAnim.loopCount >= 1)
+		if(this._animacion !== 'morir') //para evitar cosas raras al morir
 			this._animacion = anim;
 	}
 
 	caida(){ //gestiona la animacion de la caida
 		if(this._player.body.velocity.y > 0){
-			if(this.JKey.isDown && !this.cursores.up.isDown){
+			if(this.ZKey.isDown && !this.cursores.up.isDown){
 				this.cambiaAnim('fallShoot');
 			}
 			else if(!(this._animacion === 'voltereta'))
@@ -277,28 +316,28 @@ handle_Events(){
 
 	blink(){ //parpadeo al ser dañado
 		if(game.time.now > this._blinkTimer){
-			if(this._player.alpha === 0.75 || this._player.alpha === 1){
-				this._player.alpha = 0.25;
+			if(this._player.alpha === this._ALPHAMAX || this._player.alpha === 1){
+				this._player.alpha = this._ALPHAMIN;
 			}
 			else{
-				this._player.alpha = 0.75;
+				this._player.alpha = this._ALPHAMAX;
 			}
-				this._blinkTimer = game.time.now + 50;
+				this._blinkTimer = game.time.now + this._TIEMPOTRANSICIONPARPADEO;
 		}
 	}
 
 //------------------------------------------------------------CONSTRUCCIÓN & DECLARACIÓN DE VARIABLES------------------------------------
 
-	construccion_Jugador(){ //construccion de las variables necesarias para el jugador
+	construccion_Jugador(){ //construccion de las variables necesarias para el jugador	
+		this.declaracionConstantes();
 		this._player = this._sprite; //asignacion con el sprite del padre para que el nombre sea mas legible
 		this._player.anchor.setTo(0.5, 0.5); //ancla
-		this._player.health = 30; //vida inicial original del juego
-		this._maxHealth = 100;
+		this._player._Health = this._STARTINGHEALTH; //vida inicial original del juego
 		this._immune = false;
 		this._immuneTimer = 0;  //timers de inmune y de parpadeo
 		this._blinkTimer = 0;
 		this._aim = 'right';
-		this._currentBullets = new Bullets('bala', 300, 300, this, null, true); //balas añadidas en una clase 
+		this._currentBullets = new Bullets('bala', this._SPEEDBALAS, this._RANGEBALAS, this, null, true); //balas añadidas en una clase 
 		this.declaracionAnimaciones();
 		this._width = this._player.body.width;
 		this._height = this._player.body.height;
@@ -319,11 +358,8 @@ handle_Events(){
 
 	define_Keys(){
 		this.cursores = game.input.keyboard.createCursorKeys(); //"listener" de eventos de teclado, declarando la variable cursores
-		this.JKey = game.input.keyboard.addKey(Phaser.Keyboard.J); //definimos la J
-		this.WKey = game.input.keyboard.addKey(Phaser.Keyboard.W); //definimos la W
-		this.AKey = game.input.keyboard.addKey(Phaser.Keyboard.A); //definimos la A
-		this.SKey = game.input.keyboard.addKey(Phaser.Keyboard.S); //definimos la S
-		this.DKey = game.input.keyboard.addKey(Phaser.Keyboard.D); //definimos la D
+		this.ZKey = game.input.keyboard.addKey(Phaser.Keyboard.Z); //definimos la Z
+		this.XKey = game.input.keyboard.addKey(Phaser.Keyboard.X); //definimos la X
 	}
 
 	declaracionAnimaciones(){
@@ -340,6 +376,7 @@ handle_Events(){
 		this._player.animations.add('runShoot', [15, 16, 17], 8, true);
 		this._player.animations.add('runUpShoot', [18, 19, 20], 8, true);
 		this._player.animations.add('voltereta', [7, 8, 9 , 10], 15, true);
+		this._player.animations.add('morir', [24, 25, 26], 2, false);
 	}
 
 //------------------------------------------------GETS & SETS--------------------------------------------------------------------
@@ -360,7 +397,7 @@ handle_Events(){
 		return this._player;
 	}
 	get health(){
-		return this._player.health;
+		return this._player._Health;
 	}
 	get jumpSpeed(){
 		return this._jumpSpeed;

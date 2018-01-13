@@ -6,10 +6,10 @@ class Floater extends Enemies {
   constructor (posX, posY, gravity, sprite, speedX, speedY, colliders, lives, damage, type, player){
     super(posX, posY, gravity, sprite, speedX, speedY, colliders, lives, damage, type, player);
     this._actualDir = 1;
-    this.get_Damaged = function() {
-      this.hSpeed = 10;  //quita vida, reduce su velocidad y empieza el timer de velocidad bajada
-      this.vSpeed = 10;
-      this._velocityTimer = game.time.now + 300;
+    this.get_Damaged = function() { 
+      this.hSpeed = this.H_VEL_REDUCIDA;  //quita vida, reduce su velocidad y empieza el timer de velocidad bajada (no se le hace daño)
+      this.vSpeed = this.V_VEL_REDUCIDA;
+      this._velocityTimer = game.time.now + this.TIEMPO_REDUCCION_VEL;
     }
   }
 

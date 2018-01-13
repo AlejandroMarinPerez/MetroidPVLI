@@ -4,18 +4,19 @@ class Potenciadores{
 	constructor(player){
 		this._player = player;
 		this.arrayPot = [this.agregarBola, this.superSalto, this.rockets, this.bombas, this.extRange]; //Array de funciones, esto molap
+		this.AUMENTO_SALTO = 1.5; //NUMERO POR EL QUE SE MULTIPLICA EL SALTO ACTUAL
 	}
 
 //--------------------------------------------------------------------BOLA------------------------------------------------------------------------
 	extRange(self){
 		self._player._basicBullets._range = null;
 	}
+	
 	agregarBola(self){ //agrega todas las funciones necesarias para que el jugador se transforme en bola
 		//Agrega la funcion al player de transformarse en pelotita, le cambia el collider, la animacion...
 		self._player.bolita = function(){
 			if(this._puedeTrans){
 				this._bola = true;
-				this._animacion = 'bolitaDer';
 			}
 		}
 		
@@ -30,7 +31,6 @@ class Potenciadores{
 		self._player.normal = function(){ 
 			if(this._bola && this._puedeTrans){
 				this._bola = false;
-				this._animacion = 'normal';
 				if(this._ultimaDir == 1){
 					this._aim = 'right';
 					this._player.scale.x = 1;
@@ -54,7 +54,7 @@ class Potenciadores{
 //--------------------------------------------------------------------SALTO POTENCIADO------------------------------------------------------------------------
 
 	superSalto(self){
-		self._player.vSpeed = self._player.vSpeed * 1.5; //valor que aún no he definido bien, ahora salta mucho creo xD
+		self._player.vSpeed = self._player.vSpeed * self.AUMENTO_SALTO; //valor que aún no he definido bien, ahora salta mucho creo xD
 	}
 
 //--------------------------------------------------------------------COHETES e.e------------------------------------------------------------------------
@@ -96,27 +96,26 @@ class Potenciadores{
 		}
 
 		//TECLA P (PUEDE CAMBIARSE OBVIAMENTE, SON PRUEBAS SOLO)
-		self._player.pKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
+		self._player.pKey = game.input.keyboard.addKey(Phaser.Keyboard.Z);
 
 		self._player._bombas.shoot = function(){ //redefinimos el metodo shoot original de las balas
 			if(game.time.now > this._tiempoBala){
 				var bal = this._balas.getFirstExists(false);
 				bal.animations.play('normal');
-				bal.reset(this._shooter.x + 5, this._shooter.y + 20);
+				bal.reset(this._shooter.x + this._shooter.width/5, this._shooter.y + this._shooter.height/2);
 				this._tiempoBala = game.time.now + 1000;
 				bal.lifespan = 0;
 			} 
 		}
 
-		self._player._bombas.checkCollisionAndTime = function(bullet /*enemy maybe ?*/){ //comprueba colision con el enemigo(aún no) y las hace explotar en un tiempo determinado
+		self._player._bombas.checkCollisionAndTime = function(bullet){ //comprueba colision con el enemigo(aún no) y las hace explotar en un tiempo determinado
 			if(bullet.timer === 0 && bullet.lifespan === 0){
 				bullet.timer = game.time.now + this._range;
 			}
 			else if(bullet.timer > 0 && game.time.now > bullet.timer){
 					bullet.animations.play('expl');
-					bullet.lifespan = 500;
+					bullet.lifespan = 300;
 					bullet.timer = 0;
-					//faltaria comprobar si algun enemigo esta overlapeando en el momento de la explosion y hacerle daño y esO
 			}
 		}
 

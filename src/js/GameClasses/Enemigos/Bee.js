@@ -19,7 +19,7 @@ class Bee extends Enemies{
 
     movement(){
     	if(this._player.player.body.x < this._area.x + this._area.width && this._player.player.body.x > this._area.x && this._player.player.body.y > this._area.y 
-    		&& this._player.player.body.y < this._area.y + this._area.height || this._esta){
+    		&& this._player.player.body.y < this._area.y + this._area.height || this._esta){ //si estas en su area o esta haciendo el movimiento basico (para que no se quwde quieto si sales de su area)
     		this._esta = true;
     		this.hSpeed = this._speedAux;
     		this._sprite.animations.play('volar');
@@ -30,10 +30,10 @@ class Bee extends Enemies{
     }
 
     compruebaAltura(){
-    	if(this._sprite.y >= this._player.y - this._sprite.height/2){
+    	if(this._sprite.y >= this._player.y - this._sprite.height/2){ //si el player esta a su altura
     		this._timer = game.time.now + this._TIME;
     		this._esta = false;
-    		this.movement = function(){
+    		this.movement = function(){ //cambia movement
     			this.hSpeed = this._speedAux;
     			this.moveRight(this.sprite, 0);
     			if(this._player.y < this._sprite.y - this._sprite.height || game.time.now > this._timer){
@@ -44,7 +44,7 @@ class Bee extends Enemies{
     }
 
     subida(){
-    	this.movement = function(){
+    	this.movement = function(){ //cambia movement hasta posarse en el techo
     			this.moveUp(this.sprite, 0);
     			this.hSpeed = this._speedAux;
     			this.moveRight(this.sprite, 0);
@@ -55,7 +55,7 @@ class Bee extends Enemies{
     posarse(){
     	if(this.sprite.body.blocked.up){
     		this._sprite.animations.play('quieto');
-    		this._speedAux *= -1;
+    		this._speedAux *= -1; //cambia la vel horizontal
     		this._timer = game.time.now + this._TIME;
     		this.movement = function(){ if(game.time.now > this._timer){this.movement = this.fAux}};
     	}

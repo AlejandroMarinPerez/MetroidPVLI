@@ -7,7 +7,7 @@ class Bullets extends Movable{
 		//Balas
 		this.sprite = new Group(); //el sprite pasa a ser un nuevo grupo (reutulizable para enemigos)
 		this._balas = this.sprite.group;
-		this._balas.createMultiple(50, sprite); //creamos 20 balas, y luego las reutilizamos tooodo el rato
+		this._balas.createMultiple(60, sprite); //creamos 20 balas, y luego las reutilizamos tooodo el rato
 		this._balas.setAll('outOfBoundsKill', true); //hacemos que desaparezcan al chocar con los limites
 		this._balas.setAll('checkWorldBounds', true);//comprueba que no se ha chocado con nada
 
@@ -24,6 +24,7 @@ class Bullets extends Movable{
 		this._shooter = shooter;
 		this._range = range;
 		this._ammo = ammo;
+		this._TIEMPOENTREBALAS = 200; // a mas tiempo, menos balas
 	}
 
 //--------------------------------------------------------------------DISPARO------------------------------------------------------------------
@@ -39,19 +40,19 @@ class Bullets extends Movable{
 
 	gestionaBala(aim , bullet){  //elige direccion , ajusta el rango, el tiempo...
 		if(aim === 'left'){
-			bullet.reset(this._shooter.x - this._shooter.width + 8, this._shooter.y); //le marcamos su posicion inicial
+			bullet.reset(this._shooter.x - this._shooter.width + this._shooter.height/8, this._shooter.y); //le marcamos su posicion inicial
 			this.moveLeft(bullet, -90);
 		}
 		else if(aim === 'right'){
-			bullet.reset(this._shooter.x + this._shooter.width - 8, this._shooter.y - this._shooter.height/6); //le marcamos su posicion inicial
+			bullet.reset(this._shooter.x + this._shooter.width - this._shooter.height/8, this._shooter.y - this._shooter.height/6); //le marcamos su posicion inicial
 			this.moveRight(bullet, 90);
 		}
 		else if(aim  === 'up'){
 			var x = this.aux();
-			bullet.reset(this._shooter.x + x, this._shooter.y - 35); //le marcamos su posicion inicial
+			bullet.reset(this._shooter.x + x, this._shooter.y - this._shooter.height/2); //le marcamos su posicion inicial
 			this.moveUp(bullet, 0);
 		}
-		this._tiempoBala = game.time.now + 250; //temporizador para que no dispare chorrocientas balas de golpe
+		this._tiempoBala = game.time.now + this._TIEMPOENTREBALAS; //temporizador para que no dispare chorrocientas balas de golpe
 		bullet.lifespan = this._range; //rango de la bala peeeeero lo he medido en tiempo, no queda mal y no es dificil de hacer asi que ¯\_(ツ)_/¯
 		//los numeritos son para cuadrar las balas (no me mola, pero los anchors...)
 	}
@@ -63,13 +64,8 @@ class Bullets extends Movable{
 				this._shooter.changeBullets(); //se cambia automáticamente, al igual que en el juego
 			}
 		}
-		if(this.ammo !== null){ //Establece en el Canvas, acceder así no se yo si mola, deberiamos pasarselo al player a lo mejor.... o crearlo en el Player
-			playState.canvas.setText(0, 'EN: ' + this._shooter.health + '\nAMMO: ' + this.ammo); 
-			playState.canvas.updateCanvas();
-		}
 	}
 
-	//FALTAN METODOS PARA EL DAÑO Y ESO....
 
 //--------------------------------------------------------------------AUXILIARES------------------------------------------------------------------
 
@@ -79,7 +75,7 @@ class Bullets extends Movable{
 			x = 0;
 		}
 		else{
-			x = - 10;
+			x = -this._shooter.width/3;
 		}
 		return x;
 	}
