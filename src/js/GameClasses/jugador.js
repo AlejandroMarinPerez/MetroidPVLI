@@ -12,6 +12,21 @@ class Player extends Movable{
 		
 	}
 
+//----------------------------------------------------------CONSTANTES JUGADOR ----------------------------------------------------------------
+
+	declaracionConstantes(){
+		this._TIMESALTO = 600; //tiempo que`puede saltar (+ tiempo, + salta)
+		this._TIEMPOREBOTE = 200; //tiempo que rebota al hacerse daño con un enemigo (+ tiempo, + rebote)
+		this._TIEMPOINMUNIDAD = 2000; //tiempo en el q es inmune el jugador
+		this._STARTINGHEALTH = 30; //vida con la que comienza el jugador
+		this._VELMICROSALTO = -150; //velocidad del saltito de la bomba
+		this._ALPHAMAX = 0.75;
+		this._ALPHAMIN = 0.25; //desde que alpha a que alpha intercala al parpadear
+		this._TIEMPOTRANSICIONPARPADEO = 50; //tiempo en el que cambia un alpha y otra
+		this._MAXHEALTH = 100;
+		this._SPEEDBALAS = 300;
+		this._RANGEBALAS = 300;
+	}
 //--------------------------------------------------------------------MOVIMIENTO---------------------------------------------------------------
 
 	mueveIzquierda(){ //mueve el pj a la izquierda, guarda su direccion y gestiona sus animaciones
@@ -57,7 +72,7 @@ class Player extends Movable{
 			var i = Math.floor(Math.random() * 7);
 			if(i === 5 || i === 6) this.cambiaAnim('voltereta'); //la voltereta op
 			else this.cambiaAnim('salto');	
-			this._jumpTimer = game.time.now + 600;
+			this._jumpTimer = game.time.now + this._TIMESALTO;
 			this.moveUp(this._player, 0);
 		}
 		else if(this.WKey.isDown && this._jumpTimer != 0){
@@ -73,11 +88,6 @@ class Player extends Movable{
 		else{
 			this._jumpTimer = 0;
 		}
-		//game.camera.follow(this._player, Phaser.Camera.FOLLOW_PLATFORMER);
-		/*if(this._player.body.velocity.y === 0 && !this._bola){
-			this._player.body.velocity.y = -200;
-			//this._contSaltos++;
-		}*/
 	}
 
 	apuntaArriba(){
@@ -159,7 +169,7 @@ handle_Events(){
 			this._player.body.velocity.x = 0;  //reiniciamos variables...
 		}
 		else if (this._rebote && this._reboteTimer == 0){
-			this._reboteTimer = game.time.now + 200;
+			this._reboteTimer = game.time.now + this._TIEMPOREBOTE;
 		}
 		else if(game.time.now > this._reboteTimer){
 				this._player.body.velocity.x = 0;
@@ -210,7 +220,7 @@ handle_Events(){
 	immune(bool){
 		if(this._immuneTimer === 0 && bool){
 			this._immune = true;
-			this._immuneTimer = game.time.now + 2000;
+			this._immuneTimer = game.time.now + this._TIEMPOINMUNIDAD;
 		}
 		else if(this._immuneTimer !== 0){
 			this.blink();
@@ -230,8 +240,11 @@ handle_Events(){
 
 	heal(int){
 		this._player._Health += int;
-		if(this._player._Health > this._maxHealth){
-			this._player._Health = this._maxHealth;
+		if(this._player._Health > this._MAXHEALTH){
+			this._player._Health = this._MAXHEALTH;
+		}
+		else if(this._player._Health < 0){
+			this._player._Health = 0;
 		}
 	}
 
@@ -251,7 +264,7 @@ handle_Events(){
 	}
 
 	res(){
-		this._player._Health = 30; //si el player ha muerto, reestablece su vida inicial, le revive, cambia su animacion a la normal, le devuelve controles y movimiento
+		this._player._Health = this._STARTINGHEALTH; //si el player ha muerto, reestablece su vida inicial, le revive, cambia su animacion a la normal, le devuelve controles y movimiento
 		this._player.revive();
 		this._animacion = 'normal';
 		this._puedeControlar = true;
@@ -270,7 +283,7 @@ handle_Events(){
 
 	microSalto(){
 		if(this.aux){
-			this._player.body.velocity.y = -150;
+			this._player.body.velocity.y = this._VELMICROSALTO;
 			this._microSalto = true;
 			this.aux = false;
 		}
@@ -303,28 +316,28 @@ handle_Events(){
 
 	blink(){ //parpadeo al ser dañado
 		if(game.time.now > this._blinkTimer){
-			if(this._player.alpha === 0.75 || this._player.alpha === 1){
-				this._player.alpha = 0.25;
+			if(this._player.alpha === this._ALPHAMAX || this._player.alpha === 1){
+				this._player.alpha = this._ALPHAMIN;
 			}
 			else{
-				this._player.alpha = 0.75;
+				this._player.alpha = this._ALPHAMAX;
 			}
-				this._blinkTimer = game.time.now + 50;
+				this._blinkTimer = game.time.now + this._TIEMPOTRANSICIONPARPADEO;
 		}
 	}
 
 //------------------------------------------------------------CONSTRUCCIÓN & DECLARACIÓN DE VARIABLES------------------------------------
 
-	construccion_Jugador(){ //construccion de las variables necesarias para el jugador
+	construccion_Jugador(){ //construccion de las variables necesarias para el jugador	
+		this.declaracionConstantes();
 		this._player = this._sprite; //asignacion con el sprite del padre para que el nombre sea mas legible
 		this._player.anchor.setTo(0.5, 0.5); //ancla
-		this._player._Health = 1; //vida inicial original del juego
-		this._maxHealth = 100;
+		this._player._Health = this._STARTINGHEALTH; //vida inicial original del juego
 		this._immune = false;
 		this._immuneTimer = 0;  //timers de inmune y de parpadeo
 		this._blinkTimer = 0;
 		this._aim = 'right';
-		this._currentBullets = new Bullets('bala', 300, 300, this, null, true); //balas añadidas en una clase 
+		this._currentBullets = new Bullets('bala', this._SPEEDBALAS, this._RANGEBALAS, this, null, true); //balas añadidas en una clase 
 		this.declaracionAnimaciones();
 		this._width = this._player.body.width;
 		this._height = this._player.body.height;

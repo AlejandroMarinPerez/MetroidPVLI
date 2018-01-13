@@ -35,15 +35,6 @@ class Wasp extends Enemies{
 		else{
 			this.vertical_movement(); //si no tiene la altura del player, sigue hacia arriba
 		}
-		/*if(this.sprite.y <= this._player.player.body.y){ //solucion guay pero los news...
-			var aux = this.select_Dir();
-			this._direccionTomada = true;
-			this.sprite.body.velocity.y = 0;
-			this.cambioUpdate(aux); //cambia el update dependiendo de la direccion tomada
-		}
-		else{
-			this.vertical_movement();
-		}*/
 	}
 
 	select_Dir(){
@@ -56,19 +47,4 @@ class Wasp extends Enemies{
 			return - 1;
 		}
 	}
-
-	/*cambioUpdate(int){
-		if(int === 1){
-			this.update = function(){
-				this.moveRight(this.sprite, 0);
-				this.colision();
-			};
-		}
-		else{
-			this.update = function(){
-				this.moveLeft(this.sprite, 0);
-				this.colision();
-			};
-		}
-	}*/
 }

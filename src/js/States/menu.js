@@ -15,21 +15,27 @@ var menuState = {
 
 		this.backgroundImage = new Phaser.Sprite(game, 25, 0, 'menu'); //menu animado
 		game.world.add(this.backgroundImage);
-		var anim = this.backgroundImage.animations.add('start', game.math.numberArray(0,12), 4, false);
-		this.backgroundImage.animations.add('full', game.math.numberArray(13,19), 4, true);
+		var anim = this.backgroundImage.animations.add('start', game.math.numberArray(0,12), 3, false);
+		this.backgroundImage.animations.add('full', game.math.numberArray(13,19), 3, true);
 		anim.onComplete.add(this.startAnimation, this); //cuando acabe, empieza la otra animacion
 		this.backgroundImage.play('start');
 
-		//Aqui definiremos la tecla espacio para poder hacer cositas con ella
+		//Aqui definiremos la tecla enter/espacio para poder hacer cositas con ella
 		var enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+		var space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-		//Cuando alguien presione el espacio, llamaremos a la funcion "start"
+		//Cuando alguien presione el espacio/enter, llamaremos a la funcion "start" o "controles"
 		enterKey.onDown.addOnce(this.start, this); //se añade una vez esa funcion, en este estado
+		space.onDown.addOnce(this.controles, this);
 	},
 
 	start: function(){
 		//llamamos al siguiente estado --> Play
 		game.state.start('play');
+	},
+
+	controles: function(){
+		game.state.start('controles');
 	},
 
 	startAnimation:function(){

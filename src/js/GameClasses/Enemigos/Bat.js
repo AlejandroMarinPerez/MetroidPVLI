@@ -24,7 +24,7 @@ class Bat extends Enemies{
 			}
 			bal.lifespan = this._range;	
 		};
-		this._tiempoSuelo = 500;
+		this._tiempoSuelo = 500; //tiempo que tarda en "esplotar"
 		this._timer = 0;
 		this._fAux = this.wakeUp;
 		this.sprite.animations.add('default', [0, 1, 2], 8, true);
@@ -83,6 +83,6 @@ class Bat extends Enemies{
 
 	dañoPorBala(player, bullet){ //método estetico, lo unico diferente que hace es que la bala desaparece si se choca contigo
 		this.damagePlayer();
-		bullet.lifespan = 10;
+		bullet.lifespan = 10; //hace desaparecer la bala
 	}
 }

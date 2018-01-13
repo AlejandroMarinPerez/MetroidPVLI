@@ -65,7 +65,7 @@ class Waver extends Enemies{
 	selectDir(){
 		if(this._dirAct === 1){
 			this.hMovement = function(){
-			this.moveRight(this.sprite, 0);
+			this.moveRight(this.sprite, 0); //cambia la funcion de movimiento horizontal
 			};
 		this._dirAct = -1;
 		}
@@ -79,7 +79,7 @@ class Waver extends Enemies{
 
 	cambioDir(){ //cambio de direccion
 		if(this.sprite.body.x > this._area.x + this._area.width){
-			this.sprite.body.x = this.sprite.body.x - 1;
+			this.sprite.body.x = this.sprite.body.x - 1; //para los bugs visuales :P
 			this.selectDir();
 		}
 		else if(this.sprite.body.x < this._area.x){
