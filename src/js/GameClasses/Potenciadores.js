@@ -11,6 +11,7 @@ class Potenciadores{
 	extRange(self){
 		self._player._basicBullets._range = null;
 	}
+	
 	agregarBola(self){ //agrega todas las funciones necesarias para que el jugador se transforme en bola
 		//Agrega la funcion al player de transformarse en pelotita, le cambia el collider, la animacion...
 		self._player.bolita = function(){
@@ -95,7 +96,7 @@ class Potenciadores{
 		}
 
 		//TECLA P (PUEDE CAMBIARSE OBVIAMENTE, SON PRUEBAS SOLO)
-		self._player.pKey = game.input.keyboard.addKey(Phaser.Keyboard.J);
+		self._player.pKey = game.input.keyboard.addKey(Phaser.Keyboard.Z);
 
 		self._player._bombas.shoot = function(){ //redefinimos el metodo shoot original de las balas
 			if(game.time.now > this._tiempoBala){

@@ -44,8 +44,6 @@ var playState = {
 			this.pots.push(po); 
 		}
 		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes];
-		this.player.activarMejoras(0); this.player.activarMejoras(1); this.player.activarMejoras(2); this.player.activarMejoras(3);
-	
 	},
 
 //-------------------------------------------------------------------UPDATE-----------------------------------------------------------------

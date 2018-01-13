@@ -35,7 +35,7 @@ class Player extends Movable{
 		this._ultimaDir = -1;
 		if(!this._bola){
 			if(this._player.body.onFloor()){
-				if(this.JKey.isDown)
+				if(this.ZKey.isDown)
 					this.cambiaAnim('runShoot'); //las condiciones de las animaciones, que son horribles
 				else
 					this.cambiaAnim('andar');
@@ -54,7 +54,7 @@ class Player extends Movable{
 		this._ultimaDir = 1;
 		if(!this._bola){
 			if(this._player.body.onFloor()){
-				if(this.JKey.isDown)
+				if(this.ZKey.isDown)
 					this.cambiaAnim('runShoot');
 				else
 					this.cambiaAnim('andar');
@@ -68,14 +68,14 @@ class Player extends Movable{
 
 	//Aquí hacemos el saltito (por tiempo presionando la tecla)
 	saltar(){
-		if(this.WKey.isDown && this._player.body.onFloor() && !this._bola){
+		if(this.XKey.isDown && this._player.body.onFloor() && !this._bola){
 			var i = Math.floor(Math.random() * 7);
 			if(i === 5 || i === 6) this.cambiaAnim('voltereta'); //la voltereta op
 			else this.cambiaAnim('salto');	
 			this._jumpTimer = game.time.now + this._TIMESALTO;
 			this.moveUp(this._player, 0);
 		}
-		else if(this.WKey.isDown && this._jumpTimer != 0){
+		else if(this.XKey.isDown && this._jumpTimer != 0){
 			if(!(this._animacion === 'voltereta'))
 				this.cambiaAnim('salto');
 			if(game.time.now > this._jumpTimer){
@@ -135,10 +135,10 @@ class Player extends Movable{
 handle_Events(){
 		//If del movimiento...
 		if(this._puedeControlar){
-			if(this.AKey.isDown && !this._rebote){ //si presiona izquierda
+			if(this.cursores.left.isDown && !this._rebote){ //si presiona izquierda
 			this.mueveIzquierda();
 		}
-		else if(this.DKey.isDown && !this._rebote){ //si presiona derecha
+		else if(this.cursores.right.isDown && !this._rebote){ //si presiona derecha
 			this.mueveDerecha();
 		}
 		else{
@@ -154,7 +154,7 @@ handle_Events(){
 
 		this.saltar();
 
-		if(this.JKey.isDown && !this._bola){ //si presiona la tecla de disparo...
+		if(this.ZKey.isDown && !this._bola){ //si presiona la tecla de disparo...
 			if(!this.player.body.onFloor() && this._player.body.velocity.y < 0 && !this.cursores.up.isDown)
 				this.cambiaAnim('shootJump'); //si dispara mientras salta cambia de animacion
 			this._currentBullets.shoot(this._aim);
@@ -306,7 +306,7 @@ handle_Events(){
 
 	caida(){ //gestiona la animacion de la caida
 		if(this._player.body.velocity.y > 0){
-			if(this.JKey.isDown && !this.cursores.up.isDown){
+			if(this.ZKey.isDown && !this.cursores.up.isDown){
 				this.cambiaAnim('fallShoot');
 			}
 			else if(!(this._animacion === 'voltereta'))
@@ -358,11 +358,8 @@ handle_Events(){
 
 	define_Keys(){
 		this.cursores = game.input.keyboard.createCursorKeys(); //"listener" de eventos de teclado, declarando la variable cursores
-		this.JKey = game.input.keyboard.addKey(Phaser.Keyboard.J); //definimos la J
-		this.WKey = game.input.keyboard.addKey(Phaser.Keyboard.W); //definimos la W
-		this.AKey = game.input.keyboard.addKey(Phaser.Keyboard.A); //definimos la A
-		this.SKey = game.input.keyboard.addKey(Phaser.Keyboard.S); //definimos la S
-		this.DKey = game.input.keyboard.addKey(Phaser.Keyboard.D); //definimos la D
+		this.ZKey = game.input.keyboard.addKey(Phaser.Keyboard.Z); //definimos la Z
+		this.XKey = game.input.keyboard.addKey(Phaser.Keyboard.X); //definimos la X
 	}
 
 	declaracionAnimaciones(){
