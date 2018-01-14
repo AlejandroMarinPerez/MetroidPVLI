@@ -21,12 +21,21 @@ var menuState = {
 		this.backgroundImage.play('start');
 
 		//Aqui definiremos la tecla enter/espacio para poder hacer cositas con ella
-		var enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-		var space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+		this.enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+		this.space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
 		//Cuando alguien presione el espacio/enter, llamaremos a la funcion "start" o "controles"
-		enterKey.onDown.addOnce(this.start, this); //se añade una vez esa funcion, en este estado
-		space.onDown.addOnce(this.controles, this);
+		/*enterKey.onDown.addOnce(this.start, this); //se añade una vez esa funcion, en este estado
+		space.onDown.addOnce(this.controles, this);*/
+	},
+
+	update: function(){
+		if(this.enterKey.isDown){
+			this.start();
+		}
+		else if(this.space.isDown){
+			this.controles();
+		}
 	},
 
 	start: function(){

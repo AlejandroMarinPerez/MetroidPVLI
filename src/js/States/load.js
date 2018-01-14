@@ -6,6 +6,8 @@ var loadState = {
 
 		//game.load.image('dude', 'assets/PlayerThings/personaje.png'); //Cargamos tooodos los recursos que vamos a necesitar
 		game.load.spritesheet('menu', 'assets/PlayerThings/Menu.png', 744.75, 600);
+		game.load.image('controles', 'assets/Menu/controles.png', 800, 600);
+        game.load.spritesheet('metroido', 'assets/Menu/metroido.png', 23.7, 23);
 		game.load.image('menuAux', 'assets/PlayerThings/MenuLados.png');
 		game.load.spritesheet('dude', 'assets/PlayerThings/samus3.png', 33, 64);
     	game.load.image('hand', 'assets/PowerUps/hand.png');
