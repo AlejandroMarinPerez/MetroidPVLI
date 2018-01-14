@@ -3,10 +3,25 @@
 class Canvas{
 	//Arrays de game.Text y de strings, para cambiarlos cuando sea necesario
 	constructor(){
+		this._dialog = false; //Variable que controla si hay o no conversación
 		this._elemArray = [];
 		this._texts = [];
+		this._dialogs = [];
+		console.log('box');
+		this._textBox = game.add.image(0, 470, 'box');
+		this._textBox.visible = false;
+		this._textBox.fixedToCamera = true;
 		game.scale.pageAlignHorizontally = true;
 		game.scale.pageAlignVertically = true;
+		//Valores fijos
+		//Nombre del que habla
+		this._posNombreX = 150;//Posición X
+		this._posNombreY = 15;//Posición Y
+		//Posición del texto
+		this._textX = 150;
+		this._textY = 32;
+		//Anchura
+		this._maxTextWidth = 515;
 	}
 
 //--------------------------------------------------------------------UPDATE------------------------------------------------------------------
@@ -27,5 +42,32 @@ class Canvas{
 
 	setText(i, text){
 		this._texts[i] = text;
+	}
+
+	dialog(){ //Esta funcion escribe los diálogos
+		var that = this;
+		this._textBox.visible = true;
+		//Primero cargamos el díalogo desde un JSON
+		$.getJSON('assets/Canvas/Conversations/prueba.json', function(data){
+			this._dialogs = data.dialog;
+			write(this._dialogs);
+		});
+		//Sacamos el cuadro de diálogo
+		//Después escribimos los dialogos con el efecto
+		function write (dialogs){
+			for (var i = 0; i < dialogs.length; i++){
+				var text = new typeWriter();
+				text.init(game,{
+					posX: that.textX,
+					posY: that.textY,
+					fontFamily: 'desyrel',
+					fontSize: 20,
+					maxWidth: 50,
+					text: dialogs[i].Comment
+				});
+				text.start();
+			}
+		}
+
 	}
 }

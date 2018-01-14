@@ -18,9 +18,7 @@ var playState = {
 
 		//------------PLAYER & CANVAS----------
 		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 400, 150, 200, this.map._blockedLayer, playerStart[0].x, playerStart[0].y);
-		this.canvas = new Canvas();
 		this.energia = this.player.health;
-		this.canvas.addText(16, 16, 'EN: ' + this.energia, '65px Arial', '#FFF');
 
 		//--------------------Creacion de arena, puetas, enemigos...-------------------
 		this.creacion_ElementosMapa();
@@ -44,6 +42,9 @@ var playState = {
 			this.pots.push(po);
 		}
 		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes];
+		this.canvas = new Canvas();
+		this.canvas.addText(16, 16, 'EN: ' + this.energia, '65px Arial', '#FFF');
+		this.canvas.dialog();
 	},
 
 //-------------------------------------------------------------------UPDATE-----------------------------------------------------------------
