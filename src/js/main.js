@@ -107,7 +107,7 @@ var playState = {
 		var murcielagos = this.map.findObjectsByType('bat', this.map.objectsLayer);
 		this.bats = [];
 		for(var i = 0; i < murcielagos.length; i++){
-			var b = new Bat(murcielagos[i].x, murcielagos[i].y, 0,'bat', 60, 275, this.map._blockedLayer, 8, 7, 0, this.player);
+			var b = new Bat(murcielagos[i].x, murcielagos[i].y, 0,'bat', 60, 275, this.map._blockedLayer, 4, 7, 0, this.player);
 			this.bats.push(b); 
 		}
 
