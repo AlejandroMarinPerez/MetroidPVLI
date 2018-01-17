@@ -6,6 +6,9 @@ var loadState = {
 
 		//game.load.image('dude', 'assets/PlayerThings/personaje.png'); //Cargamos tooodos los recursos que vamos a necesitar
 		game.load.spritesheet('menu', 'assets/PlayerThings/Menu.png', 744.75, 600);
+		game.load.image('controles', 'assets/Menu/controles.png', 800, 600);
+        game.load.image('creditos', 'assets/Menu/creditos.png', 800, 600);
+        game.load.spritesheet('metroido', 'assets/Menu/metroido.png', 23.7, 23);
 		game.load.image('menuAux', 'assets/PlayerThings/MenuLados.png');
 		game.load.spritesheet('dude', 'assets/PlayerThings/samus3.png', 33, 64);
     	game.load.image('hand', 'assets/PowerUps/hand.png');
@@ -19,13 +22,18 @@ var loadState = {
     	game.load.spritesheet('rocketDoor', 'assets/Map/rocketDoor.png', 160, 92);
     	game.load.spritesheet('wasp', 'assets/Enemies/wasp.png', 25, 24);
     	game.load.spritesheet('floater', 'assets/Enemies/floater.png', 30, 24);
-    	game.load.spritesheet('bat', 'assets/Enemies/bat.png', 28, 40);
+    	game.load.spritesheet('bat', 'assets/Enemies/bat.png', 28, 45);
     	game.load.image('balaBat', 'assets/Enemies/balaBat.png', 125, 125);
         game.load.spritesheet('dropVida', 'assets/Enemies/drop.png', 12.5, 12);
         game.load.spritesheet('waver', 'assets/Enemies/waver.png', 25, 22);
         game.load.spritesheet('bee', 'assets/Enemies/bee.png', 38, 30);
         game.load.spritesheet('pot', 'assets/PlayerThings/pot.png', 28, 32);
         game.load.image('dropMisiles', 'assets/PlayerThings/dropMisiles.png', 20, 13);
+        game.load.image('canvasEnergia', 'assets/Canvas/CanvasEnergia.png', 80, 25);
+        game.load.image('canvasMisiles', 'assets/Canvas/CanvasMisiles.png', 45, 25);
+        game.load.bitmapFont('font', 'assets/try.png', 'assets/try.fnt');//cargamos fuente del texto
+        game.load.audio('maintheme', '/assets/Audios/Title.mp3');
+        game.load.audio('level', 'assets/Audios/Level.mp3');
 		game.floaterGroup = new Group(); //Grupo que contendrá a los floaters del juego
     	console.log("Cargando..."); //simple debug
 	},

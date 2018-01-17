@@ -68,7 +68,7 @@ class Bat extends Enemies{
 	}
 
 	explosion(){
-		if(game.time.now > this._timer && this._timer !== 0){
+		if(game.time.now > this._timer && this._timer !== 0 && this.sprite.alive){
 			this.wakeUp = this._fAux; //cuando explota, la funcion vuelve a ser la original
 			this._Bullets.shoot('dRight');
 			this._Bullets.shoot('dLeft'); //envia balas en las 4 direcciones
@@ -78,6 +78,9 @@ class Bat extends Enemies{
 			this.killThis();
 			this._timer = 0;
 			//this.loot();
+		}
+		else if(!this.sprite.alive){
+			this.wakeUp = this._fAux;
 		}
 	}
 

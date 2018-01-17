@@ -19,8 +19,8 @@ var playState = {
 		//------------PLAYER & CANVAS----------
 		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 400, 150, 200, this.map._blockedLayer, playerStart[0].x, playerStart[0].y);
 		this.canvas = new Canvas();
-		this.energia = this.player.health;
-		this.canvas.addText(16, 16, 'EN: ' + this.energia, '65px Arial', '#FFF');
+		this.canvas.addImage(0, 'canvasEnergia');
+		this.canvas.addText(0, 	this.player._player._Health);
 
 		//--------------------Creacion de arena, puetas, enemigos...-------------------
 		this.creacion_ElementosMapa();
@@ -28,6 +28,11 @@ var playState = {
 		//CAPA POR DELANTE DEL PLAYER!
 		this.map._backgroundLayer2 = this.map._map.createLayer('Tuberias'); //para que quede chulo se crean después, maybe lo hago de otra forma luego...
 
+		//------------Musica-------------------
+		this.tema = game.add.audio('level', 0.3);
+		this._tema = true;
+		this.tema.play();
+		
 		//------------COSAS DE PRUEBA----------
 		this.One = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
 		this.TwoKey = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
@@ -41,7 +46,7 @@ var playState = {
 		this.pots = [];
 		for(var i = 0; i < p.length; i++){
 			var po = new ObjectPot(p[i].x, p[i].y,'pot', 0, p[i].properties.numAActivar, this.player);
-			this.pots.push(po); 
+			this.pots.push(po);
 		}
 		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes];
 	},
@@ -51,20 +56,21 @@ var playState = {
 	update: function(){
 		this.tpDebug();
 		game.camera.focusOnXY(this.player.player.x, this.player.player.y);
-		//game.camera.follow(this.player.player);
 		game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this); //Si overlapea con el grupo de objetos de overlap, no podrá transformarse
-		
+
 		//------------COLISION & PLAYERUPDATE----------
 		this.map.update(this.objetosQueColisionan); //objetos que colisionan con el mapa
 		this.player.update(); // update del player (colision de balas 2)
 		this.updateEnemigos();
-		this.energia = this.player.health;
-		this.canvas.setText(0, 'EN: ' + this.energia); //pruebas solo (el canvas me tiene frito en verdad xdd)
-		this.canvas.updateCanvas();
-		//this.prueba.update();
+		this.updateCV();
 
 		for(var i = 0; i < this.pots.length; i++){
 			this.pots[i].update();
+		}
+
+		if(!this.tema.isPlaying && this._tema)
+		{
+			 this.tema.play();
 		}
 	},
 
@@ -93,22 +99,22 @@ var playState = {
 		this.nests = [];
 		for(var i = 0; i < nest.length; i++){
 			var spawn = new WaspSpawn(nest[i].x, nest[i].y, null, 0, 10000, this.player);
-			this.nests.push(spawn); 
+			this.nests.push(spawn);
 		}
 		//NO SE QUE ES ESTO, COSAS QUE FLOTAAAAN
 		var cositasQueFlotan = this.map.findObjectsByType('floater', this.map.objectsLayer); //crea los objetos de tipo arena
 		this.floaters = [];
 		for(var i = 0; i < cositasQueFlotan.length; i++){
 			var flo = new Floater(cositasQueFlotan[i].x, cositasQueFlotan[i].y, 0,'floater', 75, 0, this.map._blockedLayer, 1, 7, 0, this.player);
-			this.floaters.push(flo); 
+			this.floaters.push(flo);
 		}
 
 		//Murcielagoooos
 		var murcielagos = this.map.findObjectsByType('bat', this.map.objectsLayer);
 		this.bats = [];
 		for(var i = 0; i < murcielagos.length; i++){
-			var b = new Bat(murcielagos[i].x, murcielagos[i].y, 0,'bat', 60, 275, this.map._blockedLayer, 8, 7, 0, this.player);
-			this.bats.push(b); 
+			var b = new Bat(murcielagos[i].x, murcielagos[i].y, 0,'bat', 60, 275, this.map._blockedLayer, 4, 7, 0, this.player);
+			this.bats.push(b);
 		}
 
 		//Waveeeers
@@ -116,7 +122,7 @@ var playState = {
 		this.wavers = [];
 		for(var i = 0; i < wav.length; i++){
 			var w = new Waver(wav[i].x, wav[i].y, 0,'waver', 160, 160, this.map._blockedLayer, 8, 7, 0, this.player);
-			this.wavers.push(w); 
+			this.wavers.push(w);
 		}
 
 		//Abejaaaaas
@@ -124,7 +130,7 @@ var playState = {
 		this.Bees = [];
 		for(var i = 0; i < bees.length; i++){
 			var b = new Bee(bees[i].x, bees[i].y, 0,'bee', 100, 200, this.map._blockedLayer, 8, 7, 0, this.player);
-			this.Bees.push(b); 
+			this.Bees.push(b);
 		}
 
 	},
@@ -138,20 +144,20 @@ var playState = {
 			this.Arena.push(sandy); //los agrega al array de arenas
 		}
 		//PUERTAAAAAS
-		var door = this.map.findObjectsByType('door', this.map.objectsLayer); 
+		var door = this.map.findObjectsByType('door', this.map.objectsLayer);
 		this.Doors= [];
 		for(var i = 0; i < door.length; i++){
 			var puerta = new BasicDoor(door[i].x, door[i].y, 'door', 0 , this.player, i, 'bala');
-			this.Doors.push(puerta); 
+			this.Doors.push(puerta);
 		}
 		var length = this.Doors.length;
 		door = [];
 		door = this.map.findObjectsByType('rocketDoor', this.map.objectsLayer);
 		for(var i = 0; i < door.length; i++){
 			var puerta = new RocketDoor(door[i].x, door[i].y, 'rocketDoor', 0 , this.player, i + length, 'rocket');
-			this.Doors.push(puerta); 
+			this.Doors.push(puerta);
 		}
-	}, 
+	},
 
 	cancelarTransformacion: function(){
 		if(this.player.no_PuedeTransformarse != undefined)
@@ -186,6 +192,14 @@ var playState = {
 		for(var i = 0; i < this.Bees.length; i++){
 			this.Bees[i].update(); //UPDATE DE ESO
 		}
+	},
+
+	updateCV(){
+		this.canvas.setText(0,	this.player._player._Health); //pruebas solo (el canvas me tiene frito en verdad xdd)
+		if(this.player._rockets !== undefined){
+			this.canvas.setText(1,	this.player._rockets.ammo);
+		}
+		this.canvas.updateCanvas();
 	},
 
 //-------------------------------------------------------------------PRUEBAS-----------------------------------------------------------------
