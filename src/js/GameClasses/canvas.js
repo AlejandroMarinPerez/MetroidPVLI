@@ -20,10 +20,11 @@ class Canvas{
 
 //-------------------------------------------------------------------MODIFICACION DEL CANVAS--------------------------------------------------
 
-	addText(i, text, font,color){
+	addText(i, text){
 		this._texts.push(text);
-		console.log(this._img[i]);
-		this._text = game.add.text(this._img[i].x + this._img[i].width/1.1, this._img[i].y, text, {fontSize: font, fill: color});
+		//this._text = game.add.text(this._img[i].x + this._img[i].width/1.1, this._img[i].y, text, {fontSize: font, fill: color});
+		//this._text = game.add.bitmapText(12650 , 5664, 'font', "put", 12);
+		this._text = game.add.bitmapText(this._img[i].x + this._img[i].width/1.1, this._img[i].y, 'font','',40);
 		this._text.fixedToCamera = true;
 		this._elemArray.push(this._text);
 	}

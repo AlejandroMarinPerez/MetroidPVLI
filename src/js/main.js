@@ -20,7 +20,7 @@ var playState = {
 		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 400, 150, 200, this.map._blockedLayer, playerStart[0].x, playerStart[0].y);
 		this.canvas = new Canvas();
 		this.canvas.addImage(0, 'canvasEnergia');
-		this.canvas.addText(0, 	this.player._player._Health, '22px pix', '#FFF');
+		this.canvas.addText(0, 	this.player._player._Health);
 
 		//--------------------Creacion de arena, puetas, enemigos...-------------------
 		this.creacion_ElementosMapa();
