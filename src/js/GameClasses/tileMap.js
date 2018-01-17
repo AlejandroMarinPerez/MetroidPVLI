@@ -7,16 +7,24 @@ class TileMap{
 		this._map.addTilesetImage(image);
 		this._backgroundLayer = this._map.createLayer(backLayerName); //los names de las layers tienen que ser iguales que en tile
 		this._blockedLayer = this._map.createLayer(collisionLayerName);
+		this._bolaLayer = this._map.createLayer('bola');
+		//this.c = this._map.createLayer('Crawlers');
+		//this.c.visible = false;
 		this._objectsLayer = objectLayerName;
 		//this._blockedLayer.debug = true;
-		this._map.setCollisionBetween(1, 1500, true, this._blockedLayer); //el 1500 es el maximo numero que se encuentra en la parte "layers" del json (unos cuantos aumentados por si acaso)
-		this._blockedLayer.resizeWorld();
+		this._map.setCollisionBetween(1, 900, true, this._blockedLayer); //el 1500 es el maximo numero que se encuentra en la parte "layers" del json (unos cuantos aumentados por si acaso)
+		this._map.setCollisionBetween(1, 500, true, this._bolaLayer);
+		//this._map.setCollisionBetween(1, 900, true, this.c);
+		this._blockedLayer.resizeWorld();	
 	}
 
 //--------------------------------------------------------------------UPDATE---------------------------------------------------------------
 
 	update(objects){ //pura comprobacion de colisiones
 		for(var i = 0; i < objects.length; i++){
+			if(i === 1 && !objects[i].class._bola){ //player ahi guarrete :P
+				game.physics.arcade.collide(objects[i], this._bolaLayer);
+			}
 			game.physics.arcade.collide(objects[i], this._blockedLayer);
 		}
 	}
@@ -42,12 +50,6 @@ class TileMap{
 
 	get objectsLayer(){
 		return this._objectsLayer;
-	}
-
-
-	///----------------------------------------Búsqueda de los enemigos-----------------------------------------------------------///
-	addEnemies(type){
-		
 	}
 
 }

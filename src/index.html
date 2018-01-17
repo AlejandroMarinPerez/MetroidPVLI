@@ -6,14 +6,19 @@
     <meta charset="UTF-8" />
     <title>Metroid 0.01</title>
     <script type="text/javascript" src="js/Phaser/phaser.min.js"></script>
+    <script type="text/javascript" src="js/GameClasses/tileMap.js"></script>
     <script type="text/javascript" src="js/States/boot.js"></script>
     <script type="text/javascript" src="js/States/load.js"></script>
     <script type="text/javascript" src="js/States/menu.js"></script>
-    <script type="text/javascript" src="js/GameClasses/tileMap.js"></script>
+    <script type="text/javascript" src="js/States/controles.js"></script>
     <script type="text/javascript" src="js/GameClasses/canvas.js"></script>
     <script type="text/javascript" src="js/GameClasses/Potenciadores.js"></script>
     <script type="text/javascript" src="js/Auxiliares/group.js"></script>
     <script type="text/javascript" src="js/Fathers/gameSprite.js"></script>
+    <script type="text/javascript" src="js/GameClasses/DamageZone.js"></script>
+    <script type="text/javascript" src="js/Fathers/DoorFather.js"></script>
+    <script type="text/javascript" src="js/GameClasses/RocketDoor.js"></script>
+    <script type="text/javascript" src="js/GameClasses/BasicDoor.js"></script>
     <script type="text/javascript" src="js/Fathers/movable.js"></script>
     <script type="text/javascript" src="js/GameClasses/bullets.js"></script>
     <script type="text/javascript" src="js/GameClasses/jugador.js"></script>
@@ -21,6 +26,14 @@
     <script type="text/javascript" src="js/States/fail.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/States/game.js"></script>
+    <script type="text/javascript" src="js/GameClasses/Enemies.js"></script>
+    <script type="text/javascript" src="js/GameClasses/Enemigos/Wasp.js"></script>
+    <script type="text/javascript" src="js/GameClasses/Enemigos/Floater.js"></script>
+    <script type="text/javascript" src="js/GameClasses/Enemigos/Bat.js"></script>
+    <script type="text/javascript" src="js/GameClasses/Enemigos/Waver.js"></script>
+    <script type="text/javascript" src="js/GameClasses/Enemigos/Bee.js"></script>
+    <script type="text/javascript" src="js/GameClasses/ObjectPot.js"></script>
+    <script type="text/javascript" src="js/GameClasses/WaspSpawn.js"></script>
     <style type="text/css">
         body {
             margin: 0;
@@ -37,10 +50,12 @@
       </a>
      </header>
 
-    <div id="gameDiv"> </div>
+    <main style= "margin: auto; width: 50%; padding: 10px;">
+      <div id="gameDiv" > </div>
+    </main>
 
     <footer>
-    <p><strong>Metroid</strong><br>
+    <p style= "margin: auto; width: 50%; padding: 0px;"><strong>Metroid</strong><br>
       by <a href="http://github.com/AlejandroMarinPerez">Alejandro Marín Pérez y Diego Baratto Valdivia</a></p>
     <p class="license">Published under the <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike</a>
       license.</p>
