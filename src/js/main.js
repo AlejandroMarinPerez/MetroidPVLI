@@ -22,6 +22,12 @@ var playState = {
 		this.canvas.addImage(0, 'canvasEnergia');
 		this.canvas.addText(0, 	this.player._player._Health, '22px pix', '#FFF');
 
+		//---------------Música y sonidos-----------
+		this.musica = game.add.audio('muslvl', 0.3, true);
+		console.log(this.musica);
+		this.musica.start();
+
+
 		//--------------------Creacion de arena, puetas, enemigos...-------------------
 		this.creacion_ElementosMapa();
 		this.creacion_Enemigos();
@@ -44,12 +50,14 @@ var playState = {
 			this.pots.push(po);
 		}
 		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes];
+		//Musica
 	},
 
 //-------------------------------------------------------------------UPDATE-----------------------------------------------------------------
 
 	update: function(){
 		this.tpDebug();
+
 		game.camera.focusOnXY(this.player.player.x, this.player.player.y);
 		game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this); //Si overlapea con el grupo de objetos de overlap, no podrá transformarse
 

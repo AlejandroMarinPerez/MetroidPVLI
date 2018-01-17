@@ -1,7 +1,7 @@
 var menuState = {
 
 	create: function(){
-		//Vamos a hacer un menú muy sencillito, donde ponga el menu de juego y 
+		//Vamos a hacer un menú muy sencillito, donde ponga el menu de juego y
 		//solo tengas que darle a una tecla para continuar
 		//establecemos las coordenadas (80,80), el texto que queremos que ponga,
 		//la fuente, el tamaño y el color
