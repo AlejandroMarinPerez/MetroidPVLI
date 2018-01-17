@@ -19,8 +19,8 @@ var playState = {
 		//------------PLAYER & CANVAS----------
 		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 400, 150, 200, this.map._blockedLayer, playerStart[0].x, playerStart[0].y);
 		this.canvas = new Canvas();
-		this.energia = this.player.health;
-		this.canvas.addText(16, 16, 'EN: ' + this.energia, '65px Arial', '#FFF');
+		this.canvas.addImage(0, 'canvasEnergia');
+		this.canvas.addText(0, 	this.player._player._Health, '22px pix', '#FFF');
 
 		//--------------------Creacion de arena, puetas, enemigos...-------------------
 		this.creacion_ElementosMapa();
@@ -51,17 +51,13 @@ var playState = {
 	update: function(){
 		this.tpDebug();
 		game.camera.focusOnXY(this.player.player.x, this.player.player.y);
-		//game.camera.follow(this.player.player);
 		game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this); //Si overlapea con el grupo de objetos de overlap, no podrá transformarse
 
 		//------------COLISION & PLAYERUPDATE----------
 		this.map.update(this.objetosQueColisionan); //objetos que colisionan con el mapa
 		this.player.update(); // update del player (colision de balas 2)
 		this.updateEnemigos();
-		this.energia = this.player.health;
-		this.canvas.setText(0, 'EN: ' + this.energia); //pruebas solo (el canvas me tiene frito en verdad xdd)
-		this.canvas.updateCanvas();
-		//this.prueba.update();
+		this.updateCV();
 
 		for(var i = 0; i < this.pots.length; i++){
 			this.pots[i].update();
@@ -107,8 +103,9 @@ var playState = {
 		var murcielagos = this.map.findObjectsByType('bat', this.map.objectsLayer);
 		this.bats = [];
 		for(var i = 0; i < murcielagos.length; i++){
-			var b = new Bat(murcielagos[i].x, murcielagos[i].y, 0,'bat', 60, 275, this.map._blockedLayer, 8, 7, 0, this.player);
+			var b = new Bat(murcielagos[i].x, murcielagos[i].y, 0,'bat', 60, 275, this.map._blockedLayer, 4, 7, 0, this.player);
 			this.bats.push(b);
+
 		}
 
 		//Waveeeers
@@ -186,6 +183,14 @@ var playState = {
 		for(var i = 0; i < this.Bees.length; i++){
 			this.Bees[i].update(); //UPDATE DE ESO
 		}
+	},
+
+	updateCV(){
+		this.canvas.setText(0,	this.player._player._Health); //pruebas solo (el canvas me tiene frito en verdad xdd)
+		if(this.player._rockets !== undefined){
+			this.canvas.setText(1,	this.player._rockets.ammo);
+		}
+		this.canvas.updateCanvas();
 	},
 
 //-------------------------------------------------------------------PRUEBAS-----------------------------------------------------------------
