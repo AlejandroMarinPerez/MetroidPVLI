@@ -29,6 +29,9 @@ var loadState = {
         game.load.spritesheet('bee', 'assets/Enemies/bee.png', 38, 30);
         game.load.spritesheet('pot', 'assets/PlayerThings/pot.png', 28, 32);
         game.load.image('dropMisiles', 'assets/PlayerThings/dropMisiles.png', 20, 13);
+        game.load.image('canvasEnergia', 'assets/Canvas/CanvasEnergia.png', 80, 25);
+        game.load.image('canvasMisiles', 'assets/Canvas/CanvasMisiles.png', 45, 25);
+        game.load.bitmapFont('pix', 'assets/Pixeled.ttf');
 		game.floaterGroup = new Group(); //Grupo que contendrá a los floaters del juego
     	console.log("Cargando..."); //simple debug
 	},
