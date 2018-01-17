@@ -50,6 +50,8 @@ var menuState = {
 
 	start: function(){
 		//llamamos al siguiente estado --> Play
+		this.tema.stop();
+		this._tema = false;
 		game.state.start('play');
 	},
 

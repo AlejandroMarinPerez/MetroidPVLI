@@ -32,6 +32,8 @@ var loadState = {
         game.load.image('canvasEnergia', 'assets/Canvas/CanvasEnergia.png', 80, 25);
         game.load.image('canvasMisiles', 'assets/Canvas/CanvasMisiles.png', 45, 25);
         game.load.bitmapFont('font', 'assets/try.png', 'assets/try.fnt');//cargamos fuente del texto
+        game.load.audio('maintheme', '/assets/Audios/Title.mp3');
+        game.load.audio('level', 'assets/Audios/Level.mp3');
 		game.floaterGroup = new Group(); //Grupo que contendrá a los floaters del juego
     	console.log("Cargando..."); //simple debug
 	},
