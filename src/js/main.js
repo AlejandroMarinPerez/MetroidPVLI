@@ -28,11 +28,11 @@ var playState = {
 		//CAPA POR DELANTE DEL PLAYER!
 		this.map._backgroundLayer2 = this.map._map.createLayer('Tuberias'); //para que quede chulo se crean después, maybe lo hago de otra forma luego...
 
-		//------------Musica-------------------
+		//------------Musica y sonidos-------------------
 		this.tema = game.add.audio('level', 0.3);
 		this._tema = true;
 		this.tema.play();
-		
+
 		//------------COSAS DE PRUEBA----------
 		this.One = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
 		this.TwoKey = game.input.keyboard.addKey(Phaser.Keyboard.TWO);

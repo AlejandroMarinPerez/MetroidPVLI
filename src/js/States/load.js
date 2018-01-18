@@ -36,8 +36,19 @@ var loadState = {
         game.load.image('canvasEnergia', 'assets/Canvas/CanvasEnergia.png');
         game.load.image('canvasMisiles', 'assets/Canvas/CanvasMisiles.png');
         game.load.bitmapFont('font', 'assets/Canvas/try.png', 'assets/Canvas/try.fnt');//cargamos fuente del texto
-        game.load.audio('maintheme', '/assets/Audios/Title.mp3');
-        game.load.audio('level', 'assets/Audios/Level.mp3');
+
+				//Sonidos y música
+				game.load.audio('jump', '/assets/Audios/jump.ogg');//Jump
+				game.load.audio('shoot', '/assets/Audios/disparoSamantha.ogg');//Disparo
+				game.load.audio('explosion', '/assets/Audios/explosi_n.ogg');//Explosión
+				game.load.audio('dead', '/assets/Audios/enemyDead.ogg');//MuerteEnemigo
+				game.load.audio('powerup', '/assets/Audios/mejora.ogg');//Mejora
+				game.load.audio('object', '/assets/Audios/objeto.ogg');//objeto (vidas, misiles...)
+				game.load.audio('damage', '/assets/Audios/sound.ogg');//DañoEnemigos
+				game.load.audio('damageSamantha', '/assets/Audios/da_oSamantha.ogg');//DañoSamantha
+				game.load.audio('deadSamantha', '/assets/Audios/SamanthaDead.ogg');//Muerte de Samantha
+		    game.load.audio('maintheme', '/assets/Audios/Title.ogg');
+        game.load.audio('level', 'assets/Audios/Level.ogg');
 		game.floaterGroup = new Group(); //Grupo que contendrá a los floaters del juego
     	console.log("Cargando..."); //simple debug
 	},

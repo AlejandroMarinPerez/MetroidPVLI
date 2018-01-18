@@ -39,6 +39,10 @@ class Enemies extends Movable{
     this.V_VEL_REDUCIDA = 10;
     this.TIEMPO_REDUCCION_VEL = 400; //tiempo que los enemigos estan lentos
     this.TIEMPO_RESPAWN = 10000; //tiempo al cual respawnean
+
+    //--------------------Sonidos------------
+    this._damageSound = game.add.audio('damage', 1, false); //Daño que recibe el enemigo
+    this._deadSound = game.add.audio('dead', 1, false); //Muerte del enemigo
   }
 
   colision(){
@@ -60,11 +64,13 @@ class Enemies extends Movable{
   }
 
   get_Damaged(){
+    this._damageSound.play();
   	this._lives--;
   	this.hSpeed = this.H_VEL_REDUCIDA;  //quita vida, reduce su velocidad y empieza el timer de velocidad bajada
   	this.vSpeed = this.V_VEL_REDUCIDA;
   	this._velocityTimer = game.time.now + this.TIEMPO_REDUCCION_VEL;
     if(this._lives <= 0){
+      this._deadSound.play();
       this.killThis();
       this.loot();
     }

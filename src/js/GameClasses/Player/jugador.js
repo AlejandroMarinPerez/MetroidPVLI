@@ -9,7 +9,15 @@ class Player extends Movable{
 		this._posIniY = posIniY; //posiciones de inicio
 		this.construccion_Jugador();
 		this.define_Keys();
-		
+
+		//-----------Sonidos--------------
+		this._getDamage = game.add.audio('damageSamantha', 1, false); //SOnido del daño de Samantha
+		this._jump = game.add.audio('jump', 1, false); //Salto de Samantha
+		this._dead = game.add.audio('deadSamantha', 1, false); //Muerte de la prota :(
+		this._mejora = game.add.audio('powerup', 1, false); //Mejora del jugador
+		this._object = game.add.audio('object', 1, false); //Recoge objeto
+		this._played = false;
+
 	}
 
 //----------------------------------------------------------CONSTANTES JUGADOR ----------------------------------------------------------------
@@ -69,13 +77,23 @@ class Player extends Movable{
 	//Aquí hacemos el saltito (por tiempo presionando la tecla)
 	saltar(){
 		if(this.XKey.isDown && this._player.body.onFloor() && !this._bola){
+			if (!this._jump.isPlaying && !this._played){
+				this._jump.play();
+				this._played = true;
+			}
+
 			var i = Math.floor(Math.random() * 7);
 			if(i === 5 || i === 6) this.cambiaAnim('voltereta'); //la voltereta op
-			else this.cambiaAnim('salto');	
+			else this.cambiaAnim('salto');
 			this._jumpTimer = game.time.now + this._TIMESALTO;
 			this.moveUp(this._player, 0);
 		}
 		else if(this.XKey.isDown && this._jumpTimer != 0){
+			if (!this._jump.isPlaying && !this._played){
+				this._jump.play();
+				this._played = true;
+			}
+
 			if(!(this._animacion === 'voltereta'))
 				this.cambiaAnim('salto');
 			if(game.time.now > this._jumpTimer){
@@ -101,7 +119,7 @@ class Player extends Movable{
 		}
 		else
 			this.cambiaAnim('caida');
-	}	
+	}
 
 	saltoBomba(player, bomba){
 		if(bomba.animations.currentAnim.name == 'expl' && this._bola){
@@ -119,6 +137,9 @@ class Player extends Movable{
 		this.caida();
 		this.microSalto();
 		this.hSpeed = this._speed; //por si es ralentizado, para recuperar su velocidad
+		if (this._player.body.onFloor()){
+			this._played = false;
+		}
 	}
 
 	updateBullets(){ //podrian estar en el array de colisiones, pero como cuando colisionan tienen que hacer algo específico, mejor aquí
@@ -159,7 +180,7 @@ handle_Events(){
 				this.cambiaAnim('shootJump'); //si dispara mientras salta cambia de animacion
 			this._currentBullets.shoot(this._aim);
 		}
-	}		
+	}
 }
 
 //--------------------------------------------------------------------RESETS------------------------------------------------------------------------
@@ -202,7 +223,7 @@ handle_Events(){
 	}
 
 //--------------------------------------------------------------------DAÑO/INMUNIDAD/REBOTE------------------------------------------------------------------------
-	
+
 	recoil_Damage(posEnemigo, damage){
 		if(!this._immune){
 			if(this._player.body.x - posEnemigo <= 0){ //para saber la direccion del rebote
@@ -214,7 +235,7 @@ handle_Events(){
 			this.damage(damage); //si la salud llega a 0, el player muere
 			this._rebote = true;
 			this.immune(true);
-		}	
+		}
 	}
 
 	immune(bool){
@@ -235,10 +256,12 @@ handle_Events(){
 //--------------------------------------------------------------------POTENCIADORES & ATRIBUTOS------------------------------------------------------------------------
 
 	activarMejoras(i){
+		this._mejora.play();
 		this._potenciadores.activate(i);
 	}
 
 	heal(int){
+		this._object.play();
 		this._player._Health += int;
 		if(this._player._Health > this._MAXHEALTH){
 			this._player._Health = this._MAXHEALTH;
@@ -249,6 +272,7 @@ handle_Events(){
 	}
 
 	damage(int){
+		this._getDamage.play();
 		this._player._Health -= int;
 		if(this._player._Health <= 0){ //muere y hace la animacion!!
 			this._player._Health = 0;
@@ -257,6 +281,7 @@ handle_Events(){
 	}
 
 	morir(){
+		this._dead.play();
 		this.cambiaAnim('morir'); //cambia la animacion
 		this.Anima();
 		this._puedeControlar = false; //le quita los controles y el movimiento al player
@@ -275,10 +300,12 @@ handle_Events(){
 	}
 
 	moreAmmo(int){
+		this._object.play();
 		this._rockets.ammo += int;
 	}
 
 	bombasAux(bullet){
+		this._object.play();
 		this._bombas.checkCollisionAndTime(bullet);
 	}
 
@@ -329,7 +356,7 @@ handle_Events(){
 
 //------------------------------------------------------------CONSTRUCCIÓN & DECLARACIÓN DE VARIABLES------------------------------------
 
-	construccion_Jugador(){ //construccion de las variables necesarias para el jugador	
+	construccion_Jugador(){ //construccion de las variables necesarias para el jugador
 		this.declaracionConstantes();
 		this._player = this._sprite; //asignacion con el sprite del padre para que el nombre sea mas legible
 		this._player.anchor.setTo(0.5, 0.5); //ancla
@@ -338,7 +365,7 @@ handle_Events(){
 		this._immuneTimer = 0;  //timers de inmune y de parpadeo
 		this._blinkTimer = 0;
 		this._aim = 'right';
-		this._currentBullets = new Bullets('bala', this._SPEEDBALAS, this._RANGEBALAS, this, null, true); //balas añadidas en una clase 
+		this._currentBullets = new Bullets('bala', this._SPEEDBALAS, this._RANGEBALAS, this, null, true); //balas añadidas en una clase
 		this.declaracionAnimaciones();
 		this._width = this._player.body.width;
 		this._height = this._player.body.height;

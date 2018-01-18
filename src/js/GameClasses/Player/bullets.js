@@ -18,23 +18,28 @@ class Bullets extends Movable{
 				this._balas.children[i].animations.add('normal',[0], 0, true);
 				this._balas.children[i].animations.add('expl', [1], 0, true);
 			}
-		}	
+		}
 
 		this._tiempoBala = 0;
 		this._shooter = shooter;
 		this._range = range;
 		this._ammo = ammo;
 		this._TIEMPOENTREBALAS = 200; // a mas tiempo, menos balas
+
+		//-------------------Sonidos-----------------------
+		this._shoot = game.add.audio('shoot', 0.7, false); //Disparo (sonido cuando es disparada)
 	}
 
 //--------------------------------------------------------------------DISPARO------------------------------------------------------------------
 
 	shoot(aim){
 		if(game.time.now > this._tiempoBala){
+
 			var bal = this._balas.getFirstExists(false); //cogemos la primera bala
+			this._shoot.play();
 			bal.animations.play('normal'); //animacion
 			this.gestionaBala(aim ,bal);
-			this.gestionAmmo(); 
+			this.gestionAmmo();
 		}
 	}
 
@@ -58,7 +63,7 @@ class Bullets extends Movable{
 	}
 
 	gestionAmmo(){ //en caso de tener municion, este metodo reduciria la municion al disparar el tipo de bala que corresponda
-		if(this._ammo !== null){ 
+		if(this._ammo !== null){
 			this._ammo--; //reducir la municion de los misiles
 			if(this.ammo === 0){
 				this._shooter.changeBullets(); //se cambia automáticamente, al igual que en el juego
@@ -82,7 +87,7 @@ class Bullets extends Movable{
 
 //------------------------------------------------GETS & SETS--------------------------------------------------------------------
 
-	set range(newRange){ 
+	set range(newRange){
 		this._range = newRange;
 	}
 
