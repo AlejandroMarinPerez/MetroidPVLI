@@ -8,8 +8,8 @@ var menuState = {
 		//Imagen de Fondo con sus animaciones
 		this.backgroundImage = new Phaser.Sprite(game, 25, 0, 'menu'); //menu animado
 		game.world.add(this.backgroundImage);
-		this.backgroundImage.animations.add('full', game.math.numberArray(1, 5), 1, true);
-		this.backgroundImage.play('full');
+		//this.backgroundImage.animations.add('full', game.math.numberArray(1, 5), 1, true);
+		//this.backgroundImage.play('full');
 
 		//Titulo con "FadeIn"
 		this.title = game.add.sprite(this.backgroundImage.x + this.backgroundImage.width/2.1, this.backgroundImage.y + this.backgroundImage.height/4, 'title');
