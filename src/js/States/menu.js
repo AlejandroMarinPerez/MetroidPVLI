@@ -12,6 +12,7 @@ var menuState = {
 		this.backgroundImage.animations.add('full', game.math.numberArray(1, 5), 1, true);
 		this.backgroundImage.play('full');
 		this.backgroundImage.fixedToCamera = true;
+		//this.backgroundImage.anchor.setTo(0.5, 0.5);
 
 		//Titulo con "FadeIn"
 		this.title = game.add.sprite(this.backgroundImage.x + this.backgroundImage.width/2.1, this.backgroundImage.y + this.backgroundImage.height/4, 'title');
@@ -29,6 +30,7 @@ var menuState = {
 		//Aqui definiremos la tecla enter/espacio para poder hacer cositas con ella
 		this.enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 		this.space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+		game.camera.follow(this.backgroundImage);
 		
 	},
 
