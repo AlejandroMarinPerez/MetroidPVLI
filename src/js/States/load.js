@@ -8,6 +8,7 @@ var loadState = {
 		game.load.spritesheet('menu', 'assets/Menu/BckgrndMenuFull.png', 792, 600);
 		game.load.image('title', 'assets/Menu/Title.png');
 		game.load.image('things', 'assets/Menu/Things.png');
+        game.load.image('block', 'assets/Map/Block.png');
 		game.load.image('controles', 'assets/Menu/controles1.png');
         game.load.image('creditos', 'assets/Menu/creditos.png');
         game.load.spritesheet('metroido', 'assets/Menu/metroido.png', 23.7, 23);
@@ -21,6 +22,7 @@ var loadState = {
     	game.load.image('gameTiles', 'assets/Map/tiles.png'); //las imagenes del tile
     	game.load.spritesheet('bomba', 'assets/PlayerThings/bomba.png', 25, 57);
     	game.load.spritesheet('door', 'assets/Map/door2.png', 127, 99);
+        game.load.spritesheet('lDoor', 'assets/Map/lastDoor.png', 127, 99);
     	game.load.spritesheet('rocketDoor', 'assets/Map/rocketDoor.png', 160, 92);
     	game.load.spritesheet('wasp', 'assets/Enemies/wasp.png', 25, 24);
     	game.load.spritesheet('floater', 'assets/Enemies/floater.png', 30, 24);

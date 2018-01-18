@@ -64,6 +64,7 @@ class Potenciadores{
 		self._player._arrayBalas.push(self._player._rockets.grupoBalas); //push al array de balas
 		self._player._basicBullets = self._player._currentBullets; //guardamos en basicBullets las balas básicas
 		self._player.shiftKey = game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
+		console.log(self._player._basicBullets);
 
 		playState.canvas.addImage(1, 'canvasMisiles'); 
 		playState.canvas.addText(1, self._player._rockets.ammo, 38);
