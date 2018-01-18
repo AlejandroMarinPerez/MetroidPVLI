@@ -20,7 +20,7 @@ var playState = {
 		this.player = new Player(playerStart[0].x, playerStart[0].y, 'dude', 400, 150, 200, this.map._blockedLayer, playerStart[0].x, playerStart[0].y);
 		this.canvas = new Canvas();
 		this.canvas.addImage(0, 'canvasEnergia');
-		this.canvas.addText(0, 	this.player._player._Health);
+		this.canvas.addText(0, 	this.player._player._Health, 40);
 
 		//--------------------Creacion de arena, puetas, enemigos...-------------------
 		this.creacion_ElementosMapa();
@@ -54,6 +54,7 @@ var playState = {
 //-------------------------------------------------------------------UPDATE-----------------------------------------------------------------
 
 	update: function(){
+		menuState.tema.stop();  //por si acaso, se podía buguear con lo del loop manual muy ezez
 		this.tpDebug();
 		game.camera.focusOnXY(this.player.player.x, this.player.player.y);
 		game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this); //Si overlapea con el grupo de objetos de overlap, no podrá transformarse
@@ -78,7 +79,7 @@ var playState = {
 
 	render: function() {
         //game.debug.cameraInfo(game.camera, 32, 32);
-        game.debug.spriteCoords(this.player.player, 32, 500);
+        //game.debug.spriteCoords(this.player.player, 32, 500);
     },
  //-------------------------------------------------------------------AUXILIARES-----------------------------------------------------------------
  	creacion_Overlaps: function(string){

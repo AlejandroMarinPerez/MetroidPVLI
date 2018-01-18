@@ -66,7 +66,7 @@ class Potenciadores{
 		self._player.shiftKey = game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
 
 		playState.canvas.addImage(1, 'canvasMisiles'); 
-		playState.canvas.addText(1, self._player._rockets.ammo);
+		playState.canvas.addText(1, self._player._rockets.ammo, 38);
 		self._player.changeBullets = function(){ //cambiar balas con la tecla SHIFT
 				if(this._currentBullets === this._basicBullets && this._rockets.ammo > 0){ //si esta con las balas básicas y tiene municion de cohetes
 					this._player.tint = 0xff391f;

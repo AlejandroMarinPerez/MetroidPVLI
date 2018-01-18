@@ -251,6 +251,7 @@ handle_Events(){
 	damage(int){
 		this._player._Health -= int;
 		if(this._player._Health <= 0){ //muere y hace la animacion!!
+			this._player._Health = 0;
 			this.morir();
 		}
 	}
