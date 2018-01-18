@@ -14,7 +14,7 @@ var menuState = {
 		this.backgroundImage.fixedToCamera = true;
 
 		//Titulo con "FadeIn"
-		this.title = game.add.sprite(this.backgroundImage.x + this.backgroundImage.width/2.1, this.backgroundImage.y + this.backgroundImage.height/4, 'title');
+		this.title = game.add.image(this.backgroundImage.x + this.backgroundImage.width/2.1, this.backgroundImage.y + this.backgroundImage.height/4, 'title');
 		this.title.anchor.setTo(0.5, 0.5);
     	this.title.alpha = 0;
     	this.title.fixedToCamera = true;

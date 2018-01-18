@@ -354,6 +354,7 @@ handle_Events(){
 		this._player.class = this;
 		this._speed = this.hSpeed;
 		this._puedeControlar = true;
+		game.camera.follow(this.player);
 	}
 
 
