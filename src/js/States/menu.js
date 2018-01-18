@@ -4,17 +4,20 @@ var menuState = {
 
 		var bckAux = new Phaser.Image(game, 0, 0, 'menuAux'); //auxiliares para rellenar la pantalla totalmente(que queda to feo si no)
 		game.world.add(bckAux);
+		bckAux.fixedToCamera = true;
 
 		//Imagen de Fondo con sus animaciones
 		this.backgroundImage = new Phaser.Sprite(game, 25, 0, 'menu'); //menu animado
 		game.world.add(this.backgroundImage);
-		//this.backgroundImage.animations.add('full', game.math.numberArray(1, 5), 1, true);
-		//this.backgroundImage.play('full');
+		this.backgroundImage.animations.add('full', game.math.numberArray(1, 5), 1, true);
+		this.backgroundImage.play('full');
+		this.backgroundImage.fixedToCamera = true;
 
 		//Titulo con "FadeIn"
 		this.title = game.add.sprite(this.backgroundImage.x + this.backgroundImage.width/2.1, this.backgroundImage.y + this.backgroundImage.height/4, 'title');
 		this.title.anchor.setTo(0.5, 0.5);
     	this.title.alpha = 0;
+    	this.title.fixedToCamera = true;
 		var t = game.add.tween(this.title).to( { alpha: 1 }, 8000,  Phaser.Easing.Linear.None, true, 0, -1);
 		t.onComplete.add(this.addText, this);
 
