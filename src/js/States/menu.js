@@ -29,7 +29,7 @@ var menuState = {
 		//Aqui definiremos la tecla enter/espacio para poder hacer cositas con ella
 		this.enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 		this.space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-		
+
 	},
 
 	update: function(){
@@ -37,6 +37,7 @@ var menuState = {
 			this.start();
 		}
 		else if(this.space.isDown){
+
 			this.controles();
 		}
 
@@ -49,11 +50,13 @@ var menuState = {
 	start: function(){
 		//llamamos al siguiente estado --> Play
 		this.tema.stop();
-		this._tema = false;
+
 		game.state.start('play');
 	},
 
 	controles: function(){
+		this.tema.stop();
+		this._tema = false;
 		game.state.start('controles');
 	},
 
