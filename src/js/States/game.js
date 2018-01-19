@@ -1,4 +1,4 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameDiv'); //Creamos el Juego
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game'); //Creamos el Juego
 
 //Añadimos los estados
 game.state.add('boot', bootState);
