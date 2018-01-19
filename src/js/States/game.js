@@ -1,5 +1,5 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game'); //Creamos el Juego
-
+console.log('hey');
 //Añadimos los estados
 game.state.add('boot', bootState);
 game.state.add('load', loadState);
