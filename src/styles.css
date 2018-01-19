@@ -9,7 +9,9 @@ body{
   margin: 0;
   font-family: Courier, 'Courier New', monospace;
   font-size: 1.6rem;
-  background-image: url('fondoWeb.jpg');
+  background-image: url('fondoWeb3.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: #000;
 }
 
@@ -39,12 +41,7 @@ main {
   text-align: center;
 }
 
-#textoInfo {
-  margin: 2rem 0;
-  text-align: center;
-  background-color: #000;
-  width: 800;
-  background-
+#textoFLotante{
   color: #fff;
 }
 
