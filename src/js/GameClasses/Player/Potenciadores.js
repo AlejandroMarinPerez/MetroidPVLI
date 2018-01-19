@@ -48,7 +48,7 @@ class Potenciadores{
 		}
  		
  		//Agregamos la funcion 'transformarse' al curso Down (mejor en la S (?))
-		self._player.cursores.down.onDown.add(self._player.transformarse, self._player);
+		self._player.SKey.onDown.add(self._player.transformarse, self._player);
 	}
 
 //--------------------------------------------------------------------SALTO POTENCIADO------------------------------------------------------------------------
@@ -64,7 +64,6 @@ class Potenciadores{
 		self._player._arrayBalas.push(self._player._rockets.grupoBalas); //push al array de balas
 		self._player._basicBullets = self._player._currentBullets; //guardamos en basicBullets las balas básicas
 		self._player.shiftKey = game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
-		console.log(self._player._basicBullets);
 
 		playState.canvas.addImage(1, 'canvasMisiles'); 
 		playState.canvas.addText(1, self._player._rockets.ammo, 38);
@@ -95,8 +94,6 @@ class Potenciadores{
 			self._player._bombas.grupoBalas.children[i].timer = 0; //les otorgamos un timer a cada una
 		}
 
-		//TECLA P (PUEDE CAMBIARSE OBVIAMENTE, SON PRUEBAS SOLO)
-		self._player.pKey = game.input.keyboard.addKey(Phaser.Keyboard.Z);
 
 		self._player._bombas.shoot = function(){ //redefinimos el metodo shoot original de las balas
 			if(game.time.now > this._tiempoBala){
@@ -125,7 +122,7 @@ class Potenciadores{
 			}
 		}
 
-		self._player.pKey.onDown.add(self._player.placeBomb, self._player);
+		self._player.IKey.onDown.add(self._player.placeBomb, self._player);
 	}
 
 //--------------------------------------------------------------------ACTIVACION DE POTENCIADORES------------------------------------------------------------------------
