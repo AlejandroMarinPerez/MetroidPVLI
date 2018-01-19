@@ -24,7 +24,7 @@ class DoorFather extends GameSprite{
 			this.sprite.animations.play('cerrada');
 			game.physics.arcade.collide(this._player.player, this.sprite);
 			for(var i = 0; i < this._player._arrayBalas.length; i++){
-				game.physics.arcade.collide(this._player._arrayBalas[i], this.sprite, function(door, bullet){console.log(bullet);bullet.animations.play('expl'); bullet.lifespan = 200;if(bullet.key === this._tipoBala){this.abrir_Puerta();}}, null, this); //abrir la puerta
+				game.physics.arcade.collide(this._player._arrayBalas[i], this.sprite, function(door, bullet){bullet.animations.play('expl'); bullet.lifespan = 200;if(bullet.key === this._tipoBala){this.abrir_Puerta();}}, null, this); //abrir la puerta
 			}
 		}
 		else if(this._player.player.x >= this.sprite.x - this._DISTANCIA && this._player.player.x <= this.sprite.x + this.sprite.width + this._DISTANCIA){ //si esta dentro de la puerta

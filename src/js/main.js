@@ -28,11 +28,11 @@ var playState = {
 		//CAPA POR DELANTE DEL PLAYER!
 		this.map._backgroundLayer2 = this.map._map.createLayer('Tuberias'); //para que quede chulo se crean después, maybe lo hago de otra forma luego...
 
-		//------------Musica-------------------
+		//------------Musica y sonidos-------------------
 		this.tema = game.add.audio('level', 0.3);
 		this._tema = true;
 		this.tema.play();
-		
+
 		//------------COSAS DE PRUEBA----------
 		this.One = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
 		this.TwoKey = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
@@ -42,12 +42,6 @@ var playState = {
 		this.SixKey = game.input.keyboard.addKey(Phaser.Keyboard.SIX);
 		//------------ARRAY DE COLISIONES----------
 		//this.prueba= new ObjectPot(this.player.player.x + 200, 7845, 'bee', 0, 1, this.player);
-		var p = this.map.findObjectsByType('pot', this.map.objectsLayer);
-		this.pots = [];
-		for(var i = 0; i < p.length; i++){
-			var po = new ObjectPot(p[i].x, p[i].y,'pot', 0, p[i].properties.numAActivar, this.player);
-			this.pots.push(po);
-		}
 		this.objetosQueColisionan = [this.hands, this.player.player, this.spikes];
 	},
 
@@ -56,18 +50,13 @@ var playState = {
 	update: function(){
 		menuState.tema.stop();  //por si acaso, se podía buguear con lo del loop manual muy ezez
 		this.tpDebug();
-		game.camera.focusOnXY(this.player.player.x, this.player.player.y);
 		game.physics.arcade.overlap(this.player.player,this.capa_Overlaps, this.cancelarTransformacion, null, this); //Si overlapea con el grupo de objetos de overlap, no podrá transformarse
 
 		//------------COLISION & PLAYERUPDATE----------
 		this.map.update(this.objetosQueColisionan); //objetos que colisionan con el mapa
 		this.player.update(); // update del player (colision de balas 2)
-		this.updateEnemigos();
+		this.updateThings();
 		this.updateCV();
-
-		for(var i = 0; i < this.pots.length; i++){
-			this.pots[i].update();
-		}
 
 		if(!this.tema.isPlaying && this._tema)
 		{
@@ -151,12 +140,26 @@ var playState = {
 			var puerta = new BasicDoor(door[i].x, door[i].y, 'door', 0 , this.player, i, 'bala');
 			this.Doors.push(puerta);
 		}
-		var length = this.Doors.length;
 		door = [];
 		door = this.map.findObjectsByType('rocketDoor', this.map.objectsLayer);
 		for(var i = 0; i < door.length; i++){
 			var puerta = new RocketDoor(door[i].x, door[i].y, 'rocketDoor', 0 , this.player, i + length, 'rocket');
 			this.Doors.push(puerta);
+		}
+		var Last = [];
+		this.lastDoor = [];
+		Last = this.map.findObjectsByType('LastDoor', this.map.objectsLayer);
+		for(var i = 0; i < Last.length; i++){
+			var puerta = new LastDoor(Last[i].x,Last[i].y, 'lDoor', 0 , this.player, 0, null);
+			this.lastDoor.push(puerta);
+		}
+
+		//POTENCIADORES
+		var p = this.map.findObjectsByType('pot', this.map.objectsLayer);
+		this.pots = [];
+		for(var i = 0; i < p.length; i++){
+			var po = new ObjectPot(p[i].x, p[i].y,'pot', 0, p[i].properties.numAActivar, this.player);
+			this.pots.push(po);
 		}
 	},
 
@@ -165,7 +168,7 @@ var playState = {
 			this.player.no_PuedeTransformarse();
 	},
 
-	updateEnemigos(){
+	updateThings(){
 		for(var i = 0; i < this.Doors.length; i++){
 			this.Doors[i].update(); //UPDATE DE DOORS
 		}
@@ -192,6 +195,14 @@ var playState = {
 
 		for(var i = 0; i < this.Bees.length; i++){
 			this.Bees[i].update(); //UPDATE DE ESO
+		}
+
+		for(var i = 0; i < this.pots.length; i++){
+			this.pots[i].update();
+		}
+
+		for(var i = 0; i < this.lastDoor.length; i++){
+			this.lastDoor[i].update();
 		}
 	},
 
