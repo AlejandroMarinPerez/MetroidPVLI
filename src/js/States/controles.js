@@ -25,9 +25,5 @@ var ControlesState = {
 	menu: function(){
 		game.state.start('menu');
 	},
+};
 
-<<<<<<< HEAD
-};
-=======
-};
->>>>>>> 47083f70641a4040003735091154f0e81317ae1d
