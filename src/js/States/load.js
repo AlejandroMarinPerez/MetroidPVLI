@@ -45,7 +45,7 @@ var loadState = {
 				game.load.audio('powerup', 'assets/Audios/mejora.ogg');//Mejora
 				game.load.audio('object', 'assets/Audios/objeto.ogg');//objeto (vidas, misiles...)
 				game.load.audio('damage', 'assets/Audios/sound.ogg');//DañoEnemigos
-				game.load.audio('damageSamantha', 'assets/Audios/da_oSamantha.ogg');//DañoSamantha
+				game.load.audio('damageSamantha', 'assets/Audios/Da_oSamantha.ogg');//DañoSamantha
 				game.load.audio('deadSamantha', 'assets/Audios/SamanthaDead.ogg');//Muerte de Samantha
 		    game.load.audio('maintheme', 'assets/Audios/Title.ogg');
         game.load.audio('level', 'assets/Audios/Level.ogg');
