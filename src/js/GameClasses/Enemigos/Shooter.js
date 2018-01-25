@@ -1,8 +1,8 @@
 class Shooter extends Enemies{ //Este enemigo es el especial que dispara y salta para busca a Samantha
 
   //--------------------------------Construccion del enemigo------------------------
-  constructor (posX, posY, gravity, sprite, speedX, speedY, colisionParedes, lives, damage, type, player, range, viewRange){
-    super(posX, posY, sprite, gravity, speedX, speedY, colisionParedes, lives, damage, type, player);
+  constructor (posX, posY, gravity, sprite, speedX, speedY, colliders, lives, damage, type, player, range, viewRange){
+    super(posX, posY, gravity, sprite, speedX, speedY, colliders, lives, damage, type, player);
     this._range = range;
     this._Balas = new Bullets ('bala2', 200, 40, this.sprite, null, false);
     this._viewRange = viewRange;
