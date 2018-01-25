@@ -103,7 +103,7 @@ class Enemies extends Movable{
     }
  }
 
- loot(){ //por ahora solo dan vida, deberian dar tmbn misiles...
+ loot(){ 
   var rnd = Math.floor(Math.random()*10); //generacion numero random
   if(rnd === 0 || rnd === 8){
     var drop = this._Botiquines.getFirstExists(false);

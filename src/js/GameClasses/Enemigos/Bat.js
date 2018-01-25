@@ -22,9 +22,9 @@ class Bat extends Enemies{
 					this.moveUp(bal, 0);
 					break;
 			}
-			bal.lifespan = this._range;	
+			bal.lifespan = this._range;
 		};
-		this._tiempoSuelo = 500; //tiempo que tarda en "esplotar"
+		this._tiempoSuelo = 500; //tiempo que tarda en "explotar"
 		this._timer = 0;
 		this._fAux = this.wakeUp;
 		this.sprite.animations.add('default', [0, 1, 2], 8, true);

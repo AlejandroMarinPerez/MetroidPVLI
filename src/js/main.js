@@ -123,6 +123,14 @@ var playState = {
 			this.Bees.push(b);
 		}
 
+		//Enemigos que disparan y muerte y destrucción
+		var shooter = this.map.findObjectsByType('shooter', this.map.objectsLayer);
+		this.Shooter = [];
+		for(var i = 0; i < shooter.length; i++){
+			var s = new Shooter(shooter[i].x, shooter[i].y, 0, 'shooter', 150, 200, this.map._blockedLayer, 10, 5, 0, this.player, 40, 100);
+			this.Shooter.push(s);
+		}
+
 	},
 
 	creacion_ElementosMapa(){
@@ -203,6 +211,10 @@ var playState = {
 
 		for(var i = 0; i < this.lastDoor.length; i++){
 			this.lastDoor[i].update();
+		}
+
+		for (var i = 0; i < this.Shooter.length; i++){
+			this.Shooter[i].update();
 		}
 	},
 
