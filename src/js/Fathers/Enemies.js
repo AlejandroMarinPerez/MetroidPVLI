@@ -103,10 +103,11 @@ class Enemies extends Movable{
     }
  }
 
- loot(){ 
+ loot(){
   var rnd = Math.floor(Math.random()*10); //generacion numero random
   if(rnd === 0 || rnd === 8){
     var drop = this._Botiquines.getFirstExists(false);
+    console.log(this._Botiquines);
     drop.reset(this.sprite.x - this.sprite.width/5, this.sprite.y);
     drop.lifespan = 5000; //duran 5 segunditos
   }
