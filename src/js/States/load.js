@@ -36,8 +36,6 @@ var loadState = {
         game.load.image('canvasEnergia', 'assets/Canvas/CanvasEnergia.png');
         game.load.image('canvasMisiles', 'assets/Canvas/CanvasMisiles.png');
         game.load.bitmapFont('font', 'assets/Canvas/try.png', 'assets/Canvas/try.fnt');//cargamos fuente del texto
-				game.load.spritesheet('shooter', 'assets/Enemies/Shooter/shooter.png', 33, 64); //spritesheet del nuevo enemigo
-				game.load.spritesheet('bala2', 'assets/Enemies/Shooter/bala3.png', 112, 176);//spritesheet de las nuevas balas
 				//Sonidos y música
 				game.load.audio('jump', 'assets/Audios/jump.ogg');//Jump
 				game.load.audio('shoot', 'assets/Audios/disparoSamantha.ogg');//Disparo
