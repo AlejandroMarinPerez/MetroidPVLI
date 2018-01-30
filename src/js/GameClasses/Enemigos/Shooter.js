@@ -6,8 +6,6 @@ class Shooter extends Enemies{ //Este enemigo es el especial que dispara y salta
     this._range = range;
     this._Balas = new Bullets ('bala2', 200, 40, this.sprite, null, false);
     this._viewRange = viewRange;
-    this._posIniX = posX;
-    this._posIniY = posY;
     this._shooter = this.sprite;
     this.declaraAnimaciones();
     this._animacion = 'normal';
@@ -33,7 +31,7 @@ class Shooter extends Enemies{ //Este enemigo es el especial que dispara y salta
     if(!this._haMuerto){
       this.colision();
       //Copmprobamos la lógica primero (si muere, pues no se activa y esas cosas)
-      if(Math.abs((this._player.x - this.posX)) < this._viewRange){
+      if((this._player.x - this.posX) < this._viewRange){
         this.logic();
         this.animaEnemigo();
       }
@@ -41,7 +39,6 @@ class Shooter extends Enemies{ //Este enemigo es el especial que dispara y salta
     //Ya después si muere, pues eso, que se muere Y comprueba si puede revivir
     else {
       this.morir();
-      this.loot();
       this.respawn();
     }
   }
@@ -49,13 +46,13 @@ class Shooter extends Enemies{ //Este enemigo es el especial que dispara y salta
   logic(){
     if (this._player.x > this.posX){ //Tratará de perseguir al jugador hasta que esté dentro de su rango
       this.mueveDerecha(this.sprite, 0);
-      if(Math.abs((this._player.x - this.posX)) > this._range){ //Comprueba si dispara o no
+      if((this._player.x - this.posX) > this._range){ //Comprueba si dispara o no
         this._Balas.shoot(this._aim);
       }
     }
     else if (this._player.x() < this.posX){
       this.mueveIzquierda(this.sprite, 0);
-      if(Math.abs((this._player.x - this.posX)) < this._range){
+      if((this._player.x - this.posX) < this._range){
         this._Balas.shoot(this._aim);
       }
     }
@@ -75,8 +72,9 @@ class Shooter extends Enemies{ //Este enemigo es el especial que dispara y salta
 	}
 
   morir(){
-    this.cambiaAnim('morir'); //cambia la animacion
-    this.Anima();
+    this.cambiaAnimacion('morir'); //cambia la animacion
+    this.animaEnemigo();
+    this.loot();
     this.sprite.body.moves = false;
     this._shooter.animations.currentAnim.killOnComplete = true; //cuando acaba a animacion, muere
   }
