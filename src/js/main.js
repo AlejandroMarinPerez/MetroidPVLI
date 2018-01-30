@@ -256,3 +256,15 @@ var playState = {
 		}
 	}
 }
+
+/*      var controles1 = {
+        	left:  this.game.input.keyboard.addKey(Phaser.Keyboard.J),
+        	right:  this.game.input.keyboard.addKey(Phaser.Keyboard.L),
+        	jumpButton:  this.game.input.keyboard.addKey(Phaser.Keyboard.I)
+        };
+
+        var controles2 = {
+        	left:  this.game.input.keyboard.addKey(Phaser.Keyboard.A),
+        	right:  this.game.input.keyboard.addKey(Phaser.Keyboard.D),
+        	jumpButton:  this.game.input.keyboard.addKey(Phaser.Keyboard.W)
+        };*/
